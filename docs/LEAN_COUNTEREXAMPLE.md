@@ -37,7 +37,10 @@ the seventh convolution power of the identity, and the bundled object
 
 The file also proves `not_isCocomm`: the Hopf algebra is not cocommutative, i.e. the group
 scheme is genuinely noncommutative — the sanity check against Deligne's theorem, which
-affirms Grothendieck's question for commutative group schemes.
+affirms Grothendieck's question for commutative group schemes.  Two further formulations:
+`orderOf_universalPoint` shows the universal `A`-valued point has order exactly eight (an
+order-eight point on an order-four group scheme), and `isGroupLikeElem_lambda` records that
+`lambda` is group-like in the sense of Mathlib's `IsGroupLikeElem`.
 
 The statement is also transported across Mathlib's antiequivalence between commutative Hopf
 algebras and affine group schemes (`commHopfAlgCatEquivCogrpCommAlgCat`):

@@ -8,6 +8,7 @@ import Mathlib.Algebra.QuadraticAlgebra.Basic
 import Mathlib.Data.FunLike.Fintype
 import Mathlib.LinearAlgebra.Dimension.Free
 import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
+import Mathlib.RingTheory.Coalgebra.GroupLike
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.NormNum.BigOperators
 
@@ -41,6 +42,9 @@ algebra, and the associated group scheme has order four but is not killed by fou
 * `Counterexample.GrothendieckPower.instHopfAlgebra`: the Hopf algebra structure on `A`.
 * `Counterexample.GrothendieckPower.powerMap`: the `n`-th convolution power of the identity
   of `A`, i.e. the coordinate map of the pointwise `n`-th power of the group scheme.
+* `Counterexample.GrothendieckPower.affineGroupScheme`: the counterexample as a group object
+  in the opposite of the category of commutative `R`-algebras, through Mathlib's
+  antiequivalence with commutative Hopf algebras.
 
 ## Main results
 
@@ -52,6 +56,8 @@ algebra, and the associated group scheme has order four but is not killed by fou
 * `Counterexample.GrothendieckPower.counterexample`: the combined statement: over the
   nontrivial ring `R`, the algebra `A` is finite free of rank four and its fourth power map
   is not the convolution unit.
+* `Counterexample.GrothendieckPower.orderOf_universalPoint`: the universal `A`-valued point
+  of the group scheme has order exactly eight.
 * `Counterexample.GrothendieckPower.not_isCocomm`: `A` is not cocommutative, i.e. the group
   scheme is noncommutative, as forced by Deligne's theorem for commutative group schemes.
 * `Counterexample.GrothendieckPower.monPowMap_affineGroupScheme_four_ne`: the group-scheme
@@ -874,6 +880,15 @@ noncomputable instance instBialgebra : Bialgebra R A :=
 private theorem bialgebra_comulAlgHom : Bialgebra.comulAlgHom R A = comul := rfl
 private theorem bialgebra_counitAlgHom : Bialgebra.counitAlgHom R A = counit := rfl
 
+/-- The coordinate `lambda` is a group-like element of `A`. -/
+theorem isGroupLikeElem_lambda : IsGroupLikeElem R lambda where
+  counit_eq_one := by
+    rw [← Bialgebra.counitAlgHom_apply (R := R), bialgebra_counitAlgHom]
+    exact counit_lambda
+  comul_eq_tmul_self := by
+    rw [← Bialgebra.comulAlgHom_apply (R := R), bialgebra_comulAlgHom, comul_lambda]
+    simp
+
 /-!
 ### The convolution power maps
 
@@ -1131,6 +1146,19 @@ theorem universalPoint_pow_eight : universalPoint ^ 8 = 1 := by
   change powerMap 8 = (Algebra.ofId R A).comp (Bialgebra.counitAlgHom R A)
   rw [bialgebra_counitAlgHom]
   exact powerMap_eight
+
+theorem universalPoint_pow_four_ne_one : universalPoint ^ 4 ≠ 1 := by
+  intro h
+  have h' : powerMap 4 = powerMap 0 := congr_arg WithConv.ofConv h
+  exact powerMap_four_U_ne_zero (by simpa using DFunLike.congr_fun h' U)
+
+/-- In the group of `A`-valued points of the group scheme, the universal point has order
+exactly eight: an element of order eight on a group scheme of order four. -/
+theorem orderOf_universalPoint : orderOf universalPoint = 8 := by
+  have h := orderOf_eq_prime_pow (p := 2) (n := 2) universalPoint_pow_four_ne_one
+    universalPoint_pow_eight
+  norm_num at h
+  exact h
 
 /-!
 ### The Hopf algebra structure and the main statement
