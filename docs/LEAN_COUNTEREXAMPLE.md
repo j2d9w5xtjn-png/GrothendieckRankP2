@@ -35,6 +35,10 @@ The file also supplies a `Bialgebra R A` instance, a `HopfAlgebra R A` instance 
 the seventh convolution power of the identity, and the bundled object
 `coordinateHopfAlgebra : CommHopfAlgCat R`.
 
+The file also proves `not_isCocomm`: the Hopf algebra is not cocommutative, i.e. the group
+scheme is genuinely noncommutative — the sanity check against Deligne's theorem, which
+affirms Grothendieck's question for commutative group schemes.
+
 The statement is also transported across Mathlib's antiequivalence between commutative Hopf
 algebras and affine group schemes (`commHopfAlgCatEquivCogrpCommAlgCat`):
 `affineGroupScheme : Grp (CommAlgCat R)ᵒᵖ` is the corresponding group object, and

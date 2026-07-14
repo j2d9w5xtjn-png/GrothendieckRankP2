@@ -52,6 +52,8 @@ algebra, and the associated group scheme has order four but is not killed by fou
 * `Counterexample.GrothendieckPower.counterexample`: the combined statement: over the
   nontrivial ring `R`, the algebra `A` is finite free of rank four and its fourth power map
   is not the convolution unit.
+* `Counterexample.GrothendieckPower.not_isCocomm`: `A` is not cocommutative, i.e. the group
+  scheme is noncommutative, as forced by Deligne's theorem for commutative group schemes.
 * `Counterexample.GrothendieckPower.monPowMap_affineGroupScheme_four_ne`: the group-scheme
   formulation, through Mathlib's antiequivalence between commutative Hopf algebras and
   affine group schemes: the pointwise fourth power map of the group object `Spec A` is not
@@ -1202,6 +1204,51 @@ theorem counterexample :
   apply powerMap_four_U_ne_zero
   have hU := DFunLike.congr_fun h U
   simpa using hU
+
+/-!
+### Non-cocommutativity
+
+By Deligne's theorem, a commutative finite locally free group scheme is killed by its order,
+so the group scheme represented by `A` is necessarily noncommutative; equivalently, `A` is
+not cocommutative.  We verify this directly: the coefficient functional of `U` distinguishes
+`Δ(U)` from its swap.
+-/
+
+/-- The `R`-linear coefficient functional of `U` in the basis `1, v, U, U * v` of `A`. -/
+private def coeffU : A →ₗ[R] R where
+  toFun x := x.im.re
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+
+/-- The `R`-linear coefficient functional of `v` in the basis `1, v, U, U * v` of `A`. -/
+private def coeffV : A →ₗ[R] R where
+  toFun x := x.re.im
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+
+/-- The Hopf algebra `A` is not cocommutative; equivalently, the affine group scheme it
+represents is noncommutative.  This is forced by Deligne's theorem, which affirms
+Grothendieck's question for commutative group schemes. -/
+theorem not_isCocomm : ¬Coalgebra.IsCocomm R A := by
+  intro h
+  have hU := DFunLike.congr_fun h.comm_comp_comul U
+  simp only [LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply,
+    ← Bialgebra.comulAlgHom_apply (R := R), bialgebra_comulAlgHom] at hU
+  rw [comul_U_formula] at hU
+  simp only [map_add, Algebra.TensorProduct.includeLeft_apply,
+    Algebra.TensorProduct.includeRight_apply, Algebra.TensorProduct.tmul_mul_tmul, one_mul,
+    mul_one, TensorProduct.comm_tmul] at hU
+  have h2 := congr_arg (fun z ↦ TensorProduct.lid R R (TensorProduct.map coeffU coeffV z)) hU
+  have hV1 : coeffV 1 = 0 := rfl
+  have hVU : coeffV U = 0 := rfl
+  have hU1 : coeffU 1 = 0 := rfl
+  have hUU : coeffU U = 1 := rfl
+  have hVlam : coeffV lambda = b := by
+    change lambda.re.im = b
+    simp [lambda, aA, bA, U, v, V, IsScalarTower.algebraMap_apply R B A]
+  simp only [map_add, TensorProduct.map_tmul, TensorProduct.lid_tmul, hV1, hVU, hVlam, hU1,
+    hUU, smul_eq_mul, one_mul, mul_zero, add_zero, zero_add] at h2
+  exact two_b_ne_zero (by rw [h2, mul_zero])
 
 /-!
 ### The group-scheme formulation
