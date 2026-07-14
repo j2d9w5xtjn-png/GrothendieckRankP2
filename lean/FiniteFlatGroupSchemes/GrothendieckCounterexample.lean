@@ -52,6 +52,10 @@ algebra, and the associated group scheme has order four but is not killed by fou
 * `Counterexample.GrothendieckPower.counterexample`: the combined statement: over the
   nontrivial ring `R`, the algebra `A` is finite free of rank four and its fourth power map
   is not the convolution unit.
+* `Counterexample.GrothendieckPower.monPowMap_affineGroupScheme_four_ne`: the group-scheme
+  formulation, through Mathlib's antiequivalence between commutative Hopf algebras and
+  affine group schemes: the pointwise fourth power map of the group object `Spec A` is not
+  the constant-unit endomorphism.
 
 ## Implementation notes
 
@@ -1198,6 +1202,67 @@ theorem counterexample :
   apply powerMap_four_U_ne_zero
   have hU := DFunLike.congr_fun h U
   simpa using hU
+
+/-!
+### The group-scheme formulation
+
+Mathlib's antiequivalence `commHopfAlgCatEquivCogrpCommAlgCat` identifies commutative Hopf
+algebras over `R` with group objects in the opposite of the category of commutative
+`R`-algebras, that is, with affine group schemes over `R`.  This section transports the
+counterexample across that equivalence: the pointwise fourth power map of the resulting group
+object is not the constant-unit endomorphism.
+-/
+
+open CategoryTheory CartesianMonoidalCategory MonObj Opposite
+
+/-- The pointwise `n`-th power map of a monoid object in a cartesian monoidal category.  For
+a group scheme, this is the morphism `x ↦ xⁿ`, which is not in general a homomorphism. -/
+def monPowMap {C : Type*} [Category C] [CartesianMonoidalCategory C] (M : C) [MonObj M] :
+    ℕ → (M ⟶ M)
+  | 0 => toUnit M ≫ η[M]
+  | n + 1 => lift (monPowMap M n) (𝟙 M) ≫ μ[M]
+
+/-- On the group object `Spec A`, the pointwise `n`-th power map corresponds to the `n`-th
+convolution power of the identity of `A`. -/
+theorem monPowMap_op_unop_hom (n : ℕ) :
+    (monPowMap (op (CommAlgCat.of R A)) n).unop.hom = powerMap n := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+      have h : (monPowMap (op (CommAlgCat.of R A)) (n + 1)).unop.hom =
+          (Algebra.TensorProduct.lift (powerMap n) (AlgHom.id R A)
+              fun _ _ ↦ Commute.all _ _).comp
+            (Bialgebra.comulAlgHom R A) := by
+        simp only [monPowMap, unop_comp, CommAlgCat.hom_comp, CommAlgCat.mul_op_of_unop_hom,
+          CommAlgCat.lift_unop_hom, unop_id, CommAlgCat.hom_id, ih]
+      rw [h, ← Algebra.TensorProduct.lmul'_comp_map, AlgHom.comp_assoc]
+      rfl
+
+/-- The pointwise fourth power map of the group object `Spec A` is not the constant-unit
+endomorphism. -/
+theorem monPowMap_op_four_ne :
+    monPowMap (op (CommAlgCat.of R A)) 4 ≠
+      toUnit (op (CommAlgCat.of R A)) ≫ η[op (CommAlgCat.of R A)] := by
+  intro h
+  replace h : monPowMap (op (CommAlgCat.of R A)) 4 = monPowMap (op (CommAlgCat.of R A)) 0 := h
+  have h' : powerMap 4 = powerMap 0 := by
+    rw [← monPowMap_op_unop_hom, ← monPowMap_op_unop_hom, h]
+  exact powerMap_four_U_ne_zero (by simpa using DFunLike.congr_fun h' U)
+
+/-- The rank-four counterexample as an affine group scheme: the group object in the opposite
+of the category of commutative `R`-algebras corresponding to `coordinateHopfAlgebra` under
+Mathlib's antiequivalence `commHopfAlgCatEquivCogrpCommAlgCat`. -/
+noncomputable def affineGroupScheme : Grp (CommAlgCat R)ᵒᵖ :=
+  ((commHopfAlgCatEquivCogrpCommAlgCat R).functor.obj coordinateHopfAlgebra).unop
+
+theorem affineGroupScheme_X : affineGroupScheme.X = op (CommAlgCat.of R A) := rfl
+
+/-- The order-four affine group scheme `Spec A` is not killed by four: its pointwise fourth
+power map is not the constant-unit endomorphism. -/
+theorem monPowMap_affineGroupScheme_four_ne :
+    monPowMap affineGroupScheme.X 4 ≠
+      toUnit affineGroupScheme.X ≫ η[affineGroupScheme.X] :=
+  monPowMap_op_four_ne
 
 end
 

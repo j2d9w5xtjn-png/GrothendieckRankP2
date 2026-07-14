@@ -35,6 +35,15 @@ The file also supplies a `Bialgebra R A` instance, a `HopfAlgebra R A` instance 
 the seventh convolution power of the identity, and the bundled object
 `coordinateHopfAlgebra : CommHopfAlgCat R`.
 
+The statement is also transported across Mathlib's antiequivalence between commutative Hopf
+algebras and affine group schemes (`commHopfAlgCatEquivCogrpCommAlgCat`):
+`affineGroupScheme : Grp (CommAlgCat R)ᵒᵖ` is the corresponding group object, and
+`monPowMap_affineGroupScheme_four_ne` proves that its pointwise fourth power map (the
+categorical power map `monPowMap`, whose coordinate map is shown to be the convolution power
+in `monPowMap_op_unop_hom`) is not the constant-unit endomorphism.  This closes the
+translation gap between the Hopf-algebra statement and the group-scheme statement of
+Grothendieck's question.
+
 `counterexample` and `instHopfAlgebra` depend only on the standard axioms
 (`propext`, `Classical.choice`, `Quot.sound`); there is no `sorry` and no added axiom.
 
