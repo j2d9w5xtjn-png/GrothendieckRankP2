@@ -1,0 +1,815 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,longtable,array}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{xurl}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=blue!55!black,
+  urlcolor=blue!55!black,
+  pdftitle={Audit of a rank-four counterexample to Grothendieck's killed-by-order question}
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\F}{\mathbf F}
+\newcommand{\Z}{\mathbf Z}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\gr}{\operatorname{gr}}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\length}{\operatorname{length}}
+\newcommand{\q}{\mathfrak q}
+\newcommand{\m}{\mathfrak m}
+\newcommand{\eps}{\varepsilon}
+
+\title{Audit of a Rank-Four Counterexample to\\
+Grothendieck's Killed-by-Order Question}
+\author{Independent reconstruction and verification of the workspace construction}
+\date{10 July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document audits the claim that a previous computational pass found a
+finite locally free group scheme of rank four which is not killed by four.
+The claim is confirmed.  We give the group scheme as a completely specified
+free rank-four Hopf algebra over a finite Artin local ring, prove that the
+bialgebra equations and automatic-antipode argument are sufficient, and
+explain the exact filtered linear-algebra certificates proving that two
+coordinates of the fourth-power word are nonzero.  The base has
+characteristic exactly \(4\), maximal ideal of fourth power zero, embedding
+dimension \(15\), Hilbert function \((1,15,107,509)\), and length \(632\).
+The group law is noncommutative.  Its fourth-power defect is a nonzero,
+third-order socle-valued map, while its eighth-power word is trivial.
+
+The result is a computer-assisted disproof of Grothendieck's general
+killed-by-order assertion.  The decisive calculations are exact finite
+linear algebra over \(\F_2\): no timeout, probabilistic computation, or
+heuristic Groebner remainder is used as evidence.
+\end{abstract}
+
+\tableofcontents
+
+\section{Verdict and scope}
+
+Grothendieck asked whether a finite locally free group scheme of constant
+rank \(n\) over an arbitrary base is killed by its order: equivalently,
+whether the pointwise \(n\)-th power word factors through the unit section.
+The question is recorded in SGA~3, Expose VIII, Remarque 7.3.1; convenient
+modern accounts are Schoof's survey and Torti's recent paper
+\cite{SGA3,SchoofSurvey,Torti}.  For noncommutative group schemes this power
+word need not be a group homomorphism, but it is still a morphism of schemes.
+
+The audited construction gives a single explicit pair
+\[
+  G=\Spec A \longrightarrow \Spec B
+\]
+with \(A\) finite free of rank \(4\) over \(B\), such that
+\[
+  [4]^\#\ne\eta\eps:A\longrightarrow A.
+\]
+Thus the statement is negatively resolved: the general conjectural assertion
+is false.  This conclusion is stronger than finding a formal obstruction or
+a non-liftable infinitesimal seed; the universal cubic quotient used below is
+itself an honest finite base ring and carries the honest group scheme.
+
+The construction is explicit but not small.  It is best viewed as a
+universal third-order deformation quotient.  Nothing in the audit proves
+that this base, its length, or its embedding dimension is minimal.
+
+\section{The power word in Hopf-algebra coordinates}
+
+Let \(R\) be a commutative ring and let \(G=\Spec A\) be a finite locally
+free affine group scheme over \(R\).  The coordinate algebra \(A\) is a
+commutative \(R\)-algebra even when the group law on \(G\) is noncommutative;
+noncommutativity is encoded by failure of cocommutativity of the coproduct
+\(\Delta:A\to A\otimes_R A\).
+
+Write \(m:A\otimes_R A\to A\) for multiplication and put
+\[
+  \phi=m\circ\Delta=[2]^\#.
+\]
+The square of an element can be squared again without assuming that the group
+is commutative, so
+\[
+  [4]^\#=\phi\circ\phi.
+\]
+If \(I_A=\ker(\eps:A\to R)\), then \(G\) is killed by four precisely when
+\[
+  [4]^\#(I_A)=0,
+\]
+or equivalently when \([4]^\#=\eta\eps\).
+
+\section{The explicit universal cubic group scheme}
+
+\subsection{The coefficient ring and its variables}
+
+Let
+\[
+ P=\Z_{(2)}\bigl[m_{ij}^{\,r},c_{ijk}\bigr],
+\]
+where
+\[
+  1\le i\le j\le3,\quad 1\le r\le3,
+  \qquad 1\le i,j,k\le3.
+\]
+There are \(6\cdot3=18\) multiplication variables and \(3^3=27\)
+reduced-coproduct variables, hence \(45\) variables in total.  Set
+\[
+  \q=(2,m_{ij}^{\,r},c_{ijk})\subset P.
+\]
+
+On the free \(P\)-module
+\[
+  A_P=P\{1,e_1,e_2,e_3\}
+\]
+define a commutative, unital, augmented multiplication by
+\begin{equation}\label{eq:multiplication}
+ e_i e_j=
+ \begin{cases}
+   e_3,&\{i,j\}=\{1,2\},\\
+   0,&\text{otherwise}
+ \end{cases}
+ +\sum_{r=1}^3m_{ij}^{\,r}e_r,
+ \qquad 1\le i\le j\le3,
+\end{equation}
+and \(\eps(e_i)=0\).  Define a counital coproduct by
+\begin{equation}\label{eq:coproduct}
+\begin{split}
+ \Delta(e_i)={}&e_i\otimes1+1\otimes e_i\\
+ &+\delta_{i3}(e_1\otimes e_2+e_2\otimes e_1)
+ +\sum_{j,k=1}^3c_{ijk}e_j\otimes e_k,
+\end{split}
+\end{equation}
+and \(\Delta(1)=1\otimes1\).
+
+\subsection{The 189 bialgebra equations}
+
+For completeness, the equations can be specified without printing their
+large expanded polynomial forms.  Put \(e_0=1\), and define total structure
+constants \(M_{ab}^{\,r}\) and \(D_i^{\,ab}\) by
+\[
+ e_a e_b=\sum_{r=0}^3M_{ab}^{\,r}e_r,
+ \qquad
+ \Delta(e_i)=\sum_{a,b=0}^3D_i^{\,ab}e_a\otimes e_b,
+\]
+using \eqref{eq:multiplication} and \eqref{eq:coproduct}.  In particular,
+\(M_{0b}^{\,r}=\delta_{br}\), \(M_{a0}^{\,r}=\delta_{ar}\), and
+\(M_{ab}^{\,0}=0\) for \(a,b>0\).
+
+Let \(I\subset P\) be generated by the following coefficients:
+\begin{align}
+ A_{ijk}^{\,r}
+ &=\sum_{s=0}^3M_{ij}^{\,s}M_{sk}^{\,r}
+   -\sum_{s=0}^3M_{jk}^{\,s}M_{is}^{\,r},
+ &&1\le i,j,k,r\le3,\label{eq:assoc}\\
+ C_{ij}^{\,rs}
+ &=\sum_{t=0}^3M_{ij}^{\,t}D_t^{\,rs}
+   -\sum_{a,b,c,d=0}^3D_i^{\,ab}D_j^{\,cd}
+       M_{ac}^{\,r}M_{bd}^{\,s},
+ &&1\le i\le j\le3,\quad1\le r,s\le3,\label{eq:compat}\\
+ K_i^{\,abc}
+ &=\sum_{r=0}^3D_i^{\,rc}D_r^{\,ab}
+   -\sum_{s=0}^3D_i^{\,as}D_s^{\,bc},
+ &&1\le i,a,b,c\le3.\label{eq:coassoc}
+\end{align}
+
+After zero polynomials and exact duplicates are removed, the three families
+contribute respectively \(54\), \(54\), and \(81\) polynomials, for a total
+of \(189\).
+
+The equations with a \(1=e_0\) leg have not been omitted as assumptions.
+They hold identically from the augmented multiplication and counital normal
+form.  Thus \eqref{eq:assoc}--\eqref{eq:coassoc} impose the complete
+associativity, coproduct-multiplicativity, and coassociativity axioms.
+
+Now define
+\begin{equation}\label{eq:B-definition}
+  B=P/(I+\q^4),\qquad A=A_P\otimes_P B,
+  \qquad G=\Spec A.
+\end{equation}
+This is the promised explicit object.
+
+\subsection{Closed fiber}
+
+At the closed point \(\q\), all \(m\)'s and \(c\)'s vanish and \(2=0\).  The
+special fiber has
+\[
+  e_1^2=e_2^2=e_3^2=e_1e_3=e_2e_3=0,
+  \qquad e_1e_2=e_3,
+\]
+and
+\[
+\begin{aligned}
+ \Delta(e_1)&=e_1\otimes1+1\otimes e_1,\\
+ \Delta(e_2)&=e_2\otimes1+1\otimes e_2,\\
+ \Delta(e_3)&=e_3\otimes1+1\otimes e_3
+              +e_1\otimes e_2+e_2\otimes e_1.
+\end{aligned}
+\]
+Consequently
+\[
+  A\otimes_B\F_2\simeq\F_2[x,y]/(x^2,y^2),
+  \qquad(e_1,e_2,e_3)=(x,y,xy),
+\]
+with the usual Hopf structure of \(\alpha_2\times\alpha_2\).
+
+\section{Why this is an actual finite flat group scheme}
+
+\subsection{The base is finite Artin local}
+
+Every generator of \(I\) belongs to \(\q\), because its reduction at the
+closed point is a valid bialgebra equation over \(\F_2\).  Hence
+\[
+  \q^4\subset I+\q^4\subset\q,
+  \qquad \sqrt{I+\q^4}=\q.
+\]
+It follows that \(B\) is local, with residue field \(\F_2\), and its maximal
+ideal
+\[
+  \m=\q B
+\]
+satisfies \(\m^4=0\).  The quotient \(P/\q^4\) is finite, so \(B\) is a
+finite Artin local ring.
+
+The exact filtered ranks computed below imply
+\begin{equation}\label{eq:hilbert}
+ \dim_{\F_2}\gr_{\m}(B)=(1,15,107,509).
+\end{equation}
+Therefore
+\[
+ \length(B)=632,\qquad |B|=2^{632},
+\]
+and the embedding dimension is \(15\).  Since the degree-three piece is
+nonzero, the Loewy length is exactly \(4\).  Moreover \(\m^3\) is a
+\(509\)-dimensional subspace of the socle, so this universal base is very far
+from Gorenstein.
+
+An additional exact membership audit gives
+\begin{equation}\label{eq:char4}
+  2\ne0\quad\text{and}\quad4=0\quad\text{in }B.
+\end{equation}
+Thus \(B\) has characteristic exactly \(4\).  The certificate for
+\eqref{eq:char4} is described in Section~\ref{sec:extra-certificates}.
+
+\subsection{Rank four is built into the construction}
+
+The equations in \(I\) constrain structure constants; they do not quotient
+the underlying module \(B\{1,e_1,e_2,e_3\}\).  Hence \(A\) is free of rank
+four as a \(B\)-module.  Equations \eqref{eq:assoc}--\eqref{eq:coassoc}
+make it a finite free \(B\)-bialgebra.
+
+\subsection{The antipode is automatic}
+
+Let
+\[
+  \mathcal C=\operatorname{End}_B(A)
+\]
+with convolution product and unit \(\eta\eps\).  This is a finite \(B\)-algebra.
+Modulo \(\m\), the element \(\id_A\) is a convolution unit because the closed
+fiber \(\alpha_2^2\) is Hopf.  The ideal \(\m\mathcal C\) is nilpotent, so a
+unit modulo \(\m\mathcal C\) lifts to a unit in \(\mathcal C\).  Explicitly,
+the error from a lifted inverse lies in \(\m\mathcal C\) and is inverted by a
+finite geometric series.
+
+The convolution inverse of \(\id_A\) is an antipode.  Therefore \(A\) is a
+Hopf algebra and
+\[
+  G\longrightarrow\Spec B
+\]
+is a finite locally free group scheme of rank four.  No unverified antipode
+equations are missing from the construction.
+
+\section{The exact filtered certificate}
+
+\subsection{The mixed \texorpdfstring{\(\q\)}{q}-adic grading}
+
+Index the \(45\) deformation variables as \(p_0,\ldots,p_{44}\), as in
+Appendix~\ref{app:numbering}.  For a nonzero integer term \(c p^\alpha\), put
+\[
+  \ord_{\q}(c p^\alpha)=v_2(c)+|\alpha|.
+\]
+Then
+\[
+ \gr_{\q}P\simeq\F_2[\tau,p_0,\ldots,p_{44}],
+ \qquad \tau=\operatorname{in}_{\q}(2).
+\]
+The variable \(\tau\) records genuine \(2\)-adic carries; it is not an
+independent parameter of the exact ring.  Integer coefficients are combined
+before \(v_2\) is taken.  Thus two equal odd terms produce a term containing
+\(\tau\), rather than cancelling erroneously in advance.
+
+\subsection{The filtered-generation lemma}
+
+The previous note stated the recursion with a hypothesis that was too weak.
+The following is the precise invariant actually maintained by both
+implementations.
+
+\begin{lemma}[Exact filtered recursion]\label{lem:filtered}
+Suppose a finite list \(C_d\subset I\cap\q^d\) generates
+\(I\cap\q^d\) as a \(P\)-module.  Row-reduce the degree-\(d\) initial forms
+over \(\F_2\), retaining exact polynomial combinations.  Let \(G_d\) be exact
+lifts of a basis of the initial row space, and let \(H_d\) be exact residuals
+of a basis of all constant \(\F_2\)-linear relations.  Then
+\[
+ C_{d+1}=
+ \{2g,p_0g,\ldots,p_{44}g:g\in G_d\}\cup H_d
+\]
+generates \(I\cap\q^{d+1}\) as a \(P\)-module.
+\end{lemma}
+
+\begin{proof}
+The exact row operations are triangular elementary additions.  Consequently
+\(G_d\cup H_d\) generates the same \(P\)-module as \(C_d\).  The degree-\(d\)
+initial forms of the elements of \(G_d\) are linearly independent, while
+\(H_d\subset\q^{d+1}\).
+
+Take \(F\in I\cap\q^{d+1}\) and write
+\[
+ F=\sum_g a_g g+\sum_h b_h h,
+ \qquad g\in G_d,\quad h\in H_d.
+\]
+Independence of the degree-\(d\) initials forces every \(a_g\) to lie in
+\(\q\).  Since \(\q=(2,p_0,\ldots,p_{44})\), each \(a_g g\) is generated by
+the displayed \(46\) multiples of \(g\), while the \(h\)'s are retained.
+The reverse containment is immediate.
+\end{proof}
+
+At \(d=1\), the \(189\) original equations generate \(I=I\cap\q\), so the
+lemma applies inductively.  It also remains valid after localization from
+\(\Z[p]\) to \(\Z_{(2)}[p]\): every odd denominator is a unit with initial
+form \(1\), and its correction from \(1\) lies in \(\q\).  This supplies the
+localization argument omitted from the earlier note.
+
+Terms of \(\q\)-order at least \(4\) can safely be discarded.  Addition and
+multiplication cannot lower \(\q\)-order, so such terms can never return to a
+degree relevant modulo \(\q^4\).
+
+\subsection{The three exact stages}
+
+The independently reproduced ranks are:
+\begin{center}
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+degree & ambient dimension & candidates & nonzero candidates & rank\\
+\midrule
+1 & \(46\)    & \(189\)   & ---      & \(31\)\\
+2 & \(1081\)  & \(1584\)  & ---      & \(974\)\\
+3 & \(17296\) & \(45414\) & \(45402\)& \(16787\)\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+At degree one the kernel has dimension \(189-31=158\).  Therefore the
+degree-two list has
+\[
+  46\cdot31+158=1584
+\]
+elements.  Its kernel has dimension \(1584-974=610\), so Lemma
+\ref{lem:filtered} gives exactly
+\[
+  46\cdot974+610=45414
+\]
+cubic candidates.  This count is structural: the exhaustive recursion
+produces all \(45{,}414\) candidates (of which \(45{,}402\) have nonzero cubic
+initial), and their span is \(\gr_3(I)\).
+
+The Hilbert function \eqref{eq:hilbert} follows at once:
+\[
+ 1,\quad46-31=15,\quad1081-974=107,
+ \quad17296-16787=509.
+\]
+
+\section{The fourth-power calculation}
+
+Write
+\[
+  \phi(e_i)=\sum_{r=1}^3\phi_i^{\,r}e_r.
+\]
+There is no scalar coordinate because \(\phi\) preserves augmentation.  The
+nine target polynomials are
+\begin{equation}\label{eq:targets}
+  T_{ir}=\sum_{s=1}^3\phi_i^{\,s}\phi_s^{\,r},
+  \qquad1\le i,r\le3,
+\end{equation}
+which are precisely the \(e_r\)-coordinates of
+\([4]^\#(e_i)=\phi^2(e_i)\).  The source orders them as
+\[
+  3(i-1)+(r-1),
+\]
+so targets \(2\) and \(5\) are \(T_{13}\) and \(T_{23}\).
+
+All nine targets have \(\q\)-order at least two.  After exact quadratic
+cancellation, the cubic normal remainders of targets \(2\) and \(5\) are
+\begin{align}
+ \rho_2
+ &=p_0p_{18}p_{19}+p_0p_{18}p_{21}
+   =m_{11}^{\,1}c_{111}(c_{112}+c_{121}),\label{eq:rho2}\\
+ \rho_5
+ &=p_0p_{18}p_{28}+p_0p_{18}p_{30}
+   =m_{11}^{\,1}c_{111}(c_{212}+c_{221}).\label{eq:rho5}
+\end{align}
+The term \emph{normal} here refers to the specified high-pivot ordering; the
+nonzero quotient classes are intrinsic, while these representatives depend
+on the reduction convention.
+
+Two explicit \(\F_2\)-linear functionals \(L_2,L_5\) on the \(17296\)-dimensional
+cubic space have the following properties:
+\[
+\begin{array}{c|cc}
+ &\rho_2&\rho_5\\\hline
+ L_2&1&0\\
+ L_5&0&1
+\end{array}
+\]
+and both functionals annihilate every one of the \(45414\) exhaustive cubic
+ideal candidates.  Each has support \(38\); the full supports are printed in
+Appendix~\ref{app:duals}.  For the hashes, monomials are ordered
+lexicographically as nondecreasing triples, the coefficient bits are packed
+as a minimal-length little-endian byte string, and SHA-256 is applied to that
+byte string.  The resulting hashes are
+\begin{align*}
+L_2:\;&\texttt{1d8738d672e98ddd690657b14821e52e2}\\
+     &\texttt{d2445551a9e9d5b556440d66eac527f},\\[2pt]
+L_5:\;&\texttt{505bbba3120840f5644bf5b0b4ec0fde}\\
+     &\texttt{df0861cd702fdddb6240fdad84f11dbd}.
+\end{align*}
+Therefore neither residual belongs to \(\gr_3(I)\), and hence
+\[
+  T_{13},T_{23}\notin I+\q^4.
+\]
+The other seven target rows reduce to zero through degree three; exact
+filtered lifting therefore puts them in \(I+\q^4\).
+
+\begin{theorem}[Audited counterexample]\label{thm:main}
+For \(B,A,G\) defined in \eqref{eq:B-definition}, the morphism
+\(G\to\Spec B\) is a finite locally free group scheme of rank \(4\), and
+\[
+  [4]^\#\ne\eta\eps.
+\]
+More precisely,
+\begin{equation}\label{eq:p4-description}
+\begin{aligned}
+ [4]^\#(e_1)&=\theta_1e_3,\\
+ [4]^\#(e_2)&=\theta_2e_3,\\
+ [4]^\#(e_3)&=0,
+\end{aligned}
+\end{equation}
+where \(\theta_1,\theta_2\in\m^3\) are nonzero and linearly independent in
+\(\gr_3(B)=\m^3\).  Their normal representatives are
+\eqref{eq:rho2} and \eqref{eq:rho5}.
+\end{theorem}
+
+\begin{proof}
+The finite-flat and Hopf assertions were proved in Section~4.  The seven zero
+target coordinates and the two nonzero target coordinates give
+\eqref{eq:p4-description}.  Since \(A\) is a free \(B\)-module with basis
+\(1,e_1,e_2,e_3\), a nonzero coefficient gives a nonzero \(B\)-linear map.
+The two dual functionals give the stated independence.
+\end{proof}
+
+\section{A concrete description of the resulting group scheme}
+
+The example has the following useful features.
+\begin{enumerate}
+\item Its unique geometric fiber is \(\alpha_2^2\), and is killed by two.
+The failure of killedness is therefore purely infinitesimal.
+
+\item The fourth-power defect lands in the line \(Be_3\subset I_A\) and is
+scaled by two independent elements of \(\m^3\).  Since \(\m\m^3=0\), the
+defect is socle-valued and invisible through the first two infinitesimal
+layers.
+
+\item The total coordinate algebra is the free module with multiplication
+table \eqref{eq:multiplication}; it is not simply
+\(B[x,y]/(x^2,y^2)\).  The latter describes only the closed fiber.
+
+\item The group law is genuinely noncommutative.  Indeed, the coefficient of
+\(e_1\otimes e_2-e_2\otimes e_1\) in \(\Delta(e_1)\) is
+\[
+  c_{112}-c_{121},
+\]
+whose nonzero linear initial class survives the \(31\)-dimensional linear
+equation space.  An explicit two-term dual certificate is recorded in
+Section~\ref{sec:extra-certificates}.  Thus \(\Delta\) is not cocommutative.
+This is necessary: Deligne's theorem rules out a counterexample among
+commutative group schemes \cite{SchoofSurvey}.
+
+\item The group scheme is killed by eight.  Reduction modulo \(\m\) gives
+\[
+  [2]^\#(I_A)\subset\m I_A.
+\]
+By Theorem~\ref{thm:main},
+\([4]^\#(I_A)\subset\m^3I_A\).  Therefore
+\[
+ [8]^\#(I_A)
+ =[2]^\#\bigl([4]^\#(I_A)\bigr)
+ \subset\m^4I_A=0.
+\]
+In the pointwise-word sense, its exact power exponent is \(8\): it is killed
+by eight but not by four.
+\end{enumerate}
+
+\section{Supplementary exact certificates}\label{sec:extra-certificates}
+
+\subsection{Characteristic four}
+
+Exact cancellation of the degree-one initial of \(2\) by the \(31\) linear
+pivot lifts leaves, through relevant order,
+\begin{align*}
+R_2={}&-3p_0p_{18}+p_1p_{27}+p_2p_{36}
+ -2p_3p_{19}-2p_3p_{21}\\
+&-2p_6p_{20}-2p_6p_{24}.
+\end{align*}
+Its degree-two normal remainder is
+\[
+  p_0p_{18}+p_1p_{27}.
+\]
+The functional supported on
+\[
+ \{(1,27),(10,31),(10,41),(10,43),
+   (14,31),(14,41),(14,43)\}
+\]
+annihilates all \(1584\) exhaustive quadratic ideal candidates and evaluates
+to \(1\) on this residual.  Its bit-vector hash is
+\[
+\begin{split}
+&\texttt{19adb92126a6c8f844cb7d4b217e7a099}\\
+&\texttt{dadbd4cfe0025cea2ea0b4419e60478}.
+\end{split}
+\]
+Thus \(2\notin I+\q^4\).  In contrast, exact degree-two cancellation of
+\(4\) leaves
+\[
+ -6p_0p_{18}+2p_1p_{27}+2p_2p_{36},
+\]
+whose degree-three initial cancels against the exhaustive cubic list, leaving
+only \(\q^4\).  Hence \(4\in I+\q^4\), proving \eqref{eq:char4}.
+
+\subsection{Noncocommutativity}
+
+The linear initial of \(c_{112}-c_{121}=p_{19}-p_{21}\) is
+\(p_{19}+p_{21}\).  It is unchanged by reduction modulo the degree-one
+initial ideal.  The linear functional supported on \(p_{21}\) and \(p_{41}\)
+annihilates all \(189\) equation initials and evaluates to \(1\) on
+\(p_{19}+p_{21}\).  Therefore
+\[
+  c_{112}-c_{121}\notin I+\q^4,
+\]
+so the coproduct in the constructed Hopf algebra is not cocommutative.
+
+\section{Independent reproduction and audit trail}
+
+\subsection{Source and certificate paths}
+
+The principal files are:
+\begin{center}
+\begin{tabular}{@{}p{0.42\textwidth}p{0.49\textwidth}@{}}
+\toprule
+path & role\\
+\midrule
+\path{m2/universal_local_rank4.m2}
+  & constructs and exports the \(189\) equations and nine targets\\
+\path{scripts/independent_audit_mixed_a2a2_export.py}
+  & independently parses the exact M2 export and performs filtered elimination\\
+\path{scripts/audit_universal_rank4_quadratic.py}
+  & independently reconstructs the chart and supplies the first certificate path\\
+\path{scripts/compare_universal_rank4_m2_export_20260710.py}
+  & compares every relevant exact M2 and Python coefficient\\
+\path{m2/verify_mixed_a2a2_dual_direct.m2}
+  & native M2 matrix verification of the explicit dual supports\\
+\path{scripts/audit_rank4_counterexample_base_invariants_20260710.py}
+  & verifies characteristic four, the Hilbert function, and noncocommutativity\\
+\path{logs/rank4_counterexample_audit_20260710.txt}
+  & persistent command/output transcript\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Fresh commands and results}
+
+The export was regenerated with Macaulay2 1.25.11:
+\begin{verbatim}
+env RANK4_BRANCH=0 RANK4_INTEGRAL=1 RANK4_EXPORT_POLYS=1 \
+    M2 --script m2/universal_local_rank4.m2 \
+    > /tmp/m2_rank4_export_audit_20260710.txt
+\end{verbatim}
+It contained \(189\) equation records and nine target records and had the
+same SHA-256 as the frozen prior export:
+\begin{verbatim}
+686c35c91b74af2a414dd119024411266fb0056865dd1d19676c20485f93b6b7
+\end{verbatim}
+The M2/Python coefficient comparison reported exact equality through all
+terms relevant modulo \(\q^4\), with combined canonical hash
+\begin{verbatim}
+2f41a12591ea296a33cd7589dd4f8911ea108dd04e957ba6f516a26a90aca695
+\end{verbatim}
+The independent Python elimination reproduced the rank table, both
+nonmembers, both \(38\)-term supports, and both hashes in under one second,
+using about \(63\) MB peak RSS.
+
+The native Macaulay2 verifier was a newly added path which had not previously
+been logged as executed.  During this audit it exposed two syntax defects
+before reaching any mathematical calculation: the auxiliary monoid needed
+to be constructed before extending scalars, and two list-concatenation
+operators could not begin a new parsed statement.  The syntax-only repairs
+did not alter any equation, row, target, or dual support.  The repaired
+verifier then completed with exit code zero:
+\begin{verbatim}
+degree1 ... rank=31 relations=158
+degree2 ... rank=974 relations=610
+degree3 ... candidates=45414 L2_violations=0 L5_violations=0
+target2_dual_value=1 target5_dual_value=1
+AUDIT PASS: exact M2 filtered certificate through q^4
+\end{verbatim}
+It took \(53.8\) seconds and peaked at approximately \(964\) MiB RSS.  Thus
+the native certificate run remained comfortably bounded on the audit Mac.
+
+\subsection{Frozen and audited hashes}
+
+\begingroup\scriptsize
+\begin{longtable}{@{}p{0.69\textwidth}p{0.25\textwidth}@{}}
+\toprule
+SHA-256 & file\\
+\midrule
+\endhead
+\texttt{ad55eab4fa40aa31cd39fcccbbfc7f6f97fd2f2aa01398ffc8c3cc7cf3546b89}
+& \path{m2/universal_local_rank4.m2}\\
+\texttt{43d0be4f325a599a530bd87cc3653b119fae23a9ad61a2cb67b24ad975f32522}
+& independent Python checker\\
+\texttt{73c7befdb01a23c8622dc58d61fc77bc78c8566437b868e1507905b070f2207f}
+& first Python reconstruction\\
+\texttt{ede087dddb8ab5a510375f6ed71eae2e68eab89774666e079fa91a9954b5e7c0}
+& M2/Python comparison script\\
+\texttt{b278ec35fcb252d37b446370089233045fa7cbb6c5d8efd8fa2393f1dd7c5622}
+& repaired native M2 verifier\\
+\texttt{cc2a89eaa66407d27dd89c1287177d3a68d92503252b2f5700a217224535cb48}
+& base-invariant checker\\
+\bottomrule
+\end{longtable}
+\endgroup
+
+\section{Audit qualifications}
+
+The result passes the audit, subject to the following precise qualifications.
+\begin{enumerate}
+\item This is an exact computer-assisted proof.  The \(38\)-term
+functionals and the filtered-generation lemma make the finite computation
+auditable, but the \(45{,}414\) row evaluations are delegated to the supplied
+programs.
+
+\item The earlier written filtered lemma was false under the weak assumption
+that a candidate list merely spans the degree-\(d\) initials.  Lemma
+\ref{lem:filtered} states the stronger module-generation invariant actually
+maintained by the code and repairs the exposition.
+
+\item The displayed cubic normal forms are canonical only relative to the
+specified variable order and high-pivot reduction.  Their nonzero classes
+and the failure of killedness are independent of that convention.
+
+\item The workspace is not a Git worktree.  Provenance therefore rests on
+the hashes above and on byte-for-byte regeneration of the M2 export.
+
+\item Several older handoff bodies say that no counterexample was found.
+Their opening supersession banners point to the later cubic audit.  Earlier
+rank-\(16\) and pinned rank-\(4\) apparent seeds were explicitly retracted for
+unrelated scanner or pinning errors; they are not evidence for the present
+construction.
+
+\item The conclusion is a mathematical audit of a local artifact, not a
+claim about publication priority or completion of external peer review.
+As late as Torti's article published in December 2025 (and its March 2026
+arXiv revision), the general question was described as open and Schoof's
+theorem as the best general positive result
+\cite{Schoof2001,Torti}.
+\end{enumerate}
+
+\section{Conclusion}
+
+The previous agent's decisive claim is correct.  The ring
+\[
+ B=\Z_{(2)}[m_{ij}^{\,r},c_{ijk}]/(I+\q^4)
+\]
+and the multiplication and coproduct tables
+\eqref{eq:multiplication}--\eqref{eq:coproduct} define a finite locally free
+rank-four group scheme \(G/\Spec B\).  Exact dual certificates show that the
+\(e_3\)-coordinates of \([4]^\#(e_1)\) and \([4]^\#(e_2)\) are nonzero.
+Therefore \(G\) is not killed by four.  It is a characteristic-four,
+noncommutative, purely infinitesimal counterexample whose fourth-power defect
+appears only in the third-order socle; it is nevertheless killed by eight.
+
+Consequently Grothendieck's killed-by-order assertion over arbitrary bases is
+false.
+
+\appendix
+
+\section{Variable numbering}\label{app:numbering}
+
+For the unordered pairs
+\[
+ (1,1),(1,2),(1,3),(2,2),(2,3),(3,3)
+\]
+in that order, let \(\rho(i,j)\in\{0,1,2,3,4,5\}\) denote the position.
+Then
+\[
+ p_{3\rho(i,j)+r-1}=m_{ij}^{\,r}
+ \quad(1\le r\le3),
+\]
+and
+\[
+ p_{18+9(i-1)+3(j-1)+(k-1)}=c_{ijk}.
+\]
+In particular,
+\[
+\begin{gathered}
+p_0=m_{11}^{\,1},\quad p_{18}=c_{111},\quad
+p_{19}=c_{112},\quad p_{21}=c_{121},\\
+p_{28}=c_{212},\quad p_{30}=c_{221}.
+\end{gathered}
+\]
+The forty-sixth associated-graded variable is \(\tau=\operatorname{in}(2)\);
+the explicit cubic duals below happen to have no \(\tau\)-supported term.
+
+\section{The two explicit cubic dual supports}\label{app:duals}
+
+For a set \(S\) of nondecreasing triples in \(\{0,\ldots,45\}\), let
+\(L_S\) be the \(\F_2\)-linear functional which sums the coefficients of the
+corresponding cubic monomials.  The target-\(2\) support is
+\begingroup\small
+\begin{align*}
+S_2=\{&
+(0,18,21),(0,18,41),(0,21,30),(0,21,38),(0,30,31),\\
+&(0,30,43),(0,31,42),(0,38,41),(0,41,42),(0,42,43),\\
+&(1,18,30),(1,18,42),(1,30,30),(1,30,38),(1,38,42),\\
+&(1,42,42),(8,18,21),(8,18,41),(8,21,30),(8,21,38),\\
+&(8,30,31),(8,30,43),(8,31,42),(8,38,41),(8,41,42),\\
+&(8,42,43),(10,21,21),(10,21,31),(10,21,43),(10,31,41),\\
+&(10,41,41),(10,41,43),(14,21,21),(14,21,31),(14,21,43),\\
+&(14,31,41),(14,41,41),(14,41,43)\}.
+\end{align*}
+\endgroup
+
+The target-\(5\) support is
+\begingroup\small
+\begin{align*}
+S_5=\{&
+(0,18,30),(0,18,42),(0,30,30),(0,30,38),(0,38,42),\\
+&(0,42,42),(8,18,30),(8,18,42),(8,30,30),(8,30,38),\\
+&(8,38,42),(8,42,42),(9,21,21),(9,21,31),(9,21,43),\\
+&(9,31,41),(9,41,41),(9,41,43),(10,18,21),(10,18,41),\\
+&(10,21,30),(10,21,38),(10,30,31),(10,30,43),(10,31,42),\\
+&(10,38,41),(10,41,42),(10,42,43),(14,18,21),(14,18,41),\\
+&(14,21,30),(14,21,38),(14,30,31),(14,30,43),(14,31,42),\\
+&(14,38,41),(14,41,42),(14,42,43)\}.
+\end{align*}
+\endgroup
+
+The native M2 verifier evaluates \(L_{S_2}\) and \(L_{S_5}\) on each of the
+\(45414\) cubic candidates.  Both violation counts are zero, and their values
+on the respective exactly lifted target residuals are one.
+
+\begin{thebibliography}{9}
+
+\bibitem{SGA3}
+M.~Demazure and A.~Grothendieck (eds.),
+\emph{Schemas en groupes (SGA 3)},
+Exposes VIIA and VIII, Lecture Notes in Mathematics, Springer.
+
+\bibitem{Schoof2001}
+R.~Schoof,
+\emph{Finite flat group schemes over local Artin rings},
+Compositio Mathematica \textbf{128} (2001), 1--15.
+\url{https://doi.org/10.1023/A:1017560215203}.
+
+\bibitem{SchoofSurvey}
+R.~Schoof,
+\emph{Is a finite locally free group scheme killed by its order?},
+survey/preliminary version, 2017.
+\url{https://www.mat.uniroma2.it/~schoof/schoof_oortAAG.pdf}.
+
+\bibitem{Torti}
+E.~Torti,
+\emph{Lagrange's theorem for a class of finite flat group schemes over local
+Artin rings},
+Documenta Mathematica (2025), published online first,
+\url{https://doi.org/10.4171/DM/1055}; see also the revised arXiv:2411.12129.
+\url{https://arxiv.org/abs/2411.12129}.
+
+\end{thebibliography}
+
+\end{document}

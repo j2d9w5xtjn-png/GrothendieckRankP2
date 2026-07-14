@@ -1,0 +1,112 @@
+PRINCIPAL COORDINATE EVIDENCE AUDIT
+slurm_log_dirs=none
+local_log_dirs=/tmp/rank4_principal_local000059_20260710/run/logs,/tmp/rank4_principal_local060119_20260710/run/logs,/tmp/rank4_principal_local_i1_120297x174_20260710/run/logs
+expected_driver_sha256=ffe405fd5201ffd6c4b8cabf9f6a7b81a2e9f7508f5c77d8f2d5195dd8030926
+expected_source_manifest files=11 sha256=49e1f74e11e51f8678f7f14d93db82464c2630f979c124b46d62a41aa83caf52
+mapping=T//30:ring, (T//3)%10:row, T%3+1:i
+universe rings=10 rows_per_ring=10 rows=100 coordinate_tasks=300
+files matched=103 recognized=103 malformed_or_out_of_scope=0 duplicate_task_copies=0
+PER-RING ROW COUNTS
+  e1_0000: closed UNSAT=0, H0-vacuous=3, SAT candidate=0, unknown=1, incomplete=6, error=0
+  e2_000: closed UNSAT=0, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=10, error=0
+  e2_001: closed UNSAT=8, H0-vacuous=0, SAT candidate=0, unknown=2, incomplete=0, error=0
+  e2_100: closed UNSAT=8, H0-vacuous=0, SAT candidate=0, unknown=2, incomplete=0, error=0
+  e2_110: closed UNSAT=0, H0-vacuous=0, SAT candidate=0, unknown=2, incomplete=8, error=0
+  e3_00: closed UNSAT=0, H0-vacuous=0, SAT candidate=0, unknown=3, incomplete=7, error=0
+  e4_0: closed UNSAT=0, H0-vacuous=0, SAT candidate=0, unknown=3, incomplete=7, error=0
+  e4_1: closed UNSAT=0, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=10, error=0
+  e5_-: closed UNSAT=0, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=10, error=0
+  eqchar: closed UNSAT=0, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=10, error=0
+GLOBAL ROW COUNTS closed UNSAT=16, H0-vacuous=3, SAT candidate=0, unknown=13, incomplete=68, error=0
+TASK COUNTS terminal=103, missing=197, truncated=0, error=0; terminal_outcomes=H0-vacuous=9,UNSAT=79,SAT=0,unknown=15
+PROCESS RESOURCES logs=103 elapsed_sum_seconds=97180.92 maxrss_max_mib=5842.03 platforms=darwin:103
+SELECTED EVIDENCE ORIGINS slurm=0 local=103
+SLURM ARRAY JOB IDS none
+LOCAL RUN IDS local64g_principal_000_059_20260710,local64g_principal_060_119_20260710,local64g_principal_i1_120_297x174_20260710
+ROW DETAILS displayed=81
+  e1_0000 xy/mu2mu2: unknown; i1:UNSAT,i2:UNSAT,i3:unknown
+  e1_0000 xy/mu2mu2_unipotent: incomplete; i1:missing,i2:missing,i3:missing
+  e1_0000 xy/mu2mu2_irreducible: incomplete; i1:missing,i2:missing,i3:missing
+  e1_0000 t4/c1=0,c4=0: incomplete; i1:missing,i2:missing,i3:missing
+  e1_0000 t4/c1=0,c4=1: incomplete; i1:missing,i2:missing,i3:missing
+  e1_0000 t4/c1=1,c4=0: incomplete; i1:missing,i2:missing,i3:missing
+  e1_0000 t4/c1=1,c4=1: incomplete; i1:missing,i2:missing,i3:missing
+  e2_000 xy/a2a2: incomplete; i1:missing,i2:missing,i3:missing
+  e2_000 xy/W2F: incomplete; i1:missing,i2:missing,i3:missing
+  e2_000 xy/mu2mu2: incomplete; i1:missing,i2:missing,i3:missing
+  e2_000 xy/mu2a2: incomplete; i1:missing,i2:missing,i3:missing
+  e2_000 xy/mu2mu2_unipotent: incomplete; i1:missing,i2:missing,i3:missing
+  e2_000 xy/mu2mu2_irreducible: incomplete; i1:missing,i2:missing,i3:missing
+  e2_000 t4/c1=0,c4=0: incomplete; i1:missing,i2:missing,i3:missing
+  e2_000 t4/c1=0,c4=1: incomplete; i1:missing,i2:missing,i3:missing
+  e2_000 t4/c1=1,c4=0: incomplete; i1:missing,i2:missing,i3:missing
+  e2_000 t4/c1=1,c4=1: incomplete; i1:missing,i2:missing,i3:missing
+  e2_001 xy/mu2a2: unknown; i1:unknown,i2:UNSAT,i3:UNSAT
+  e2_001 xy/mu2mu2_unipotent: unknown; i1:unknown,i2:unknown,i3:unknown
+  e2_100 xy/mu2a2: unknown; i1:unknown,i2:UNSAT,i3:UNSAT
+  e2_100 xy/mu2mu2_unipotent: unknown; i1:UNSAT,i2:UNSAT,i3:unknown
+  e2_110 xy/a2a2: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e2_110 xy/W2F: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e2_110 xy/mu2mu2: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e2_110 xy/mu2a2: unknown; i1:unknown,i2:missing,i3:missing
+  e2_110 xy/mu2mu2_unipotent: unknown; i1:unknown,i2:missing,i3:missing
+  e2_110 xy/mu2mu2_irreducible: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e2_110 t4/c1=0,c4=0: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e2_110 t4/c1=0,c4=1: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e2_110 t4/c1=1,c4=0: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e2_110 t4/c1=1,c4=1: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e3_00 xy/a2a2: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e3_00 xy/W2F: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e3_00 xy/mu2mu2: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e3_00 xy/mu2a2: unknown; i1:unknown,i2:missing,i3:missing
+  e3_00 xy/mu2mu2_unipotent: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e3_00 xy/mu2mu2_irreducible: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e3_00 t4/c1=0,c4=0: unknown; i1:unknown,i2:missing,i3:missing
+  e3_00 t4/c1=0,c4=1: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e3_00 t4/c1=1,c4=0: incomplete; i1:missing,i2:missing,i3:missing
+  e3_00 t4/c1=1,c4=1: unknown; i1:unknown,i2:missing,i3:missing
+  e4_0 xy/a2a2: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e4_0 xy/W2F: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e4_0 xy/mu2mu2: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e4_0 xy/mu2a2: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e4_0 xy/mu2mu2_unipotent: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e4_0 xy/mu2mu2_irreducible: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e4_0 t4/c1=0,c4=0: unknown; i1:unknown,i2:missing,i3:missing
+  e4_0 t4/c1=0,c4=1: unknown; i1:unknown,i2:missing,i3:missing
+  e4_0 t4/c1=1,c4=0: unknown; i1:unknown,i2:missing,i3:missing
+  e4_0 t4/c1=1,c4=1: incomplete; i1:missing,i2:missing,i3:missing
+  e4_1 xy/a2a2: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e4_1 xy/W2F: incomplete; i1:missing,i2:missing,i3:missing
+  e4_1 xy/mu2mu2: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e4_1 xy/mu2a2: incomplete; i1:missing,i2:missing,i3:missing
+  e4_1 xy/mu2mu2_unipotent: incomplete; i1:UNSAT,i2:missing,i3:missing
+  e4_1 xy/mu2mu2_irreducible: incomplete; i1:missing,i2:missing,i3:missing
+  e4_1 t4/c1=0,c4=0: incomplete; i1:missing,i2:missing,i3:missing
+  e4_1 t4/c1=0,c4=1: incomplete; i1:missing,i2:missing,i3:missing
+  e4_1 t4/c1=1,c4=0: incomplete; i1:missing,i2:missing,i3:missing
+  e4_1 t4/c1=1,c4=1: incomplete; i1:missing,i2:missing,i3:missing
+  e5_- xy/a2a2: incomplete; i1:missing,i2:missing,i3:missing
+  e5_- xy/W2F: incomplete; i1:missing,i2:missing,i3:missing
+  e5_- xy/mu2mu2: incomplete; i1:missing,i2:missing,i3:missing
+  e5_- xy/mu2a2: incomplete; i1:missing,i2:missing,i3:missing
+  e5_- xy/mu2mu2_unipotent: incomplete; i1:missing,i2:missing,i3:missing
+  e5_- xy/mu2mu2_irreducible: incomplete; i1:missing,i2:missing,i3:missing
+  e5_- t4/c1=0,c4=0: incomplete; i1:missing,i2:missing,i3:missing
+  e5_- t4/c1=0,c4=1: incomplete; i1:missing,i2:missing,i3:missing
+  e5_- t4/c1=1,c4=0: incomplete; i1:missing,i2:missing,i3:missing
+  e5_- t4/c1=1,c4=1: incomplete; i1:missing,i2:missing,i3:missing
+  eqchar xy/a2a2: incomplete; i1:missing,i2:missing,i3:missing
+  eqchar xy/W2F: incomplete; i1:missing,i2:missing,i3:missing
+  eqchar xy/mu2mu2: incomplete; i1:missing,i2:missing,i3:missing
+  eqchar xy/mu2a2: incomplete; i1:missing,i2:missing,i3:missing
+  eqchar xy/mu2mu2_unipotent: incomplete; i1:missing,i2:missing,i3:missing
+  eqchar xy/mu2mu2_irreducible: incomplete; i1:missing,i2:missing,i3:missing
+  eqchar t4/c1=0,c4=0: incomplete; i1:missing,i2:missing,i3:missing
+  eqchar t4/c1=0,c4=1: incomplete; i1:missing,i2:missing,i3:missing
+  eqchar t4/c1=1,c4=0: incomplete; i1:missing,i2:missing,i3:missing
+  eqchar t4/c1=1,c4=1: incomplete; i1:missing,i2:missing,i3:missing
+AUDIT ISSUES count=0
+SLURM TASKS NEEDED AFTER COMBINING ORIGINS count=212 ranges=8,12-59,69,72-74,99,104,121-122,124-125,127-134,136-137,139-140,142-143,145-146,148-149,151-152,154-155,157-161,163-164,166-170,172-179,181-182,184-185,187-188,190-191,193-194,196-209,211-215,217-221,223-299
+RETRY ARRAY TASK IDS count=212 ranges=8,12-59,69,72-74,99,104,121-122,124-125,127-134,136-137,139-140,142-143,145-146,148-149,151-152,154-155,157-161,163-164,166-170,172-179,181-182,184-185,187-188,190-191,193-194,196-209,211-215,217-221,223-299
+  reason=missing count=197 ranges=12-59,121-122,124-125,127-128,130-131,133-134,136-137,139-140,142-143,145-146,148-149,151-152,154-155,157-158,160-161,163-164,166-167,169-170,172-176,178-179,181-182,184-185,187-188,190-191,193-194,196-197,199-200,202-203,205-209,211-215,217-221,223-299
+  reason=solver-unknown count=15 ranges=8,69,72-74,99,104,129,132,159,168,177,198,201,204

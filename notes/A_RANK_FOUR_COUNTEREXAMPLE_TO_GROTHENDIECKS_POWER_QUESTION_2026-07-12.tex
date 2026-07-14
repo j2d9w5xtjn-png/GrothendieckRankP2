@@ -1,0 +1,1336 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{xurl}
+\usepackage[colorlinks=true,
+            linkcolor=blue!55!black,
+            citecolor=blue!55!black,
+            urlcolor=blue!55!black]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Z}{\mathbf Z}
+\newcommand{\F}{\mathbf F}
+\newcommand{\Ga}{\mathbb G_a}
+\newcommand{\Gm}{\mathbb G_m}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Soc}{\operatorname{Soc}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\m}{\mathfrak m}
+\newcommand{\ot}{\otimes}
+\newcommand{\unit}{\mathrm e}
+
+\title[A rank-four counterexample]
+      {A Rank-Four Counterexample to\\
+       Grothendieck's Power Question}
+\author{}
+\date{}
+\subjclass[2020]{14L15, 16T05}
+\keywords{finite flat group scheme, power word, Oort--Tate group scheme,
+matched product, affine group}
+
+\begin{document}
+
+\begin{abstract}
+The power question customarily attributed to Grothendieck asks whether a
+finite locally free group scheme of rank \(n\) is killed by its
+\(n\)-th power word.  We give a counterexample of rank four.  Let
+\[
+ R=\Z[a,b]/(a^3,b^3,a^2b+2)
+\]
+and
+\[
+ A=R[U,V]/(U^2-abU+b^2V,\ V^2-a^2V).
+\]
+Then \(A\) is free of rank four over \(R\).  If
+\(\lambda=(1+aU)(1+bV)\), the formulas
+\[
+ \Delta(U)=U\ot1+\lambda\ot U,\qquad
+ \Delta(V)=V\ot\lambda+1\ot V
+\]
+make \(A\) a Hopf algebra, but
+\[
+ [4]^\#(U)=2bUV\ne0,\qquad [4]^\#(V)=0,\qquad [8]=\unit.
+\]
+
+The construction takes place inside
+\(H=(\Ga^2)\rtimes\Gm\).  Modulo \(q=b^2\), it is an exact matched
+product of two order-two Oort--Tate groups.  A general construction of
+such rank-four matched products is given.  Over \(R\), one scalar
+compatibility fails by \(aq\); replacing
+\(U^2-abU=0\) by \(U^2-abU=-qV\) restores closure under multiplication.
+The resulting group is nevertheless not killed by four: the relevant
+coefficient is \(a^2q=-2b\ne0\).
+The group structure follows from the group structure on the closed
+fiber.  A companion Macaulay2 file checks all polynomial identities.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction and history}
+
+Let \(G/S\) be a finite locally free group scheme of constant rank \(n\).
+The multiplication and diagonal define the power word
+\[
+ [n]\colon G\longrightarrow G,\qquad g\longmapsto g^n.
+\]
+If \(G\) is not commutative, this need not be a homomorphism, but it is
+still a morphism of \(S\)-schemes.  The natural analogue of Lagrange's
+theorem asks whether it is the constant unit word
+\[
+ \unit_G:G\longrightarrow S\stackrel{\unit}{\longrightarrow}G.
+\]
+
+The question is traditionally attributed to Grothendieck and has a long,
+unusually explicit history.  SGA~3 proves that a finite group scheme over
+a field is killed by its rank
+\cite[Exp.~VIIA, Prop.~8.5]{SGA3I}.  The field result immediately
+implies the result over a reduced base: the difference between the
+comorphisms of \([n]\) and the constant unit word vanishes after passage
+to every residue field.  In a local free basis its coefficients
+therefore lie in every prime ideal, and hence vanish when the base is
+reduced.
+
+There is a bibliographic wrinkle in the usual attribution.  In the
+printed 1970 version of Expos\'e~VIII, Lemma~7.3 was stated for a
+commutative group scheme, so the adjacent Remark~7.3.1 literally asked
+for the arbitrary-base result in that context
+\cite[Exp.~VIII, Lem.~7.3 and Rem.~7.3.1]{SGA3II}.  The modern
+annotated edition removes the commutativity hypothesis and explicitly says that it
+has modified the remark accordingly
+\cite[notes (38)--(39)]{SGA3VIIIannotated}.  Tate and Oort nevertheless
+formulated the arbitrary-base \emph{noncommutative} question explicitly
+in 1970 \cite[p.~5]{OortTate}, and Schoof and Torti subsequently
+formulated it as Grothendieck's question.  We follow that established
+terminology.  Tate's 1997 survey also records the problem as open
+\cite[\S3.8]{Tate1997}.
+
+Deligne found a proof for every \emph{commutative} finite locally free
+group scheme over an arbitrary base.  He communicated the proof to Tate
+and Oort, who published it in 1970 in their paper on group schemes of
+prime order \cite[\S1]{OortTate}.  Thus any counterexample must use both a
+nonreduced base and a noncommutative group law.
+
+Oort and Tate also proved that every group scheme of prime rank \(p\)
+over an arbitrary base is commutative and killed by \(p\)
+\cite[Thm.~1]{OortTate}.  Hence ranks two and three are impossible, and
+rank four is the first rank at which a counterexample could occur.
+
+Schoof established a principal general nilpotence criterion over
+nonreduced bases.  If \(R\) is a local Artin ring with residue
+characteristic \(p\), maximal ideal \(\m_R\), and
+\[
+ \m_R^p=p\m_R=0,
+\]
+then every finite flat group scheme over \(R\) is killed by its rank
+\cite{Schoof2001}.  Schoof later gave a concise account of the problem,
+the reductions to local Artin bases, the field case, and Deligne's
+argument \cite{SchoofSurvey}.  Schoof also proved, without a length
+restriction, killedness for deformations of the standard noncommutative
+matrix group \(\alpha_p\rtimes\mu_{p^m}\).  More recently, Torti
+extended this deformation-theoretic analysis to an explicit family
+\(\alpha_p\rtimes_\lambda\mu_{p^m}\) of noncommutative special fibers and
+proved killedness for all of them without a bound on the length of the
+base \cite[Thms.~1.3--1.4]{Torti}.  That work, published in December
+2025, still presents the general question as open.  We know of no earlier
+counterexample.
+
+The example below gives a negative answer.  It lies just outside the
+known positive ranges.  Its residue characteristic is two, but
+\[
+ \m^2\ne0,\qquad 2\m\ne0.
+\]
+Its special fiber is the \emph{commutative} group
+\(\alpha_2\times\alpha_2\); noncommutativity itself appears only in the
+nilpotent deformation.  In particular, the example is not a deformation
+of one of the noncommutative special fibers treated by Schoof and Torti.
+
+The preceding positive results also suggest what a counterexample would
+have to look like.  Nilpotents in the base are essential, since the
+assertion holds over every reduced base.  Noncommutativity is essential,
+since Deligne's theorem covers the commutative case.  Yet it is not
+enough simply to deform a familiar noncommutative group in the most
+elementary way, as the results of Schoof and Torti show.  Our example
+uses a different possibility: the special fiber is commutative, and a
+noncommutative interaction is created entirely by nilpotent
+coefficients.  The base retains enough of that interaction to repair
+multiplicative closure while leaving a nonzero trace in the power word.
+
+Here is the complete statement.
+
+\begin{theorem}\label{thm:main}
+Let
+\begin{equation}\label{eq:R}
+ R=\Z[a,b]/(a^3,b^3,a^2b+2)
+\end{equation}
+and
+\begin{equation}\label{eq:A}
+ A=R[U,V]/(U^2-abU+b^2V,\ V^2-a^2V).
+\end{equation}
+Put \(W=UV\) and
+\begin{equation}\label{eq:lambda}
+ \lambda=(1+aU)(1+bV).
+\end{equation}
+Then:
+\begin{enumerate}
+\item \(R\) is a local Artin complete intersection of length nine,
+with residue field \(\F_2\) and characteristic four.
+\item \(A\) is free of rank four over \(R\), on \(1,U,V,W\).
+\item There is a Hopf algebra structure on \(A\) with
+\[
+ \eps(U)=\eps(V)=0,\qquad
+ \Delta(U)=U\ot1+\lambda\ot U,\qquad
+ \Delta(V)=V\ot\lambda+1\ot V.
+\]
+\item For \(G=\Spec A\),
+\[
+ [4]^\#(U)=2bW\ne0,\qquad
+ [4]^\#(V)=0,\qquad
+ [8]=\unit.
+\]
+\item The special fiber is \(\alpha_2\times\alpha_2\), whereas \(G\)
+itself is noncommutative.
+\end{enumerate}
+In particular, \(G\) is a finite locally free group scheme of rank four
+which is not killed by four.
+\end{theorem}
+
+The proof is organized by the ambient affine group
+\(H=(\Ga^2)\rtimes\Gm\).  Its triangular-matrix representation
+makes associativity and the power words formal.  Section~3.1 constructs
+rank-four subgroups of \(H\) as matched products of two order-two
+Oort--Tate groups and identifies the quotient \(G_0\).  Section~3.2
+shows that one cross compatibility fails over \(R\), and that the
+single correction \(qV\) restores multiplicative closure.  The power
+calculation is then reduced to a geometric sum in Section~4.
+\section{The base and the affine-group mechanism}
+
+We begin with the small amount of commutative algebra needed to detect
+the final nonzero class.
+
+\begin{lemma}\label{lem:base}
+The additive group of \(R\) has the decomposition
+\begin{equation}\label{eq:additive-R}
+ R_{\mathrm{add}}\simeq
+ (\Z/4)\{1,b\}\oplus
+ (\Z/2)\{a,a^2,ab,b^2,ab^2\}.
+\end{equation}
+In particular,
+\[
+ 4=0,\qquad 2b=-a^2b^2\ne0.
+\]
+Moreover \(R\) is a local Artin complete intersection of length nine,
+with maximal ideal \(\m=(a,b)\) and residue field \(\F_2\).
+\end{lemma}
+
+\begin{proof}
+Let \(R_0=\Z[a,b]/(a^3,b^3)\), free over \(\Z\) on the nine box
+monomials \(a^ib^j\), \(0\le i,j\le2\).  Multiplication by \(a^2b\)
+has only two nonzero arrows:
+\[
+ 1\longmapsto a^2b,\qquad b\longmapsto a^2b^2.
+\]
+The additive group of \(R\) is the cokernel of
+\(2+\text{multiplication by }a^2b\).  On the ordered pairs
+\[
+ (1,a^2b),\qquad (b,a^2b^2),
+\]
+this endomorphism has matrix
+\[
+ \begin{pmatrix}2&0\\1&2\end{pmatrix},
+\]
+whose Smith normal form is \(\operatorname{diag}(1,4)\).  On each of
+the remaining monomials
+\[
+ a,\ a^2,\ ab,\ b^2,\ ab^2
+\]
+it is multiplication by \(2\).  The two \(2\times2\) blocks therefore
+give cyclic summands generated by \(1\) and \(b\), each of order four,
+while the five \(1\times1\) blocks give the five displayed summands of
+order two.  This proves \eqref{eq:additive-R}.  It also shows directly
+that \(2b=-a^2b^2\) is nonzero.
+
+Since \(a\) and \(b\) are nilpotent, they belong to every prime ideal
+of \(R\).  The relation \(2=-a^2b\) then implies that every prime also
+contains \(2\).  Thus \((a,b)\) is the unique prime, hence the unique
+maximal ideal, and \(R/(a,b)=\F_2\).  The displayed additive
+decomposition has order \(2^9\), so the length over the residue field
+is nine.  It shows that \(4=0\) but \(2\ne0\), and therefore that
+\(\operatorname{char}(R)=4\).
+
+Finally, \(a^3,b^3\) form a regular sequence in \(\Z[a,b]\).
+Multiplication by \(a^2b+2\) on the free abelian group \(R_0\) has
+determinant
+\[
+ 4^2\cdot2^5=2^9
+\]
+by the same block decomposition.  It is therefore injective.  Hence
+\(a^3,b^3,a^2b+2\) is a regular sequence, proving the
+complete-intersection assertion.
+\end{proof}
+
+We will repeatedly use the immediate consequences
+\begin{equation}\label{eq:base-identities}
+ 2a=4=0,\qquad
+ q:=b^2,\qquad
+ q^2=bq=2q=0,\qquad
+ a^2q=-2b.
+\end{equation}
+The first equality follows by multiplying \(a^2b=-2\) by \(a\), and the
+others follow from \(b^3=0\).
+
+The ideal \(Q=(q)\) is square-zero.  The following sequence of
+nonvanishing products will be used twice:
+\begin{equation}\label{eq:coefficient-chain}
+ q\longmapsto aq\longmapsto a^2q=-2b\ne0,
+ \qquad a^3q=0.
+\end{equation}
+Here \(q=b^2\), \(aq=ab^2\), and \(a^2q=-2b\) are all nonzero by
+\eqref{eq:additive-R}.
+The first product \(aq\) is the obstruction to lifting the matched
+product of Section~3.1 without changing its equations.  The correction
+by \(q\) removes that obstruction, while the second product \(a^2q\)
+reappears in the fourth-power word.
+
+Now consider the affine group
+\begin{equation}\label{eq:H}
+ H=\Spec R[u,v,z,z^{-1}]
+\end{equation}
+with multiplication
+\begin{equation}\label{eq:H-law}
+ (u,v,z)(u',v',z')
+   =(u+zu',\,vz'+v',\,zz').
+\end{equation}
+Thus, for every \(R\)-algebra \(C\), an element of \(H(C)\) is a triple
+\((u,v,z)\in C\times C\times C^\times\).  The coordinate \(z\) is a
+multiplicative scale.  It acts on the next upper-translation coordinate
+from the left and on the preceding lower-translation coordinate from
+the right.  The inverse is
+\[
+ (u,v,z)^{-1}=(-z^{-1}u,-vz^{-1},z^{-1}).
+\]
+It is the fiber product over \(\Gm\) of an upper and a lower affine
+group, as shown by the faithful representation
+\begin{equation}\label{eq:H-matrix}
+ (u,v,z)\longmapsto
+ \begin{pmatrix}z&u\\0&1\end{pmatrix}
+ \oplus
+ \begin{pmatrix}z&0\\v&1\end{pmatrix}.
+\end{equation}
+After the change of coordinate \(v=zy\), this is the usual semidirect
+product \(\Ga^2\rtimes\Gm\), with weights \(1\) and \(-1\).
+
+On coordinate rings, the same law says
+\[
+ \Delta(u)=u\ot1+z\ot u,\qquad
+ \Delta(v)=v\ot z+1\ot v,\qquad
+ \Delta(z)=z\ot z.
+\]
+The last identity says geometrically that \(z:H\to\Gm\) is a group
+homomorphism; this is what it means for \(z\) to be \emph{group-like}.
+The first two identities say that \(u\) and \(v\) are translation
+cocycles twisted by that character; algebraically they are respectively
+left and right \(z\)-skew primitive.  When \(z=1\), they become ordinary
+primitive coordinates, hence homomorphisms to \(\Ga\).  This dictionary
+is the reason for using \(H\): once a closed subscheme has \(z=\lambda\)
+and is stable under the displayed multiplication, the desired Hopf
+formulas and all their associativity identities come for free.
+
+The matrix description contains the power calculation we need.  Write
+\[
+ N_n(T)=1+T+\cdots+T^{n-1}.
+\]
+Then
+\begin{equation}\label{eq:H-power}
+ (u,v,z)^n=\bigl(N_n(z)u,\ vN_n(z),\ z^n\bigr).
+\end{equation}
+This is just the geometric-series formula for the off-diagonal entry of
+a triangular matrix power.  It replaces an iterated Hopf-algebra
+calculation by a single scalar \(N_n(z)\).
+Equivalently, a function \(U\) satisfying
+\[
+ \Delta(U)=U\ot1+\lambda\ot U
+\]
+is a translation coordinate in an affine-group representation, and
+\([n]^\#(U)=N_n(\lambda)U\).  This is the geometric meaning of a
+\(\lambda\)-skew primitive element.
+
+We shall use the following standard lifting observation to pass from
+monoids to groups.
+
+\begin{lemma}\label{lem:monoid-to-group}
+Let \(S\) be a local Artin ring and let \(M\) be a finite locally free
+monoid scheme over \(S\).  If the closed fiber of \(M\) is a group
+scheme, then \(M\) is a group scheme.
+\end{lemma}
+
+\begin{proof}
+Let \(B=\mathcal O(M)\).  In the convolution algebra
+\(\operatorname{End}_S(B)\), the reduction of
+\(\mathrm{id}_B\) has an inverse, namely the antipode of the closed
+fiber.  Since \(B\) is finite free, lift that antipode to an
+\(S\)-linear endomorphism \(s\) of \(B\).  Write \(*\) for convolution
+and \(e=\eta\eps\) for its unit.  Both
+\[
+ a=s*\mathrm{id}_B,\qquad b=\mathrm{id}_B*s
+\]
+belong to \(e+\mathfrak m_S\operatorname{End}_S(B)\).  The latter is a
+nilpotent ideal in the convolution algebra, so the finite geometric
+series makes \(a\) and \(b\) invertible.  Now
+\[
+ s_{\mathrm L}=a^{-1}*s,\qquad
+ s_{\mathrm R}=s*b^{-1}
+\]
+satisfy
+\[
+ s_{\mathrm L}*\mathrm{id}_B=e,\qquad
+ \mathrm{id}_B*s_{\mathrm R}=e.
+\]
+Consequently
+\[
+ s_{\mathrm L}
+ =s_{\mathrm L}*(\mathrm{id}_B*s_{\mathrm R})
+ =(s_{\mathrm L}*\mathrm{id}_B)*s_{\mathrm R}
+ =s_{\mathrm R}.
+\]
+This common endomorphism is an antipode for \(B\).
+\end{proof}
+
+\section{Oort--Tate matched products and the corrected lift}
+\label{sec:construction}
+
+Put
+\[
+ q=b^2,\qquad Q=(q)\subset R,\qquad D=R/Q.
+\]
+Thus \(Q^2=0\).  We first construct the group modulo \(Q\) from two
+order-two Oort--Tate groups.
+
+\subsection{An Oort--Tate matched product downstairs}
+
+Let \(S\) be a ring, and let \(c,d\in S\) satisfy \(cd=-2\).  In the
+sign convention used here, the order-two Oort--Tate group is
+\begin{equation}\label{eq:OT2}
+ \operatorname{OT}_S(c,d)
+ =
+ \Spec S[T]/(T^2-cT),
+ \qquad
+ \Delta(T)
+ =T\ot1+1\ot T+dT\ot T.
+\end{equation}
+Equivalently, if \(\chi=1+dT\), then
+\[
+ \Delta(T)=T\ot1+\chi\ot T,
+ \qquad
+ \Delta(\chi)=\chi\ot\chi,
+ \qquad
+ \chi^2=1.
+\]
+These identities also give a self-contained verification of the Hopf
+structure.  Indeed,
+\[
+ \chi^2
+ =1+(2d+cd^2)T
+ =1+d(2+cd)T
+ =1,
+\]
+and the formula for \(\Delta(\chi)\) follows by expanding
+\(1+d\Delta(T)\).  If
+\[
+ T_*=T_1+(1+dT_1)T_2,
+\]
+then, using \(T_i^2=cT_i\) and \((1+dT_1)^2=1\), one finds
+\[
+ T_*^2-cT_*
+ =
+ \bigl(c(1-(1+dT_1))+2(1+dT_1)T_1\bigr)T_2
+ =0.
+\]
+The last equality is exactly \(cd=-2\).
+Thus \(\Delta(T)\) satisfies the same quadratic relation as \(T\), so
+\(\Delta\) descends to the quotient.  Coassociativity follows without
+another calculation: both iterated coproducts of \(T\) equal
+\[
+ T\ot1\ot1+\chi\ot T\ot1+\chi\ot\chi\ot T.
+\]
+The counit is \(\eps(T)=0\), and the antipode is
+\(S(T)=T\), since
+\[
+ T+\chi T=2T+dT^2=(2+dc)T=0.
+\]
+Thus \(\operatorname{OT}_S(c,d)\) is finite locally free of rank two
+and every point has order dividing two.
+This is the \(p=2\) case of the Oort--Tate classification
+\cite[Introduction]{OortTate}; our parameter \(d\) is the negative of
+the second parameter there, so their relation \(c(-d)=2\) becomes
+\(cd=-2\).  Over a local base, every order-two group scheme with free
+augmentation ideal has this form.
+
+The following criterion gives a rank-four analogue adapted to the
+ambient group \(H\).
+
+\begin{proposition}[Matched products of two Oort--Tate groups]
+\label{prop:OT-matched}
+Let \(c,d,e,f\in S\) satisfy \(cd=ef=-2\), and set
+\[
+ A_{c,d;e,f}
+ =
+ S[U,V]/(U^2-cU,\ V^2-eV),
+ \qquad
+ \lambda=(1+dU)(1+fV).
+\]
+Then
+\begin{equation}\label{eq:OT-matched-graph}
+ \Spec A_{c,d;e,f}\longrightarrow H_S,
+ \qquad
+ (U,V)\longmapsto(U,V,\lambda)
+\end{equation}
+is a subgroup of \(H_S\) if and only if
+\begin{equation}\label{eq:OT-matched-conditions}
+ cf=ed=0.
+\end{equation}
+When these conditions hold, it is finite locally free of rank four and
+its underlying
+scheme is
+\[
+ \operatorname{OT}_S(c,d)
+ \times_S
+ \operatorname{OT}_S(e,f).
+\]
+If \(p(u)=(u,0,1+du)\) and \(k(v)=(0,v,1+fv)\), the two factors satisfy
+\begin{equation}\label{eq:OT-refactor}
+ k(v)p(u)
+ =
+ p\bigl((1+fv)u\bigr)
+ k\bigl(v(1+du)\bigr).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Assume first that \(cf=ed=0\).
+Regard the quotient first as
+\[
+ \bigl(S[V]/(V^2-eV)\bigr)[U]/(U^2-cU).
+\]
+The two successive monic relations give the free basis \(1,U,V,UV\).
+Put
+\(L=1+dU\) and \(M=1+fV\).  Since \(cd=ef=-2\),
+\[
+ L^2=M^2=1;
+\]
+hence \(\lambda=LM\) is a unit.  The comorphism
+\[
+ S[u,v,z,z^{-1}]\longrightarrow A_{c,d;e,f},
+ \qquad
+ (u,v,z)\longmapsto(U,V,\lambda)
+\]
+sends \(z^{-1}\) to \(\lambda^{-1}\) and is surjective because its
+image contains \(U\) and \(V\).  Thus \eqref{eq:OT-matched-graph} is a
+finite locally free closed immersion of rank four.
+
+It remains to check that the product of the two Oort--Tate factors is
+stable under multiplication.  In \(H_S\),
+\[
+ k(v)p(u)
+ =
+ \bigl((1+fv)u,\,v(1+du),\,(1+fv)(1+du)\bigr).
+\]
+Write
+\[
+ \widetilde u=(1+fv)u,
+ \qquad
+ \widetilde v=v(1+du).
+\]
+The cross conditions in \eqref{eq:OT-matched-conditions} give
+\[
+ \widetilde u^{\,2}-c\widetilde u=-cfuv=0,
+ \qquad
+ \widetilde v^{\,2}-e\widetilde v=-eduv=0.
+\]
+Thus \(\widetilde u\) and \(\widetilde v\) lie in the two factors.
+
+We also need their characters to multiply to the ambient third
+coordinate.  Put \(\alpha=du\), \(\beta=fv\), and
+\(E=\alpha\beta\).  A direct expansion gives
+\[
+ (1+d\widetilde u)(1+f\widetilde v)
+ -(1+\beta)(1+\alpha)
+ =
+ E(2+\alpha+\beta+E).
+\]
+The scalar relations imply \(2d=2f=0\): multiply \(ed=0\) by \(f\),
+and \(cf=0\) by \(d\).  Using \(u^2=cu\) and
+\(v^2=ev\), one then obtains
+\[
+ 2E=E\alpha=E\beta=E^2=0.
+\]
+For clarity, the middle two equalities are
+\[
+ E\alpha=d^2f u^2v
+          =cdfd\,uv=-2df\,uv=0,
+ \qquad
+ E\beta=df^2uv^2
+          =def^2\,uv=-2df\,uv=0,
+\]
+and \(E^2=(E\alpha)\beta=0\).
+The character identity follows, proving the refactorization
+\eqref{eq:OT-refactor}.
+
+Every point of the graph has a unique factorization \(p(u)k(v)\).
+To multiply two such points, use \eqref{eq:OT-refactor} on the middle
+two factors:
+\[
+ p(u_1)k(v_1)p(u_2)k(v_2)
+ =
+ p(u_1)\,
+ p\bigl((1+fv_1)u_2\bigr)\,
+ k\bigl(v_1(1+du_2)\bigr)\,
+ k(v_2).
+\]
+The two \(p\)-terms multiply in \(\operatorname{OT}_S(c,d)\), and the
+two \(k\)-terms multiply in \(\operatorname{OT}_S(e,f)\), so the product
+again has the form \(p(u)k(v)\).  Similarly,
+\[
+ (p(u)k(v))^{-1}=k(v)^{-1}p(u)^{-1}
+\]
+can be put back in the same form by one application of
+\eqref{eq:OT-refactor}.  Hence the graph is a subgroup.
+
+Conversely, suppose that the graph is stable under multiplication and
+apply this to the universal product \(k(v)p(u)\).  Its first two
+coordinates are \(\widetilde u=(1+fv)u\) and
+\(\widetilde v=v(1+du)\), and their defining equations reduce to
+\[
+ \widetilde u^2-c\widetilde u=-cfuv,\qquad
+ \widetilde v^2-e\widetilde v=-eduv.
+\]
+Since
+\[
+ S[u,v]/(u^2-cu,v^2-ev)
+\]
+is free on \(1,u,v,uv\), both coefficients vanish.  Thus \(cf=ed=0\).
+\end{proof}
+
+\begin{remark}\label{rem:OT-scope}
+Proposition~\ref{prop:OT-matched} is not a classification of all
+rank-four group schemes.  It is an exact classification within the
+following natural ansatz: the underlying scheme is the product of two
+order-two Oort--Tate schemes, the multiplicative coordinate is the
+product of their two characters, and the graph is required to lie in
+\(H_S\).  The equations \(cf=ed=0\) are precisely the two conditions
+that allow the factors to pass through one another.  The counterexample
+first arises from this construction over \(D\), and then leaves the
+product ansatz over \(R\) by modifying one of the quadratic equations.
+\end{remark}
+
+We now apply Proposition~\ref{prop:OT-matched} to \(S=D\) with
+\begin{equation}\label{eq:our-OT-parameters}
+ (c,d,e,f)=(ab,a,a^2,b).
+\end{equation}
+Indeed,
+\[
+ (ab)a=a^2b=-2,
+ \qquad
+ (a^2)b=-2,
+ \qquad
+ a^2a=0,
+ \qquad
+ (ab)b=0
+ \quad\text{in }D.
+\]
+Consequently,
+\begin{equation}\label{eq:A0}
+ A_0
+ =
+ D[U,V]/(U^2-abU,\ V^2-a^2V)
+ =
+ D\{1,U,V,UV\},
+\end{equation}
+and
+\begin{equation}\label{eq:matched-product}
+ j_0:G_0:=\Spec A_0\hookrightarrow H_D,
+ \qquad
+ (U,V)\longmapsto
+ \bigl(U,V,(1+aU)(1+bV)\bigr)
+\end{equation}
+is a finite locally free closed subgroup of rank four.
+
+For later use, we record its law explicitly.  One has
+\[
+ D=\Z[a,b]/(a^3,b^2,a^2b+2),
+ \qquad
+ D_{\mathrm{add}}
+ \simeq
+ (\Z/4)\{1\}
+ \oplus
+ (\Z/2)\{a,a^2,b,ab\}.
+\]
+For a \(D\)-algebra \(C\), put
+\[
+ \ell(u,v)=(1+au)(1+bv).
+\]
+Then
+\begin{equation}\label{eq:downstairs-law}
+ (u_1,v_1)\star(u_2,v_2)
+ =
+ \bigl(
+  u_1+\ell(u_1,v_1)u_2,\,
+  v_1\ell(u_2,v_2)+v_2
+ \bigr),
+\end{equation}
+with inverse
+\begin{equation}\label{eq:downstairs-inverse}
+ (u,v)^{-1}
+ =
+ \bigl((1+bv)u,\,v(1+au)\bigr).
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:downstairs-square}
+ [2]^\#(U)=bUV,
+ \qquad
+ [2]^\#(V)=aUV,
+ \qquad
+ [4]=\unit.
+\end{equation}
+Here is a direct derivation of these formulas.  Put
+\[
+ L=1+au,\qquad M=1+bv,\qquad \ell=LM.
+\]
+The two Oort--Tate relations give \(L^2=M^2=1\), so
+\(\ell^{-1}=\ell\).  Formula \eqref{eq:downstairs-law} is the
+restriction of \eqref{eq:H-law}.  The ambient inverse is
+\((-\ell u,-v\ell,\ell)\).  Since
+\[
+ -Lu=-u-au^2=u,\qquad -vM=-v-bv^2=v,
+\]
+where \(u^2=abu\), \(v^2=a^2v\), and \(a^2b=-2\), this is precisely
+\eqref{eq:downstairs-inverse}.  Finally,
+\[
+ (1+\ell)u=buv,\qquad v(1+\ell)=auv.
+\]
+Indeed, these identities follow by expanding \(\ell=1+au+bv+abuv\)
+and reducing the two quadratic relations; the terms containing \(2b\)
+vanish in \(D\) because \(b^2=0\) and \(a^2b=-2\).
+The power formula \eqref{eq:H-power} now gives the first two identities
+of \eqref{eq:downstairs-square}.  Since \(\ell^2=1\) and
+\(2(1+\ell)=0\) in \(A_0\), the same power formula gives
+\([4]=\unit\).
+
+The two Oort--Tate factors are not normal: ambient conjugation gives
+\begin{align}
+ p(u)k(v)p(u)^{-1}
+   &=\bigl(buv,\,v(1+au)\bigr),
+   \label{eq:conj-K}\\
+ k(v)p(u)k(v)^{-1}
+   &=\bigl((1+bv)u,\,auv\bigr).
+   \label{eq:conj-P}
+\end{align}
+These identities follow by multiplying in \(H_D\) and reducing
+\(u^2=abu\) and \(v^2=a^2v\).
+Since \(aUV\) and \(bUV\) are nonzero in the free algebra
+\eqref{eq:A0}, \(G_0\) is a genuine matched product rather than a
+semidirect product with the displayed factors.  Appendix
+\ref{app:no-semidirect} rules out any other rank-two semidirect
+presentation.
+\subsection{The corrected lift}
+
+The same Oort--Tate parameters \eqref{eq:our-OT-parameters} no longer
+satisfy the cross conditions over \(R\): one has
+\[
+ ed=a^3=0,
+ \qquad
+ cf=(ab)b=ab^2=aq\ne0.
+\]
+Thus the coefficientwise lift of the matched product \(G_0\) need not
+be closed under multiplication.  The following identity measures the
+failure and its correction.
+
+\begin{lemma}[The closure identity]\label{lem:closure}
+For \(t\in Q\), put
+\[
+ B_t
+ =
+ R[U,V]/(U^2-abU+tV,\ V^2-a^2V),
+ \qquad
+ \lambda=(1+aU)(1+bV).
+\]
+Then \(B_t\) is free over \(R\) on \(1,U,V,UV\).  In
+\(B_t\ot_R B_t\), set
+\[
+ U_*=U_1+\lambda_1U_2,
+ \qquad
+ V_*=V_1\lambda_2+V_2.
+\]
+Then
+\begin{equation}\label{eq:closure-defect}
+ \begin{pmatrix}
+  U_*^2-abU_*+tV_*\\
+  V_*^2-a^2V_*\\
+  (1+aU_*)(1+bV_*)-\lambda_1\lambda_2
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  a(q-t)V_1U_2\\0\\0
+ \end{pmatrix}.
+\end{equation}
+Moreover, \(\lambda\) is a unit in \(B_t\).
+\end{lemma}
+
+The proof is the elementary reduction recorded in
+Appendix~\ref{app:closure}.  The three entries in
+\eqref{eq:closure-defect} are simply the three defining equations
+evaluated on the ambient product of two points.
+
+For \(t=0\), the coefficientwise lift has the single nonzero defect
+\[
+ aqV_1U_2.
+\]
+It is nonzero because \(aq\ne0\) and
+\(B_0\ot_RB_0\) is free on the sixteen tensor monomials.
+For \(t=q\), all three entries in \eqref{eq:closure-defect} vanish.
+Thus we replace the first Oort--Tate equation by
+\begin{equation}\label{eq:corrected-equation}
+ U^2-abU=0
+ \qquad\rightsquigarrow\qquad
+ U^2-abU=-qV.
+\end{equation}
+This gives precisely the algebra \(A\) of Theorem~\ref{thm:main}.
+
+More explicitly, first quotient \(R[V]\) by the monic polynomial
+\(V^2-a^2V\), and then adjoin \(U\) subject to the monic polynomial
+\(U^2-abU+qV\).  It follows successively that
+\begin{equation}\label{eq:A-basis}
+ A=R\{1,U,V,UV\}
+\end{equation}
+is finite free of rank four.  Since \(\lambda\) is a unit, the map
+\[
+ j:G=\Spec A\longrightarrow H_R,
+ \qquad
+ (U,V)\longmapsto(U,V,\lambda)
+\]
+has a surjective comorphism: \(u,v,z,z^{-1}\) map to
+\(U,V,\lambda,\lambda^{-1}\), respectively.  It is therefore a closed
+immersion.  Equation \eqref{eq:closure-defect} with
+\(t=q\) says that ambient multiplication restricts to \(G\), and the
+ambient unit lies on \(G\).  Hence \(G\) is a finite locally free monoid
+scheme; its associativity and unit laws are inherited from \(H_R\).
+
+Modulo \(\mathfrak m=(a,b)\), one has
+\[
+ U^2=V^2=0,
+ \qquad
+ \lambda=1,
+\]
+and the two coordinates are primitive.  The closed fiber is therefore
+\(\alpha_2\times\alpha_2\), in particular a group scheme.
+Lemma~\ref{lem:monoid-to-group} now shows immediately that \(G\) is a
+group scheme.  Dually, \(A\) is a Hopf algebra with
+\[
+ \eps(U)=\eps(V)=0,\qquad
+ \Delta(U)=U\ot1+\lambda\ot U,
+ \qquad
+ \Delta(V)=V\ot\lambda+1\ot V,
+ \qquad
+ \Delta(\lambda)=\lambda\ot\lambda.
+\]
+
+This exhibits the counterexample as a small modification of the
+Oort--Tate matched product.  The failed cross condition is the
+coefficient \(aq\); adding \(qV\) to the first quadratic removes exactly
+that defect.  The modification cannot be avoided by choosing a different
+lift of \(b\): every lift \(b+x\), with \(x\in Q\), satisfies
+\[
+ (b+x)^2=b^2=q,
+\]
+because \(bQ=Q^2=0\).
+
+\section{The fourth-power word}
+\label{sec:power}
+
+There are two conditions for the fourth power of a point of \(G\) to be
+the unit.  Its multiplicative coordinate must satisfy
+\(\lambda^4=1\), and its two translation coordinates must be killed by
+\(N_4(\lambda)\).  The first condition does not imply the second over a
+nonreduced ring: from
+\[
+ \lambda^4-1=(\lambda-1)N_4(\lambda)
+\]
+one cannot cancel \(\lambda-1\).  In fact, the whole counterexample is
+concentrated in the small geometric sum \(N_4(\lambda)\).
+
+Set
+\[
+ \theta=\lambda-1=aU+bV+abUV.
+\]
+A short reduction by the two quadrics gives
+\begin{equation}\label{eq:theta-identities}
+ \lambda^2=1+2bV,\qquad
+ 2\theta=2bV,\qquad
+ \theta^2=0.
+\end{equation}
+For example, if \(L=1+aU\) and \(M=1+bV\), then
+\[
+ M^2=1,\qquad
+ L^2=1+2bV,
+\]
+using \(U^2=abU-qV\), \(V^2=a^2V\), and
+\eqref{eq:base-identities}.  Hence \(\lambda^2=L^2M^2=1+2bV\).
+The middle identity in \eqref{eq:theta-identities} is immediate from
+the displayed formula for \(\theta\) and \(2a=0\).  Substituting it in
+\(\lambda^2=1+2\theta+\theta^2\) then gives \(\theta^2=0\).  In
+particular, \(\lambda\) is a unit;
+in fact \(\lambda^{-1}=1-\theta\).
+
+Since \(4=0\) and \(\theta^2=0\),
+\begin{equation}\label{eq:norms}
+ N_4(\lambda)=2\theta=2bV,\qquad
+ \lambda^4=1,\qquad
+ N_8(\lambda)=N_4(\lambda)(1+\lambda^4)=0.
+\end{equation}
+Conceptually, because \(\lambda=1+\theta\) and \(\theta^2=0\), one has
+\[
+ N_4(\lambda)
+ =1+(1+\theta)+(1+2\theta)+(1+3\theta)
+ =4+6\theta=2\theta.
+\]
+Thus \(N_4(\lambda)\) need not vanish even though \(4=0\) and
+\(\lambda^4=1\): its value here is \(2\theta=2bV\).  Multiplication by
+the translation coordinate \(U\) gives the nonzero value \(2bUV\).
+The ambient matrix formula \eqref{eq:H-power} now gives
+\[
+ [4]^\#(U)=2bVU=2bUV.
+\]
+This is nonzero by Lemma~\ref{lem:base} and the free basis
+\eqref{eq:A-basis}.  On the other coordinate,
+\[
+ [4]^\#(V)=2bV^2=2a^2bV=-4V=0.
+\]
+At eight, both \(U\) and \(V\) map to zero and \(\lambda\) maps to one.
+Therefore
+\[
+ [8]=\unit.
+\]
+
+Finally, \(G\) is noncommutative.  Indeed,
+\[
+ \Delta(U)-\tau\Delta(U)
+ =(\lambda-1)\ot U-U\ot(\lambda-1),
+\]
+and the coefficient of \(V\ot U\) is the nonzero element \(b\in R\).
+More precisely, this is its coefficient relative to the free tensor
+basis coming from \eqref{eq:A-basis}, so it cannot be canceled by the
+other displayed terms.
+
+Lemma~\ref{lem:base} proves assertion (1) of
+Theorem~\ref{thm:main}.  The successive monic presentation
+\eqref{eq:A-basis} proves (2), and the closed-subgroup construction
+together with Lemma~\ref{lem:monoid-to-group} proves (3).  The preceding
+power calculation proves (4), including the nonvanishing of
+\([4]^\#(U)\), while the closed-fiber and noncocommutativity calculations
+prove (5).  This completes the proof of Theorem~\ref{thm:main}.
+
+\appendix
+
+\section{The hand calculation}\label{app:closure}
+
+We prove Lemma~\ref{lem:closure}.  Fix \(t\in Q\).  The two successive
+monic relations show first that \(B_t\) is free on \(1,U,V,UV\).
+Work in \(B_t\ot_R B_t\).  For any \(x\in B_t\), write
+\[
+ x_1=x\ot1,\qquad x_2=1\ot x.
+\]
+Thus \(U_1,V_1\) belong to the first tensor factor and \(U_2,V_2\) to
+the second.  In particular,
+\[
+ V_1U_2=(V\ot1)(1\ot U)
+\]
+is the mixed term that will measure the interaction between the two
+points.  Scalars from \(R\), such as \(t\) and \(q\), are not
+subscripted.
+
+For \(i=1,2\), define
+\begin{equation}\label{eq:tensor-characters}
+ L_i=1+aU_i,\qquad
+ M_i=1+bV_i,\qquad
+ \lambda_i=L_iM_i.
+\end{equation}
+The coordinates of the ambient product are
+\begin{equation}\label{eq:star-coordinates}
+ U_*=U_1+\lambda_1U_2,
+ \qquad
+ V_*=V_1\lambda_2+V_2.
+\end{equation}
+We shall substitute these coordinates into the \(V\)-quadratic, the
+\(U\)-quadratic, and the graph equation, in that order.
+
+\smallskip
+\noindent\emph{Preliminary reductions in each tensor factor.}
+The base identities and the hypothesis \(t\in Q\) give
+\[
+ 2a=4=0,\qquad
+ t^2=bt=2t=0,\qquad
+ a^2q=-2b.
+\]
+Inside either tensor factor,
+\[
+ U_i^2=abU_i-tV_i,
+ \qquad
+ V_i^2=a^2V_i.
+\]
+Consequently,
+\[
+ M_i^2
+ =1+(2b+a^2q)V_i
+ =1
+\]
+and
+\[
+ L_i^2
+ =1+2aU_i+a^2U_i^2
+ =1-a^2tV_i.
+\]
+Multiplying these two identities, and making three further immediate
+reductions, gives
+\begin{equation}\label{eq:auxiliary}
+\begin{gathered}
+ M_i^2=1,\qquad
+ \lambda_i^2=1-a^2tV_i,\qquad
+ a^2(\lambda_i-1)=-2V_i,\\
+ t(\lambda_i-1)=atU_i,\qquad
+ t(\lambda_i^2-1)=0,\\
+ 2\lambda_iU_i
+   +ab(\lambda_i^2-\lambda_i)
+   =-aqV_i
+\end{gathered}
+\qquad (i=1,2).
+\end{equation}
+For example, the middle identities follow directly from
+\[
+ \lambda_i-1=aU_i+bV_i+abU_iV_i
+\]
+and \(bt=t^2=0\).  For completeness, the two terms in the last
+identity of \eqref{eq:auxiliary} reduce separately to
+\[
+ 2\lambda_iU_i=2U_i+2bU_iV_i
+\]
+and
+\[
+ ab(\lambda_i^2-\lambda_i)
+   =2U_i-aqV_i+2bU_iV_i.
+\]
+Their sum is \(-aqV_i\), since \(4=0\).
+
+\smallskip
+\noindent\emph{The \(V\)-quadratic.}
+Expanding the second formula in \eqref{eq:star-coordinates} and using
+\(V_i^2=a^2V_i\), we obtain
+\begin{align*}
+ V_*^2-a^2V_*
+ &=V_1\lambda_2
+   \bigl(a^2(\lambda_2-1)+2V_2\bigr)\\
+ &=0.
+\end{align*}
+The last equality is exactly the third identity in
+\eqref{eq:auxiliary}, applied in the second tensor factor.
+
+\smallskip
+\noindent\emph{The \(U\)-quadratic.}
+Expanding the first formula in \eqref{eq:star-coordinates} and using
+\(U_i^2=abU_i-tV_i\) in both factors gives
+\begin{align*}
+ U_*^2-abU_*+tV_*
+ &=tV_1(\lambda_2-1)\\
+ &\quad+
+ \bigl(
+  2\lambda_1U_1
+  +ab(\lambda_1^2-\lambda_1)
+ \bigr)U_2
+ +t(1-\lambda_1^2)V_2.
+\end{align*}
+By \eqref{eq:auxiliary}, the three terms on the right are respectively
+\[
+ atV_1U_2,\qquad
+ -aqV_1U_2,\qquad
+ 0.
+\]
+It follows that
+\[
+ U_*^2-abU_*+tV_*
+ =a(t-q)V_1U_2
+ =a(q-t)V_1U_2.
+\]
+The last equality uses \(2a=0\), so that \(-a=a\).
+
+\smallskip
+\noindent\emph{The graph equation.}
+Set
+\[
+ \alpha=aU_2,\qquad
+ \beta=bV_1,\qquad
+ E=\alpha\beta.
+\]
+The subscripts are important: \(\alpha\) comes from the second tensor
+factor and \(\beta\) from the first.  From
+\eqref{eq:tensor-characters} and \eqref{eq:star-coordinates},
+\[
+ 1+aU_*=L_1(1+M_1\alpha),
+ \qquad
+ 1+bV_*=M_2(1+\beta L_2).
+\]
+Since \(M_1=1+\beta\) and \(L_2=1+\alpha\), while
+\(\lambda_1\lambda_2=L_1M_2M_1L_2\), subtraction gives
+\begin{align}
+ &(1+aU_*)(1+bV_*)-\lambda_1\lambda_2\notag\\
+ &\quad=
+ L_1M_2
+ \bigl(
+  (1+M_1\alpha)(1+\beta L_2)-M_1L_2
+ \bigr)\notag\\
+ &\quad=
+ L_1M_2E(2+\alpha+\beta+E).
+ \label{eq:graph-factorization}
+\end{align}
+The last factorization is now an ordinary polynomial identity in
+\(\alpha\) and \(\beta\).  It remains to see that every term in its
+parenthesis is annihilated by \(E\).  First, \(2E=0\).  The quadratic
+relations also give
+\[
+ \beta^2
+ =b^2V_1^2
+ =a^2qV_1
+ =-2\beta,
+ \qquad
+ \alpha^2
+ =a^2U_2^2
+ =-a^2tV_2.
+\]
+Therefore
+\[
+ E\beta=-2E=0,
+ \qquad
+ E\alpha=-a^2btV_1V_2=0,
+ \qquad
+ E^2=0,
+\]
+where the middle equality uses \(bt=0\).  The right side of
+\eqref{eq:graph-factorization} is zero, so the graph equation is
+preserved.
+
+We have now proved that the three defects are
+\[
+ \bigl(a(q-t)V_1U_2,\,0,\,0\bigr).
+\]
+Finally, in one copy of \(B_t\), the same preliminary calculation gives
+\[
+ \lambda^2=1-a^2tV.
+\]
+Since \((a^2tV)^2=0\), the character \(\lambda\) is a unit; explicitly,
+\[
+ \lambda^{-1}=\lambda(1+a^2tV).
+\]
+This proves every assertion of Lemma~\ref{lem:closure}.
+\section{No semidirect presentation downstairs}
+\label{app:no-semidirect}
+
+The conjugation formulas \eqref{eq:conj-K}--\eqref{eq:conj-P} show
+that the two displayed factors of \(G_0\) are not normal.  The following
+strengthening rules out a different rank-two semidirect presentation.
+
+\begin{corollary}\label{cor:no-semidirect}
+The group scheme \(G_0\) has no finite locally free normal subgroup
+scheme of rank two.  Consequently it is not isomorphic over \(D\) to a
+nontrivial semidirect product of finite locally free group schemes.
+\end{corollary}
+
+\begin{proof}
+Suppose that \(N\subset G_0\) is finite locally free of rank two.  On
+the closed fiber, \(\mathcal O(N_{\F_2})\) is a two-dimensional quotient
+of the local algebra
+\[
+ \F_2[U,V]/(U^2,V^2).
+\]
+As a quotient of this local algebra, it is local with residue field
+\(\F_2\); its one-dimensional maximal ideal has square zero.  It is
+therefore \(\F_2[T]/(T^2)\), and at least one of the images of \(U\) and
+\(V\) is nonzero.  Hence at least one of the two scheme projections
+\[
+ N_{\F_2}\longrightarrow P_{\F_2},
+ \qquad
+ N_{\F_2}\longrightarrow K_{\F_2}
+\]
+is an isomorphism.  By Nakayama's lemma, the corresponding projection
+over \(D\) is an isomorphism: on coordinate rings it is a map between
+free \(D\)-modules of rank two whose reduction is invertible.
+
+For the normality test we use the following identity in the ambient
+group:
+\begin{equation}\label{eq:ambient-conjugation}
+ (x,y,z)(r,s,w)(x,y,z)^{-1}
+ =
+ \bigl(zr+(1-w)x,\ (s+y(w-1))z^{-1},\ w\bigr).
+\end{equation}
+
+Assume first that \(N\to P\) is an isomorphism.  In the product scheme
+\(P\times_DK\), the subgroup \(N\) is then the graph
+\(v=cu\) of a pointed scheme map, for some \(c\in D\): indeed, the
+augmentation ideal of \(\mathcal O(P)=D\oplus DU\) is the principal
+module \(DU\).  Along this graph,
+\[
+ \ell=1+(a+bc)u.
+\]
+Conjugation by the universal element \(k(y)\) gives
+\begin{equation}\label{eq:normal-graph-P}
+ V\bigl(k(y)n(u)k(y)^{-1}\bigr)
+ -cU\bigl(k(y)n(u)k(y)^{-1}\bigr)
+ =(a+bc)uy.
+\end{equation}
+If \(N\) were normal, the left side would vanish.  The algebra
+\[
+ D[u,y]/(u^2-abu,\ y^2-a^2y)
+\]
+is free on \(1,u,y,uy\), so \eqref{eq:normal-graph-P} would force
+\(a+bc=0\).  This is impossible because \(a\notin bD\).
+
+If instead \(N\to K\) is an isomorphism, write its graph as
+\(u=cv\); here the same argument uses the principal augmentation ideal
+\(DV\subset\mathcal O(K)\).  Conjugation by the universal \(p(x)\)
+similarly gives
+\begin{equation}\label{eq:normal-graph-K}
+ U\bigl(p(x)n(v)p(x)^{-1}\bigr)
+ -cV\bigl(p(x)n(v)p(x)^{-1}\bigr)
+ =(b+ac)xv.
+\end{equation}
+Normality would force \(b+ac=0\), impossible because
+\(b\notin aD\).  Indeed, the displayed additive decomposition of \(D\)
+gives
+\[
+ bD\subset\langle2,b,ab\rangle,
+ \qquad
+ aD\subset\langle2,a,a^2,ab\rangle,
+\]
+which makes \(a\notin bD\) and \(b\notin aD\) immediate.  Thus no such
+normal subgroup exists.
+
+In a nontrivial semidirect decomposition of a rank-four group scheme
+over the local ring \(D\), both factors have rank two and one is normal.
+The first assertion therefore implies the second.
+\end{proof}
+
+\section{Companion computer audit}
+\label{app:audit}
+
+The proof above is independent of computer algebra.  For reproducibility,
+the companion file
+\begin{center}
+\path{m2/verify_rank4_affine_article_20260712.m2}
+\end{center}
+performs exact strong Gr\"obner reductions over \(\Z\).  From the project
+root, run
+\begin{verbatim}
+M2 --script m2/verify_rank4_affine_article_20260712.m2
+\end{verbatim}
+The script was tested with Macaulay2 1.25.11 and is organized around the
+claims of the paper.  The article-specific blocks check:
+\begin{itemize}
+\item the base identities, the survival of \(q,aq,a^2q=-2b\), and the
+normal form of \(2bUV\);
+\item the exact three-component closure identity
+\eqref{eq:closure-defect}, including the coefficientwise and corrected
+lifts;
+\item preservation of both quadrics, group-likeness of \(\lambda\),
+coassociativity, the counit, and an explicit antipode satisfying both
+convolution identities;
+\item the explicit law, inverse, mutual actions, and conjugation formulas
+for \(G_0\), including the nonnormality of \(P\) and \(K\), and the
+graph identities used in Appendix~\ref{app:no-semidirect};
+\item noncocommutativity and the special fiber
+\(\alpha_2\times\alpha_2\);
+\item the identities \(\theta^2=0\), \(2\theta=2bV\),
+\[
+ ([4]^\#U,[4]^\#V,[8]^\#U,[8]^\#V)=(2bUV,0,0,0);
+\]
+\item the general matched-product identities of
+Proposition~\ref{prop:OT-matched} and the nonsplitting identity for the
+chosen lift.
+\end{itemize}
+Freeness in \eqref{eq:A-basis}, the base complete-intersection assertion,
+and the existence of the group law from the ambient group are proved
+formally in the text; the script audits every polynomial identity used
+in those arguments.  It also retains supplementary consistency checks
+in standard semidirect-product coordinates and in a universal
+five-parameter presentation.
+
+\begin{thebibliography}{99}
+
+\bibitem{SGA3I}
+M.~Demazure and A.~Grothendieck (eds.),
+\emph{Sch\'emas en groupes I: Propri\'et\'es g\'en\'erales des sch\'emas
+en groupes (SGA 3)},
+Lecture Notes in Mathematics, vol.~151, Springer-Verlag, 1970.
+
+\bibitem{SGA3II}
+M.~Demazure and A.~Grothendieck (eds.),
+\emph{Sch\'emas en groupes II: Groupes de type multiplicatif, et structure
+des sch\'emas en groupes g\'en\'eraux (SGA 3)},
+Lecture Notes in Mathematics, vol.~152, Springer-Verlag, 1970.
+
+\bibitem{SGA3VIIIannotated}
+A.~Grothendieck,
+\emph{Expos\'e VIII: Groupes diagonalisables},
+revised and annotated online edition, ed. P.~Gille and P.~Polo,
+version 1.1, 8 November 2009,
+\href{https://wstein.org/sga/SGA3/Exp8-8nov09.pdf}
+{available online}.
+
+\bibitem{OortTate}
+J.~Tate and F.~Oort,
+\emph{Group schemes of prime order},
+Ann. Sci. \'Ecole Norm. Sup. (4) \textbf{3} (1970), no.~1, 1--21,
+\href{https://www.numdam.org/item/ASENS_1970_4_3_1_1_0/}
+{Numdam}.
+
+\bibitem{Schoof2001}
+R.~Schoof,
+\emph{Finite flat group schemes over local Artin rings},
+Compos. Math. \textbf{128} (2001), no.~1, 1--15,
+\href{https://doi.org/10.1023/A:1017560215203}
+{doi:10.1023/A:1017560215203}.
+
+\bibitem{SchoofSurvey}
+R.~Schoof,
+\emph{Is a finite locally free group scheme killed by its order?},
+in \emph{Open Problems in Arithmetic Algebraic Geometry},
+Advanced Lectures in Mathematics, vol.~46, International Press, 2019,
+1--7,
+\href{https://www.mat.uniroma2.it/~schoof/schoof_oortAAG.pdf}
+{available online}.
+
+\bibitem{Tate1997}
+J.~Tate,
+\emph{Finite flat group schemes},
+in \emph{Modular Forms and Fermat's Last Theorem},
+G.~Cornell, J.~H.~Silverman, and G.~Stevens (eds.),
+Springer, New York, 1997, 121--154,
+\href{https://doi.org/10.1007/978-1-4612-1974-3_5}
+{doi:10.1007/978-1-4612-1974-3\_5}.
+
+\bibitem{Torti}
+E.~Torti,
+\emph{Lagrange's theorem for a class of finite flat group schemes over
+local Artin rings},
+Doc. Math. (2025), online first,
+\href{https://doi.org/10.4171/DM/1055}{doi:10.4171/DM/1055}.
+
+\end{thebibliography}
+
+\end{document}

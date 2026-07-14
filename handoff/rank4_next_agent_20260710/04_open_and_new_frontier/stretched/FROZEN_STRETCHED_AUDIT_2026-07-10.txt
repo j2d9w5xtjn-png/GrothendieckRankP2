@@ -1,0 +1,24 @@
+STRETCHED H12111 SPLIT-LOG AUDIT
+log_dirs=scripts,results/stretched_retry_s_f2_t4_11_i1_20260710,results/stretched_retry_q00_t4_11_i1_20260710
+universe rings=11 rows_per_ring=10 rows=110 coordinate_tasks=330
+files matched=283 recognized=283 malformed_or_out_of_scope=0 duplicate_task_copies=3
+PER-RING ROW COUNTS
+  s_f2: closed UNSAT=9, H0-vacuous=0, SAT candidate=0, unknown=1, incomplete=0, error=0
+  s_z32: closed UNSAT=5, H0-vacuous=5, SAT candidate=0, unknown=0, incomplete=0, error=0
+  s_e2_00: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  s_e2_10: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  s_e2_11: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  s_e3: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  s_e4: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q00: closed UNSAT=4, H0-vacuous=5, SAT candidate=0, unknown=1, incomplete=0, error=0
+  q01: closed UNSAT=5, H0-vacuous=5, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q10: closed UNSAT=5, H0-vacuous=5, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q11: closed UNSAT=5, H0-vacuous=5, SAT candidate=0, unknown=0, incomplete=0, error=0
+GLOBAL ROW COUNTS closed UNSAT=83, H0-vacuous=25, SAT candidate=0, unknown=2, incomplete=0, error=0
+TASK COUNTS terminal=280, missing=50, truncated=0, error=0; terminal_outcomes=H0-vacuous=25,UNSAT=253,SAT=0,unknown=2
+PROCESS RESOURCES logs=280 elapsed_sum_seconds=25925.15 maxrss_max_mib=1593.75 platforms=darwin:280
+ROW DETAILS displayed=2
+  s_f2 t4/c1=1,c4=1: unknown; i1:unknown,i2:UNSAT,i3:UNSAT
+  q00 t4/c1=1,c4=1: unknown; i1:unknown,i2:UNSAT,i3:UNSAT
+AUDIT ISSUES count=0
+MISSING/RETRY TASK COMMANDS count=2

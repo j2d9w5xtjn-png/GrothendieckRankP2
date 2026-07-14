@@ -1,0 +1,7 @@
+triangular family: PASS (1608 valid parameter tuples; 1536 killed-fiber tuples)
+monogenic N=5 formulas: PASS (32 residue tuples)
+INDEPENDENT AUDIT PASS
+HF1/HF2/HF3 and RT: PASS (1608 valid triangular Hopf tuples)
+local-local determinant screen: 0 nontrivial / 1088 tuples
+FINITE SCREEN PASS
+Exit code: 0

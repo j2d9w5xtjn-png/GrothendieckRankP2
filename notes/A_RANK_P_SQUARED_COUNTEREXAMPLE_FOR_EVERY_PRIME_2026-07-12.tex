@@ -1,0 +1,848 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{array,booktabs}
+\usepackage{xcolor}
+\usepackage{xurl}
+\usepackage[colorlinks=true,
+            linkcolor=blue!55!black,
+            citecolor=blue!55!black,
+            urlcolor=blue!55!black]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Z}{\mathbf Z}
+\newcommand{\F}{\mathbf F}
+\newcommand{\Ga}{\mathbb G_a}
+\newcommand{\Gm}{\mathbb G_m}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Soc}{\operatorname{Soc}}
+\newcommand{\gr}{\operatorname{gr}}
+\newcommand{\length}{\operatorname{length}}
+\newcommand{\m}{\mathfrak m}
+\newcommand{\ot}{\otimes}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\unit}{\mathrm e}
+\newcommand{\Np}{N}
+
+\title[A rank-\(p^2\) counterexample for every prime]
+      {A Rank-\(p^2\) Finite Flat Group Scheme\\
+       Not Killed by \(p^2\), for Every Prime \(p\)}
+\author{}
+\date{July 12, 2026}
+\subjclass[2020]{14L15, 16T05}
+\keywords{finite flat group scheme, power word, affine group,
+Oort--Tate polynomial, truncated logarithm}
+
+\begin{document}
+
+\begin{abstract}
+For every prime \(p\), we construct an Artin local ring \(R_p\) and a
+finite locally free, necessarily noncommutative, group scheme \(G_p/R_p\)
+of rank \(p^2\) for which the \(p^2\)-th power word is not the unit word.
+The base is
+\[
+ R_p=\Z[a,b]/(a^{p+1},b^{2p-1},a^pb^{p-1}+p).
+\]
+Put \(w_i=p^{-1}\binom pi\) and
+\[
+ W_c(T)=\sum_{i=1}^{p-1}w_i c^{i-1}T^i.
+\]
+The coordinate algebra is
+\[
+ A_p=R_p[U,V]/(F,G),
+\]
+where
+\[
+ \begin{split}
+ F&=U^p-a b^{p-1}W_a(U)+b^pW_b(V),\\
+ G&=V^p-a^pW_b(V).
+ \end{split}
+\]
+Writing \(L=1+aU\), \(M=1+bV\), and
+\(\lambda=LM^{-1}\), the coproduct is
+\[
+ \Delta(U)=U\ot1+\lambda\ot U,
+ \qquad
+ \Delta(V)=V\ot\lambda^{-1}+1\ot V.
+\]
+The two monic equations give the basis
+\(\{U^iV^j:0\leq i,j<p\}\).  A divided Oort--Tate identity and one
+truncated-logarithm calculation prove that the equations are preserved
+by the displayed product law.  The power words are
+\[
+ [p^2]^\#(U)=p b^{p-1}UV^{p-1}\ne0,
+ \qquad [p^2]^\#(V)=0,
+ \qquad [p^3]=\unit.
+\]
+Nonvanishing follows from
+\[
+ p b^{p-1}=-a^pb^{2p-2}\ne0.
+\]
+For \(p=2\), the formulas specialize exactly to the previously
+constructed rank-four example over
+\(\Z[a,b]/(a^3,b^3,a^2b+2)\).
+\end{abstract}
+
+\maketitle
+\tableofcontents
+
+\section{Statement of the construction}
+
+The theorem of Deligne says that a \emph{commutative} finite locally
+free group scheme is killed by its rank.  Thus the requested example
+cannot have a commutative group law.  As usual, its coordinate algebra
+will still be a commutative algebra; noncommutativity means that its
+coproduct is not cocommutative.
+
+Fix a prime \(p\).  For \(1\leq i\leq p-1\), set
+\begin{equation}\label{eq:wi}
+ w_i=\frac1p\binom pi\in\Z.
+\end{equation}
+Introduce the two convenient polynomials
+\begin{equation}\label{eq:S-W}
+ S_p(X)=\sum_{i=1}^{p-1}w_iX^i,
+ \qquad
+ W_c(T)=\sum_{i=1}^{p-1}w_i c^{i-1}T^i.
+\end{equation}
+They are related by
+\begin{equation}\label{eq:cW=S}
+ cW_c(T)=S_p(cT),
+ \qquad
+ (1+X)^p=1+X^p+pS_p(X).
+\end{equation}
+
+Define
+\begin{equation}\label{eq:base}
+ R_p=\Z[a,b]/(a^{p+1},b^{2p-1},a^pb^{p-1}+p)
+\end{equation}
+and the two monic polynomials
+\begin{equation}\label{eq:F-G}
+ \begin{split}
+ F(U,V)&=U^p-a b^{p-1}W_a(U)+b^pW_b(V),\\
+ G(V)&=V^p-a^pW_b(V).
+ \end{split}
+\end{equation}
+Let
+\begin{equation}\label{eq:A}
+ A_p=R_p[U,V]/(F,G),
+ \qquad L=1+aU,\qquad M=1+bV.
+\end{equation}
+
+The relations will imply that \(L\) and \(M\) are units.  Put
+\begin{equation}\label{eq:lambda}
+ \lambda=LM^{-1}.
+\end{equation}
+The point of using the \emph{exact} inverse in this formula is that it
+makes the character calculation formal for every prime.  No
+prime-dependent correction to \(\lambda\) is needed.
+
+\begin{theorem}[The arbitrary-prime counterexample]\label{thm:main}
+For every prime \(p\), the following assertions hold.
+\begin{enumerate}
+\item The ring \(R_p\) is an Artin local complete intersection of
+characteristic \(p^2\), residue field \(\F_p\), and length
+\((p+1)(2p-1)\).  Moreover,
+\[
+ p b^{p-1}=-a^pb^{2p-2}\ne0.
+\]
+\item The algebra \(A_p\) is free of rank \(p^2\) over \(R_p\), with
+basis
+\[
+ \mathcal B=\{U^iV^j:0\leq i,j<p\}.
+\]
+\item There is a Hopf algebra structure on \(A_p\) with
+\(\varepsilon(U)=\varepsilon(V)=0\) and
+\begin{equation}\label{eq:Delta-main}
+ \Delta(U)=U\ot1+\lambda\ot U,
+ \qquad
+ \Delta(V)=V\ot\lambda^{-1}+1\ot V.
+\end{equation}
+The element \(\lambda\) is group-like.
+\item If \(G_p=\Spec A_p\), then
+\begin{equation}\label{eq:power-main}
+ [p^2]^\#(U)=p b^{p-1}UV^{p-1}\ne0,
+ \qquad
+ [p^2]^\#(V)=0,
+ \qquad
+ [p^3]=\unit.
+\end{equation}
+In particular, \(G_p\) has rank \(p^2\) and is not killed by \(p^2\).
+\item The closed fiber is
+\[
+ (G_p)_{\F_p}\simeq\alpha_p\times\alpha_p,
+\]
+but \(G_p\) itself is noncommutative.
+\end{enumerate}
+\end{theorem}
+
+The rest of the note proves the theorem.  The only substantial closure
+calculation is isolated in Section~\ref{sec:closure}.  Sections
+\ref{sec:base} and~\ref{sec:powers} give independent, transparent
+proofs of the two facts that matter most: the coefficient in
+\eqref{eq:power-main} is nonzero, and it is exactly the \(p^2\)-th power
+carry.
+
+\section{The Artin base and its top class}\label{sec:base}
+
+Let
+\[
+ T=\Z[a,b]/(a^{p+1},b^{2p-1}).
+\]
+As an abelian group, \(T\) is free on the box monomials
+\begin{equation}\label{eq:box}
+ a^ib^j,\qquad 0\leq i\leq p,\quad 0\leq j\leq2p-2.
+\end{equation}
+Let \(N\) denote multiplication by \(a^pb^{p-1}\).  It has exactly the
+following \(p\) nonzero arrows:
+\begin{equation}\label{eq:arrows}
+ b^j\longmapsto a^pb^{p-1+j},
+ \qquad 0\leq j\leq p-1.
+\end{equation}
+All other box monomials are killed by \(N\), and \(N^2=0\).
+
+The additive group of \(R_p\) is the cokernel of \(p\id+N\).  On each
+two-term chain in \eqref{eq:arrows}, if \(e_j=b^j\) and
+\(f_j=a^pb^{p-1+j}\), the relations are
+\[
+ pe_j+f_j=0,\qquad pf_j=0.
+\]
+Thus this chain contributes one copy of \(\Z/p^2\), generated by
+\(e_j\).  Every remaining box monomial contributes one copy of
+\(\Z/p\).  We have proved the precise Smith form
+\begin{equation}\label{eq:additive}
+ (R_p)_{\mathrm{add}}\simeq
+ (\Z/p^2)^p\oplus
+ (\Z/p)^{(p+1)(2p-1)-2p}.
+\end{equation}
+
+Several consequences are immediate.  First, \(R_p\) has characteristic
+exactly \(p^2\).  Second,
+\begin{equation}\label{eq:top-nonzero}
+ p b^{p-1}=-a^pb^{2p-2}\ne0;
+\end{equation}
+it is the last element in the chain beginning with \(b^{p-1}\).  Third,
+all of \(a,b,p\) are nilpotent, so \(R_p\) is local with maximal ideal
+\(\m=(a,b)\) and residue field \(\F_p\).  Its length is
+\[
+ 2p+\bigl((p+1)(2p-1)-2p\bigr)=(p+1)(2p-1).
+\]
+
+The associated graded ring has the especially simple form
+\begin{equation}\label{eq:gr-base}
+ \gr_{\m}R_p\simeq
+ \F_p[A,B]/(A^{p+1},B^{2p-1}).
+\end{equation}
+In particular, \(a^pb^{2p-2}\) is the unique top monomial.  One can also
+see directly that the three equations in \eqref{eq:base} form a regular
+sequence.  Indeed, the first two do so, and multiplication by
+\(p\id+N\) is injective on the torsion-free abelian group underlying
+\(T\): if \((p\id+N)x=0\), applying \(p\id-N\) gives \(p^2x=0\), hence
+\(x=0\).  Thus \(R_p\) is an Artin local complete intersection.
+
+We record three scalar consequences used repeatedly below:
+\begin{equation}\label{eq:scalar-zeroes}
+ p^2=0,\qquad pa=0,\qquad pb^p=0.
+\end{equation}
+They follow respectively by multiplying
+\(p=-a^pb^{p-1}\) by \(p,a,b^p\).
+
+\section{Freeness and the two character identities}
+
+First quotient \(R_p[V]\) by the monic polynomial \(G(V)\).  The result
+is free over \(R_p\) on \(1,V,\ldots,V^{p-1}\).  Over that quotient,
+the polynomial \(F(U,V)\) is monic of degree \(p\) in \(U\).  Therefore
+\begin{equation}\label{eq:basis}
+ A_p=\bigoplus_{0\leq i,j<p}R_pU^iV^j.
+\end{equation}
+This proves finite local freeness and rank \(p^2\) without any
+Gr\"obner-basis calculation.
+
+Put
+\[
+ x=bV,\qquad t=aU.
+\]
+The second relation in \eqref{eq:F-G} gives
+\begin{align*}
+ x^p
+ &=b^pV^p
+ =a^pb^pW_b(V)
+ =a^pb^{p-1}S_p(x)
+ =-pS_p(x).
+\end{align*}
+Consequently, by \eqref{eq:cW=S},
+\begin{equation}\label{eq:Mp}
+ M^p=(1+x)^p=1+x^p+pS_p(x)=1.
+\end{equation}
+
+Similarly, multiplying \(F=0\) by \(a^p\) gives
+\begin{equation}\label{eq:tp}
+ t^p=pS_p(x).
+\end{equation}
+Since \(pa=0\), every term of \(pS_p(t)\) vanishes.  Hence
+\begin{equation}\label{eq:Lp}
+ L^p=(1+t)^p=1+pS_p(x).
+\end{equation}
+
+Equations \eqref{eq:Mp} and \eqref{eq:Lp} show explicitly that \(M\)
+and \(L\) are units.  In fact,
+\begin{equation}\label{eq:explicit-inverses}
+ M^{-1}=M^{p-1},
+ \qquad
+ L^{-1}=L^{p-1}\bigl(1-pS_p(x)\bigr),
+\end{equation}
+because \((pS_p(x))^2=0\).  Thus \(\lambda=LM^{-1}\) and
+\(\lambda^{-1}=ML^{-1}\) are honest elements of \(A_p\), with no
+localization implicit in the definition.
+
+We will also use
+\begin{equation}\label{eq:lambdap}
+ \lambda^p=1+pS_p(x),
+ \qquad
+ \lambda^{p^2}=1.
+\end{equation}
+The second equality follows from the first and \(p^2=0\).
+
+\section{The rank-\texorpdfstring{\(p\)}{p} affine identity}
+
+The degree-\(p\) polynomials in the construction are the natural
+mixed-characteristic replacements for the quadratic equations in the
+rank-four example.
+
+\begin{lemma}[Divided affine, or Oort--Tate, identity]
+\label{lem:OT}
+Let \(C\) be a ring, let \(c,d\in C\) satisfy
+\(c^{p-1}d=p\), and put
+\[
+ \Phi_{c,d}(T)=T^p+dW_c(T).
+\]
+For
+\[
+ X\oplus_cY=X+Y+cXY
+\]
+one has the exact polynomial identity
+\begin{equation}\label{eq:OT}
+ \Phi_{c,d}(X\oplus_cY)
+ =\Phi_{c,d}(X)+\Phi_{c,d}(Y)
+  +c^p\Phi_{c,d}(X)\Phi_{c,d}(Y).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The defining choice of coefficients gives
+\begin{equation}\label{eq:OT-character}
+ (1+cT)^p=1+c^p\Phi_{c,d}(T).
+\end{equation}
+On the other hand,
+\[
+ 1+c(X\oplus_cY)=(1+cX)(1+cY).
+\]
+Raise this equality to the \(p\)-th power and apply
+\eqref{eq:OT-character} to the three occurrences of \(\Phi\).  After
+expansion one obtains \eqref{eq:OT}.  This is an integral polynomial
+identity; no cancellation by a possibly nonregular element is being
+used in the quotient algebra.
+\end{proof}
+
+For our first equation, take
+\[
+ c=a,\qquad d=-ab^{p-1};
+\]
+for the second, take
+\[
+ c=b,\qquad d=-a^p.
+\]
+In both cases \(c^{p-1}d=p\) in \(R_p\).  Thus
+\begin{equation}\label{eq:Phiab}
+ \Phi_a(T)=T^p-ab^{p-1}W_a(T),
+ \qquad
+ \Phi_b(T)=T^p-a^pW_b(T),
+\end{equation}
+and our relations are
+\begin{equation}\label{eq:F-Phi}
+ F=\Phi_a(U)+b^{p-1}S_p(bV),
+ \qquad G=\Phi_b(V).
+\end{equation}
+
+\section{Closure under the affine-group law}\label{sec:closure}
+
+We now prove that \eqref{eq:Delta-main} respects the two monic
+relations.  This is the step at which it would be invalid merely to
+multiply a relation defect by \(a^p\) or \(b^p\), since those elements
+are zero divisors.  The argument below proves the actual monic defects
+to be zero.
+
+In \(A_p\ot_{R_p}A_p\), use subscripts \(1,2\) for the two factors and
+put
+\begin{equation}\label{eq:star}
+ U_*=U_1+\lambda_1U_2,
+ \qquad
+ V_*=V_1\lambda_2^{-1}+V_2.
+\end{equation}
+We must prove
+\begin{equation}\label{eq:three-closure}
+ F(U_*,V_*)=0,
+ \qquad G(V_*)=0,
+ \qquad \lambda(U_*,V_*)=\lambda_1\lambda_2.
+\end{equation}
+
+\subsection{The second monic relation}
+
+Since \(\lambda_2^{-1}=M_2L_2^{-1}\), one may write
+\begin{equation}\label{eq:Vstar-formal}
+ V_*=\bigl(L_2^{-1}V_1\bigr)\oplus_bV_2.
+\end{equation}
+Lemma~\ref{lem:OT} reduces the problem to showing
+\(\Phi_b(L_2^{-1}V_1)=0\).  Using \(\Phi_b(V_1)=0\), a direct scaling
+calculation gives
+\begin{align}
+ \Phi_b(L_2^{-1}V_1)
+ &=a^p\sum_{i=1}^{p-1}w_i b^{i-1}V_1^i
+   \bigl(L_2^{-p}-L_2^{-i}\bigr).\label{eq:scaled-G}
+\end{align}
+For every \(i\), the parenthesis is divisible by
+\(L_2-1=aU_2\).  Its product with \(a^p\) is therefore zero because
+\(a^{p+1}=0\).  Hence \eqref{eq:scaled-G} vanishes.  The product term
+in \eqref{eq:OT} also vanishes, and we conclude that
+\begin{equation}\label{eq:G-closes}
+ G(V_*)=0.
+\end{equation}
+
+\subsection{The bridge and the truncated logarithm}
+
+The first relation contains the bridge
+\(b^{p-1}S_p(bV)\).  We isolate the elementary identity which makes it
+close.
+
+\begin{lemma}[Divided bridge lemma]\label{lem:bridge}
+Assume \(p\) is odd.  In the tensor square above, set
+\[
+ x=bV_1,\qquad y=bV_2,\qquad t=aU_2,
+ \qquad q=(1+x)^{-1},
+\]
+and
+\begin{equation}\label{eq:z}
+ z=bV_*=y+\frac{x(1+y)}{1+t}.
+\end{equation}
+Then
+\begin{equation}\label{eq:E}
+ \begin{split}
+ E={}&S_p(z)-S_p(x)-S_p(y)
+       +S_p(t)-S_p(tq)\\
+    &\hspace{25mm}-pS_p(x)S_p(y)
+ \end{split}
+\end{equation}
+satisfies
+\begin{equation}\label{eq:bridge-vanish}
+ b^{p-1}E=0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Modulo \(p\), the coefficients in \eqref{eq:wi} satisfy
+\[
+ w_i\equiv\frac{(-1)^{i-1}}{i}\pmod p.
+\]
+Thus \(S_p(T)\bmod p\) is the logarithm
+\[
+ \log(1+T)=\sum_{i=1}^{p-1}
+             \frac{(-1)^{i-1}}{i}T^i
+\]
+truncated just before degree \(p\).  The two elementary factorizations
+\begin{equation}\label{eq:cross-ratio}
+ 1+z=\frac{(1+y)(1+x+t)}{1+t},
+ \qquad
+ 1+tq=\frac{1+x+t}{1+x}
+\end{equation}
+give the exact formal-logarithm identity
+\begin{equation}\label{eq:log-identity}
+ \begin{split}
+ 0={}&\log(1+z)-\log(1+x)-\log(1+y)\\
+    &+\log(1+t)-\log(1+tq).
+ \end{split}
+\end{equation}
+
+Compare coefficients in \(x,y\) of total degree less than \(p\), using
+the truncated series above.  Equation \eqref{eq:log-identity} shows
+that all such coefficients in the first five terms of \(E\) vanish
+modulo \(p\), apart from terms containing \(t^p\).  Equivalently,
+before substituting the scaled defining relations,
+\begin{equation}\label{eq:E-membership}
+ E\in p(x,y)+(x,y)^p+t^p(x,y).
+\end{equation}
+The last term in \eqref{eq:E} is already in \(p(x,y)\).  From
+\eqref{eq:tp}, applied in the second tensor factor,
+\(t^p=pS_p(y)\), so the last summand in
+\eqref{eq:E-membership} also lies in \(p(x,y)\).
+
+Finally, every element of \(p(x,y)\) is divisible by \(pb\), so
+\[
+ b^{p-1}p(x,y)=0
+\]
+by \(pb^p=0\).  Every monomial in \((x,y)^p\) is divisible by \(b^p\),
+so
+\[
+ b^{p-1}(x,y)^p=0
+\]
+by \(b^{2p-1}=0\).  This proves \eqref{eq:bridge-vanish}.
+\end{proof}
+
+\begin{proposition}[Preservation of the first relation]
+\label{prop:F-closes}
+For odd \(p\), one has \(F(U_*,V_*)=0\).
+\end{proposition}
+
+\begin{proof}
+Write \(q=M_1^{-1}\).  Then
+\[
+ U_*=U_1\oplus_a(qU_2).
+\]
+The scaling defect of \(\Phi_a\) is
+\begin{equation}\label{eq:scaled-F}
+ \Phi_a(qU_2)
+ =\Phi_a(U_2)+b^{p-1}\bigl(S_p(t)-S_p(tq)\bigr),
+\end{equation}
+because \(q^p=1\).  Apply Lemma~\ref{lem:OT}, use
+\[
+ \Phi_a(U_i)=-b^{p-1}S_p(bV_i),
+\]
+and add the new bridge \(b^{p-1}S_p(bV_*)\).  The result is the exact
+defect formula
+\begin{equation}\label{eq:F-defect}
+ F(U_*,V_*)=b^{p-1}E,
+\end{equation}
+with \(E\) as in \eqref{eq:E}.  The product term in the Oort--Tate
+identity accounts for the final term
+\(-pS_p(x)S_p(y)\); terms containing the scaling correction in
+\eqref{eq:scaled-F} acquire one additional factor of \(x\) and die by
+\(b^{2p-1}=0\).  Lemma~\ref{lem:bridge} now proves that
+\eqref{eq:F-defect} is zero.
+\end{proof}
+
+\subsection{The character is group-like}
+
+The character calculation is shorter than either relation calculation.
+Put
+\begin{equation}\label{eq:C}
+ C=M_1+L_2-1=1+bV_1+aU_2.
+\end{equation}
+This is a unit: its difference from \(1\) is nilpotent.  Directly from
+\eqref{eq:star},
+\begin{align}
+ L_*:=1+aU_*
+ &=L_1M_1^{-1}C=\lambda_1C,\label{eq:Lstar}\\
+ M_*:=1+bV_*
+ &=M_2L_2^{-1}C=\lambda_2^{-1}C.\label{eq:Mstar}
+\end{align}
+Therefore
+\begin{equation}\label{eq:lambda-group-like}
+ \lambda(U_*,V_*)=L_*M_*^{-1}
+ =\lambda_1\lambda_2.
+\end{equation}
+
+Equations \eqref{eq:G-closes}, \eqref{eq:F-defect}, and
+\eqref{eq:lambda-group-like} prove all three identities in
+\eqref{eq:three-closure} for odd \(p\).  Thus \eqref{eq:Delta-main}
+defines an algebra map \(A_p\to A_p\ot A_p\).
+
+Coassociativity is now formal.  Indeed, \(\lambda\) is group-like, \(U\)
+is left \(\lambda\)-skew primitive, and \(V\) is right
+\(\lambda^{-1}\)-skew primitive.  The formulas
+\(\varepsilon(U)=\varepsilon(V)=0\), \(\varepsilon(\lambda)=1\) give
+the counit identities.  We have constructed a finite flat affine monoid.
+Section~\ref{sec:powers} will show that every element has a functorial
+inverse, completing the Hopf-algebra proof.
+
+\section{The \texorpdfstring{\(p^2\)}{p-squared}-th power carry}
+\label{sec:powers}
+
+For \(n\geq1\), put
+\begin{equation}\label{eq:norm}
+ N_n(T)=1+T+\cdots+T^{n-1}.
+\end{equation}
+The skew-primitive formulas give, in any associative monoid,
+\begin{equation}\label{eq:power-skew}
+ [n]^\#(U)=N_n(\lambda)U,
+ \qquad
+ [n]^\#(V)=V N_n(\lambda^{-1}).
+\end{equation}
+This is simply the usual geometric-sum formula for powers of an affine
+matrix.
+
+Assume first that \(p\) is odd.  From \eqref{eq:lambdap},
+\[
+ N_{p^2}(\lambda)=N_p(\lambda)N_p(\lambda^p).
+\]
+Since \(\lambda^p=1+pS_p(x)\), \(p^2=0\), and \(p\) is odd,
+\begin{equation}\label{eq:Nplambdap}
+ N_p(\lambda^p)=p.
+\end{equation}
+Moreover, \(pa=0\) implies \(pL^j=p\), and hence
+\begin{equation}\label{eq:p-lambda}
+ p\lambda^j=pM^{-j}.
+\end{equation}
+Because \(M^p=1\), inversion permutes the powers
+\(1,M,\ldots,M^{p-1}\).  Therefore
+\begin{align}
+ N_{p^2}(\lambda)
+ &=pN_p(\lambda)
+ =pN_p(M)\nonumber\\
+ &=p(bV)^{p-1}.
+ \label{eq:Np2}
+\end{align}
+In the last step we used
+\[
+ N_p(1+x)=x^{p-1}
+ +p\sum_{i=1}^{p-1}w_i x^{i-1}
+\]
+and \(p^2=0\).
+
+The same argument gives
+\begin{equation}\label{eq:Np2-inverse}
+ N_{p^2}(\lambda^{-1})=p(bV)^{p-1}.
+\end{equation}
+Substituting \eqref{eq:Np2} and \eqref{eq:Np2-inverse} into
+\eqref{eq:power-skew} yields
+\begin{align}
+ [p^2]^\#(U)&=p b^{p-1}UV^{p-1},\label{eq:p2U}\\
+ [p^2]^\#(V)&=p b^{p-1}V^p=0.\label{eq:p2V}
+\end{align}
+For the final equality, use \(V^p=a^pW_b(V)\) and \(pa=0\).
+
+The first element in \eqref{eq:p2U} is nonzero.  Indeed,
+\(UV^{p-1}\) belongs to the \(R_p\)-basis \eqref{eq:basis}, while its
+coefficient \(pb^{p-1}\) is nonzero by \eqref{eq:top-nonzero}.  This is
+the desired failure of the rank-annihilation identity.
+
+On the other hand, \(\lambda^{p^2}=1\), and
+\begin{equation}\label{eq:Np3}
+ N_{p^3}(\lambda)
+ =N_{p^2}(\lambda)N_p(\lambda^{p^2})
+ =pN_{p^2}(\lambda)=0.
+\end{equation}
+The same holds for \(\lambda^{-1}\).  Hence
+\begin{equation}\label{eq:p3zero}
+ [p^3]^\#(U)=[p^3]^\#(V)=0,
+ \qquad [p^3]=\unit.
+\end{equation}
+
+The \((p^3-1)\)-st power word is consequently a two-sided inverse in
+the finite flat monoid constructed above.  It supplies the antipode and
+proves that \(A_p\) is a Hopf algebra.
+
+\section{The prime two and the previous rank-four example}
+
+When \(p=2\), one has \(w_1=1\), \(W_c(T)=T\), and the formulas become
+\begin{equation}\label{eq:p2-base-A}
+ R_2=\Z[a,b]/(a^3,b^3,a^2b+2),
+\end{equation}
+\begin{equation}\label{eq:p2-A}
+ A_2=R_2[U,V]/(U^2-abU+b^2V,\ V^2-a^2V).
+\end{equation}
+The relation \(M^2=1\) gives \(M^{-1}=M\), so
+\begin{equation}\label{eq:p2-lambda}
+ \lambda=LM=(1+aU)(1+bV).
+\end{equation}
+This is exactly the earlier human-scale rank-four construction.
+
+For completeness, the five scalar cancellations behind closure are
+\[
+ (ab)a=-2,\qquad (a^2)b=-2,\qquad
+ a^2a=0,\qquad (-b^2)b=0,
+\]
+and
+\[
+ (-b^2)a+(ab)b=0.
+\]
+They imply directly that
+\[
+ U_*=U_1+\lambda_1U_2,
+ \qquad V_*=V_1\lambda_2+V_2
+\]
+preserve both quadrics and make \(\lambda\) multiplicative.
+
+Our uniform formula uses \(\lambda^{-1}\) in the second skew direction.
+It gives the same coproduct here.  Indeed, if
+\(\theta=\lambda-1\), then
+\[
+ \theta^2=0,\qquad 2\theta=2bV,
+\]
+so
+\[
+ V(\lambda^{-1}-\lambda)
+ =-2V\theta=-2bV^2=-2a^2bV=4V=0.
+\]
+
+The power calculation is
+\begin{equation}\label{eq:p2-powers}
+ [4]^\#(U)=2bUV\ne0,
+ \qquad [4]^\#(V)=0,
+ \qquad [8]=\unit.
+\end{equation}
+Thus Theorem~\ref{thm:main} includes \(p=2\) literally, while the
+truncated-log proof in Section~\ref{sec:closure} was needed only for odd
+primes.
+
+\section{Special fiber and noncommutativity}
+
+Modulo the maximal ideal \(\m=(a,b)\), the two equations become
+\[
+ U^p=0,\qquad V^p=0,
+\]
+and \(\lambda=1\).  Both \(U\) and \(V\) become primitive.  Therefore
+\begin{equation}\label{eq:special-fiber}
+ (G_p)_{\F_p}\simeq\alpha_p\times\alpha_p.
+\end{equation}
+
+The total group is nevertheless noncommutative.  Since \(M^p=1\), one
+may write
+\[
+ \lambda=LM^{p-1}.
+\]
+The coefficient of \(V\) in \(\lambda-1\) is
+\((p-1)b\), which is nonzero in \(R_p\).  Now
+\begin{equation}\label{eq:noncocomm}
+ \Delta(U)-\tau\Delta(U)
+ =(\lambda-1)\ot U-U\ot(\lambda-1).
+\end{equation}
+The coefficient of \(V\ot U\) in \eqref{eq:noncocomm} is
+\((p-1)b\ne0\).  Since \(A_p\ot A_p\) is free on tensor products of
+the basis \eqref{eq:basis}, the displayed element is nonzero.  Hence the
+coproduct is not cocommutative and \(G_p\) is noncommutative, as it must
+be in view of Deligne's theorem.
+
+\section{The first odd case: \texorpdfstring{\(p=3\)}{p=3}}
+
+It is useful to display the first genuinely new case without summation
+notation.  Here
+\[
+ w_1=w_2=1,
+ \qquad W_c(T)=T+cT^2.
+\]
+The base is
+\begin{equation}\label{eq:p3-base}
+ R_3=\Z[a,b]/(a^4,b^5,a^3b^2+3),
+\end{equation}
+and
+\begin{equation}\label{eq:p3-A}
+ \begin{split}
+ A_3=R_3[U,V]/(&U^3-ab^2U-a^2b^2U^2+b^3V+b^4V^2,\\
+               &V^3-a^3V-a^3bV^2).
+ \end{split}
+\end{equation}
+It is free on the nine monomials \(U^iV^j\), \(0\leq i,j\leq2\).
+With
+\[
+ L=1+aU,\qquad M=1+bV,
+\]
+the relations give
+\[
+ M^3=1,
+ \qquad L^3=1+3bV+3b^2V^2.
+\]
+Thus
+\[
+ \lambda=LM^2,
+ \qquad
+ \lambda^{-1}=ML^2(1-3bV-3b^2V^2).
+\]
+The coproduct is
+\[
+ \Delta(U)=U\ot1+\lambda\ot U,
+ \qquad
+ \Delta(V)=V\ot\lambda^{-1}+1\ot V.
+\]
+The ninth-power calculation is
+\begin{equation}\label{eq:p3-power}
+ [9]^\#(U)=3b^2UV^2=-a^3b^4UV^2\ne0,
+ \qquad [9]^\#(V)=0,
+ \qquad [27]=\unit.
+\end{equation}
+The nonzero coefficient \(3b^2=-a^3b^4\) is the top class of
+\(R_3\).
+
+\section{Conceptual summary}
+
+The construction has four moving parts.
+\begin{enumerate}
+\item The base relation
+\[
+ a^pb^{p-1}=-p
+\]
+turns the two degree-\(p\) polynomials into affine, Oort--Tate-type
+blocks.  The deeper nilpotence bounds retain the final class
+\[
+ pb^{p-1}=-a^pb^{2p-2}.
+\]
+\item The term \(b^pW_b(V)\) in the first equation is the higher-prime
+bridge.  Without it, the two rank-\(p\) directions would form an overly
+simple extension.  The bridge is exactly what the divided logarithm in
+Lemma~\ref{lem:bridge} transports under multiplication.
+\item The ratio
+\[
+ \lambda=\frac{1+aU}{1+bV}
+\]
+is a character.  The opposite exact skew directions in
+\eqref{eq:Delta-main} make its multiplicativity reduce to the common
+factor \(C=M_1+L_2-1\).
+\item The first \(p\)-adically nontrivial term in the geometric sum of
+length \(p^2\) is
+\[
+ p(bV)^{p-1}.
+\]
+Multiplying by the skew coordinate \(U\) produces the surviving class
+\(pb^{p-1}UV^{p-1}\).  One further block of \(p\) powers kills it, which
+explains \([p^3]=\unit\).
+\end{enumerate}
+
+Thus the rank-four fourth-power carry is not an isolated phenomenon at
+the prime two.  It is the first case of a uniform family of rank-\(p^2\)
+counterexamples, with the square-zero expression \(2bUV\) replaced by
+the divided \(p\)-stage carry
+\[
+ p b^{p-1}UV^{p-1}.
+\]
+
+\section{Independent exact checks}
+
+The proof above is by hand.  As bounded local checks, the three closure
+normal forms
+\[
+ F(U_*,V_*),\qquad G(V_*),\qquad
+ \lambda(U_*,V_*)-\lambda_1\lambda_2
+\]
+were also reduced exactly over \(\Z\) in Macaulay2 for
+\(p=3,5,7\).  In every case the three normal forms were
+\[
+ 0,\qquad0,\qquad0.
+\]
+The \(p=5\) and \(p=7\) checks are useful guards against two accidental
+small-prime simplifications: the coefficients \(w_i\) cease to be all
+one, and the nilpotence box becomes substantially larger.  These checks
+are not used as a substitute for the arbitrary-\(p\) divided identities
+in Sections~\ref{sec:closure} and~\ref{sec:powers}.
+
+The saved representative odd-prime audit is
+\begin{center}
+\path{m2/verify_rank_p2_uniform_p5_20260712.m2}.
+\end{center}
+It also verifies the nonzero \([25]\)-carry and the vanishing needed for
+the \([125]\)-word.
+
+For \(p=2\), the pre-existing exact audit is
+\begin{center}
+\path{m2/verify_human_scale_affine_rank4_counterexample_20260712.m2}.
+\end{center}
+
+\end{document}

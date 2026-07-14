@@ -1,0 +1,11 @@
+class	e	characteristic	canonical_relation_with_t6_zero	raw_coordinate_orbit	automorphic_uniformizers
+C01	1	64	2=t	e1_0000,e1_0001,e1_0010,e1_0011,e1_0100,e1_0101,e1_0110,e1_0111,e1_1000,e1_1001,e1_1010,e1_1011,e1_1100,e1_1101,e1_1110,e1_1111	1
+C02	2	8	2=t^2	e2_000,e2_011	8
+C03	2	8	2=t^2+t^5	e2_001,e2_010	8
+C04	2	8	2=t^2+t^3	e2_100,e2_101	8
+C05	2	8	2=t^2+t^3+t^4	e2_110,e2_111	8
+C06	3	4	2=t^3	e3_00,e3_01,e3_10,e3_11	4
+C07	4	4	2=t^4	e4_0	16
+C08	4	4	2=t^4+t^5	e4_1	16
+C09	5	4	2=t^5	e5_-	16
+C10	inf	2	2=0	eqchar	16

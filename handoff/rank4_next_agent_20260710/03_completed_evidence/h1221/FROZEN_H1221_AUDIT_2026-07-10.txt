@@ -1,0 +1,30 @@
+H1221 SPLIT-LOG AUDIT
+log_dirs=scripts
+universe rings=19 rows_per_ring=10 rows=190 coordinate_tasks=570
+files matched=510 recognized=510 malformed_or_out_of_scope=0 duplicate_task_copies=0
+PER-RING ROW COUNTS
+  q01: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q03: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q05: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q06: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q07: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q08: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q09: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q10: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q15: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q16: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q17: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q18: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q20: closed UNSAT=10, H0-vacuous=0, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q21: closed UNSAT=5, H0-vacuous=5, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q22: closed UNSAT=5, H0-vacuous=5, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q23: closed UNSAT=5, H0-vacuous=5, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q24: closed UNSAT=5, H0-vacuous=5, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q25: closed UNSAT=5, H0-vacuous=5, SAT candidate=0, unknown=0, incomplete=0, error=0
+  q27: closed UNSAT=5, H0-vacuous=5, SAT candidate=0, unknown=0, incomplete=0, error=0
+GLOBAL ROW COUNTS closed UNSAT=160, H0-vacuous=30, SAT candidate=0, unknown=0, incomplete=0, error=0
+TASK COUNTS terminal=510, missing=60, truncated=0, error=0; terminal_outcomes=H0-vacuous=30,UNSAT=480,SAT=0,unknown=0
+PROCESS RESOURCES logs=510 elapsed_sum_seconds=15715.66 maxrss_max_mib=1645.00 platforms=darwin:510
+ROW DETAILS displayed=0
+AUDIT ISSUES count=0
+MISSING/RETRY TASK COMMANDS count=0

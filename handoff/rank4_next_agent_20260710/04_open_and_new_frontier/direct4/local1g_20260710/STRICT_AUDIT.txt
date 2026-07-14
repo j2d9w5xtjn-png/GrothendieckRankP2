@@ -1,0 +1,14 @@
+MONOGENIC DIRECT-[4] STRICT LOCAL AUDIT
+run=local1g_20260710 cases=6 audited_resources=6
+  sf2_g0_a0: H0=SAT D1=UNSAT elapsed=14.63s maxrss=462.83MiB platform=darwin
+  sf2_g0_a1: H0=SAT D1=UNSAT elapsed=16.48s maxrss=461.67MiB platform=darwin
+  sf2_g1_a0: H0=SAT D1=UNSAT elapsed=15.56s maxrss=479.55MiB platform=darwin
+  sf2_g1_a1: H0=SAT D1=UNSAT elapsed=15.75s maxrss=497.50MiB platform=darwin
+  q00_a0: H0=SAT D1=UNSAT elapsed=11.78s maxrss=493.61MiB platform=darwin
+  q00_a1: H0=SAT D1=UNSAT elapsed=13.65s maxrss=497.91MiB platform=darwin
+AUDIT PASS six_of_six_H0_SAT_and_direct4_UNSAT errors=0 unknown=0 SAT=0
+
+Command:
+/Users/akhilmathew/.venvs/z3env/bin/python scripts/audit_monogenic_stretched_direct4_local_20260710.py results/monogenic_direct4/local1g_20260710
+
+Exit code: 0

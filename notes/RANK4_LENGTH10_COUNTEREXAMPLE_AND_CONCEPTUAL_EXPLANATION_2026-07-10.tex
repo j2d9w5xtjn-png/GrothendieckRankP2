@@ -1,0 +1,1562 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,longtable,array}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{xurl}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=blue!55!black,
+  urlcolor=blue!55!black,
+  pdftitle={A length-ten base for the rank-four counterexample: structure and deformation theory}
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\F}{\mathbf F}
+\newcommand{\Z}{\mathbf Z}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Soc}{\operatorname{Soc}}
+\newcommand{\gr}{\operatorname{gr}}
+\newcommand{\length}{\operatorname{length}}
+\newcommand{\Ann}{\operatorname{Ann}}
+\newcommand{\GL}{\operatorname{GL}}
+\newcommand{\Ad}{\operatorname{Ad}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\m}{\mathfrak m}
+\newcommand{\n}{\mathfrak n}
+
+\title{A Length-Ten Base for the Rank-Four Counterexample:\\
+Its Linear, Subgroup, and Deformation-Theoretic Structure}
+\author{Exact compression and independent audit of the universal cubic construction}
+\date{11 July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The previously audited rank-four group scheme not killed by four was defined
+over a universal Artin ring of length \(632\).  This note compresses it to an
+explicit characteristic-four local Gorenstein ring \(R\) of length \(10\)
+and cardinality \(2^{10}=1024\).  We give a four-generator presentation of
+\(R\), the complete multiplication and coproduct tables of the rank-four
+Hopf algebra, and an explicit antipode.  Direct calculation gives
+\[
+ [4]^\#(e_1)=(2z)e_3\ne0,
+ \qquad [4]^\#(e_2)=[4]^\#(e_3)=0,
+ \qquad [8]^\#=\iota\eps.
+\]
+The construction is governed by the divided-power cubic
+\[
+ X^{[2]}Z+XYD+YD^{[2]}+Z^{[3]}.
+\]
+Conceptually, the fourth-power obstruction is the product of a
+mixed-characteristic carry with the first noncocommutative symbol.  If
+\(P=\iota\eps\), where \(\iota:R\to A\) is the unit, \(\phi=[2]^\#\), and
+\(\psi=\phi-P\), then already on the
+universal cubic base one has the exact identity
+\[
+ \psi^2=2\psi.
+\]
+Thus the cubic obstruction is intrinsically ``Bockstein-type carry times
+noncommutativity.''  A bounded exact Boolean MinRank computation returns
+UNSAT in rank at most three; conditional on that solver verdict, length
+\(10\) is minimal among all Artin quotients of the audited universal cubic
+base on which either fourth-power defect survives.  This is not asserted to
+be a global minimum among every conceivable unrelated construction.  We
+also describe the resulting group in several complementary ways.  Its
+coordinate algebra is a two-equation relative complete intersection, its
+dual is a four-dimensional PBW-type measure algebra, and reduced right
+translation gives a closed immersion \(G\hookrightarrow\GL_{3,R}\), of
+minimal possible dimension.  The group has exactly sixteen rank-two finite
+flat subgroups over \(R\), all abstractly the same Oort--Tate group and none
+normal.  Finally, a length-\(6\to8\to10\) deformation tower separates the two
+phenomena: the first square-zero lift destroys a rank-two normal filtration,
+while the last square-zero lift creates the nonzero fourth-power class.
+\end{abstract}
+
+\tableofcontents
+
+\section{Statement of the result and scope}
+
+The main construction is completely explicit.
+
+\begin{theorem}\label{thm:main}
+There is a finite local ring \(R\) and a finite locally free group scheme
+\(G/\Spec R\) with the following properties.
+\begin{enumerate}
+\item \(R\) has characteristic \(4\), residue field \(\F_2\), cardinality
+  \(2^{10}\), Hilbert function \((1,4,4,1)\), and one-dimensional socle.
+\item \(G\) has rank \(4\), its unique geometric fiber is
+  \(\alpha_2\times\alpha_2\), and \(G\) is noncommutative.
+\item The fourth-power word is nontrivial, while the eighth-power word is
+  trivial.  Thus \(G\) is not killed by its order:
+  \[
+    [4]\ne e,\qquad [8]=e.
+  \]
+\item \(G\) embeds as a closed subgroup of \(\GL_{3,R}\), but not of
+  \(\GL_{2,R}\).  It has rank-two finite flat closed subgroups but no normal
+  one, and hence no nontrivial finite-flat composition filtration.
+\end{enumerate}
+\end{theorem}
+
+The earlier universal base had Hilbert function \((1,15,107,509)\), length
+\(632\), and cardinality \(2^{632}\).  The new base therefore changes the
+size as follows.
+\begin{center}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+base & characteristic & Hilbert function & length & cardinality\\
+\midrule
+universal cubic base & \(4\) & \((1,15,107,509)\) & \(632\) & \(2^{632}\)\\
+compressed base \(R\) & \(4\) & \((1,4,4,1)\) & \(10\) & \(2^{10}\)\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+There are two different minimality statements to keep separate.
+\begin{itemize}
+\item The length-ten ring is optimal among \emph{all Artin quotients of the
+audited universal cubic base} which retain either nonzero fourth-power
+coordinate.  This is proved in Section~\ref{sec:minimality}.
+\item No claim is made here that an unrelated rank-four counterexample over
+an arbitrary base must have length at least ten.  Earlier exact work summarized
+in \path{STRUCTURAL_LENGTH6_QUOTIENTS_F2_2026-07-10.md} (not re-audited in
+this note) excludes residue-\(\F_2\) bases of length at most six; lengths
+seven, eight, and nine remain the honest global frontier unless one proves
+that every such counterexample is controlled by this cubic chart.
+\end{itemize}
+
+\section{The length-ten base ring}\label{sec:base}
+
+\subsection{A compact four-generator presentation}
+
+Define
+\begin{equation}\label{eq:R-presentation}
+R=(\Z/4)[x,y,z,d]/J,
+\end{equation}
+where
+\begin{equation}\label{eq:J}
+\begin{split}
+J=\bigl(&2x,2y,2d,\ x^2-2,\ z^2-2,\ y^2,\ yz,\ zd,\\
+        &d^2-xd,\ yd-xz-xy\bigr).
+\end{split}
+\end{equation}
+Put
+\begin{equation}\label{eq:secondary-names}
+ \xi=xz,\qquad \eta=xd,\qquad \omega=xy,
+ \qquad \sigma=2z.
+\end{equation}
+Every element has a unique additive normal form
+\begin{equation}\label{eq:additive-normal-form}
+ a+bz+\alpha x+\beta y+\gamma d
+       +\lambda\xi+\mu\eta+\nu\omega,
+\end{equation}
+where \(a,b\in\Z/4\) and the six Greek coefficients lie in \(\F_2\).
+Consequently
+\begin{equation}\label{eq:additive-type}
+ R_{\mathrm{add}}\simeq(\Z/4)^2\oplus(\Z/2)^6,
+ \qquad |R|=2^{10}.
+\end{equation}
+
+\subsection{The inverse-system description}
+
+The cleanest proof that the presentation is consistent and associative uses
+a cubic inverse system.  Let
+\[
+ V=\F_2\{X,Y,Z,D\},\qquad V^\vee=\F_2\{X^\vee,Y^\vee,Z^\vee,D^\vee\},
+\]
+and let
+\begin{equation}\label{eq:cubic}
+ \mathcal G=X^{[2]}Z+XYD+YD^{[2]}+Z^{[3]}
+\end{equation}
+be a divided-power cubic.  Equivalently, its symmetric trilinear functional
+is one precisely on the unordered triples
+\[
+ (X,X,Z),\quad(X,Y,D),\quad(Y,D,D),\quad(Z,Z,Z).
+\]
+Write
+\[
+ B_{\mathcal G}:\operatorname{Sym}^2(V)\longrightarrow V^\vee,
+ \qquad B_{\mathcal G}(v,w)(t)=\mathcal G(v,w,t).
+\]
+
+Start with the additive group
+\begin{equation}\label{eq:apolar-additive}
+ \Z/4\{1\}\oplus\Z/4\{Z\}
+ \oplus\F_2\{X,Y,D,X^\vee,Y^\vee,D^\vee\}.
+\end{equation}
+Identify
+\begin{equation}\label{eq:ramified-identifications}
+ Z^\vee=2,\qquad s=2Z.
+\end{equation}
+Give it a unital multiplication by declaring, for \(v,w\in V\) and
+\(\lambda,\mu\in V^\vee\),
+\begin{equation}\label{eq:apolar-products}
+ vw=B_{\mathcal G}(v,w),\qquad
+ v\lambda=\lambda(v)s,\qquad
+ \lambda\mu=0,\qquad \m s=0.
+\end{equation}
+The identification \(Z^\vee=2\) is compatible with the additive group:
+both rules give \(2v=0\) for \(v=X,Y,D\), and \(2Z=s\).
+More explicitly, \(Z^\vee v=2v=Z^\vee(v)s\), while
+\((2Z)v=2B_{\mathcal G}(Z,v)=0=sv\); the same compatibility against
+\(V^\vee\) and \(s\) is immediate.  Hence the declared products descend
+through both ramified identifications in \eqref{eq:ramified-identifications}.
+
+Associativity is now transparent.  On three tangent vectors,
+\[
+ (v_1v_2)v_3=\mathcal G(v_1,v_2,v_3)s
+             =v_1(v_2v_3)
+\]
+by symmetry of \(\mathcal G\).  If two factors lie in \(V^\vee\), or one
+factor is \(s\), both bracketings vanish.  The remaining cases reduce to the
+evaluation pairing in \eqref{eq:apolar-products}.  This constructs an
+associative commutative ring of order \(2^{10}\).
+
+Its nonzero products between tangent generators, up to symmetry, are
+\begin{equation}\label{eq:tangent-products}
+\begin{aligned}
+ X^2&=Z^2=2,& XY&=D^\vee,& XZ&=X^\vee,& XD&=Y^\vee,\\
+ YD&=X^\vee+D^\vee,& D^2&=Y^\vee.&&
+\end{aligned}
+\end{equation}
+Upon putting \((X,Y,Z,D)=(x,y,z,d)\), this is exactly
+\eqref{eq:R-presentation}--\eqref{eq:J}, with
+\[
+ X^\vee=\xi,\qquad Y^\vee=\eta,\qquad D^\vee=\omega.
+\]
+Conversely, the relations in \(J\) reduce every monomial to the span in
+\eqref{eq:additive-normal-form}, so the presentation has at most \(2^{10}\)
+elements.  Its map onto the just-constructed table ring has \(2^{10}\)
+elements, proving both uniqueness of the normal form and the claimed
+isomorphism.
+
+\subsection{Locality, Hilbert function, and socle}
+
+\begin{proposition}\label{prop:base-invariants}
+The ring \(R\) is local Gorenstein of characteristic \(4\).  Its maximal
+ideal and its powers are
+\begin{align}
+ \m&=(x,y,z,d),\nonumber\\
+ \m^2&=\F_2\{2,\xi,\eta,\omega,\sigma\},\nonumber\\
+ \m^3&=\F_2\{\sigma\},\qquad \m^4=0.\label{eq:m-powers}
+\end{align}
+Moreover
+\[
+ \Soc(R)=\F_2\sigma,\qquad H_R=(1,4,4,1),
+ \qquad \length(R)=10.
+\]
+\end{proposition}
+
+\begin{proof}
+The quotient by \((x,y,z,d)\) is \(\F_2\).  In the normal form
+\eqref{eq:additive-normal-form}, an element is a unit exactly when its
+constant coefficient is odd, so this is the unique maximal ideal.  The
+relations give \eqref{eq:m-powers} directly.
+
+The degree-one and degree-two pairing into the top line is perfect.  In the
+ordered bases \((x,y,z,d)\) and \((\xi,\eta,2,\omega)\), its diagonal
+products are
+\begin{equation}\label{eq:perfect-pairing}
+ x\xi=y\eta=z\cdot2=d\omega=\sigma,
+\end{equation}
+and all off-diagonal products are zero.  Hence no nonzero class in
+\(\m/\m^2\) or \(\m^2/\m^3\) annihilates \(\m\).  Since \(\m\sigma=0\),
+the socle is exactly \(\F_2\sigma\).  The successive dimensions in
+\eqref{eq:m-powers} are \((1,4,4,1)\), whose sum is ten.  Finally \(2\ne0\)
+and \(4=0\), so the characteristic is exactly four.
+\end{proof}
+
+\section{The explicit rank-four Hopf algebra}\label{sec:hopf}
+
+Let
+\[
+ A=R\{1,e_1,e_2,e_3\}
+\]
+be free of rank four.  Its augmentation sends \(e_1,e_2,e_3\) to zero.
+Define a commutative multiplication by
+\begin{equation}\label{eq:A-multiplication}
+\begin{aligned}
+ e_1^2&=xe_1+ye_2,& e_1e_2&=e_3,& e_1e_3&=xe_3,\\
+ e_2^2&=ze_2,&e_2e_3&=ze_3,&e_3^2&=\xi e_3.
+\end{aligned}
+\end{equation}
+Put
+\begin{equation}\label{eq:q-sigma}
+ q=x(y+z)=\xi+\omega,\qquad \sigma=2z.
+\end{equation}
+The coproduct is
+\begin{equation}\label{eq:Delta1}
+\begin{split}
+\Delta(e_1)={}&e_1\otimes1+1\otimes e_1
+ +x e_1\otimes e_1 +(y+z)e_2\otimes e_1+q e_3\otimes e_1,
+\end{split}
+\end{equation}
+\begin{equation}\label{eq:Delta2}
+\begin{split}
+\Delta(e_2)={}&e_2\otimes1+1\otimes e_2
+ +d e_2\otimes e_1 +(y+z)e_2\otimes e_2+q e_2\otimes e_3,
+\end{split}
+\end{equation}
+and
+\begin{equation}\label{eq:Delta3}
+\begin{split}
+\Delta(e_3)={}&e_3\otimes1+1\otimes e_3
+ +e_1\otimes e_2+e_2\otimes e_1+x e_1\otimes e_3\\
+& +(2+\eta)e_2\otimes e_1+q e_2\otimes e_2
+  +\sigma e_2\otimes e_3\\
+& +(x+d)e_3\otimes e_1+(y+z+\sigma)e_3\otimes e_2
+  +q e_3\otimes e_3.
+\end{split}
+\end{equation}
+
+\begin{proposition}\label{prop:hopf}
+Equations \eqref{eq:A-multiplication}--\eqref{eq:Delta3}, together with
+\(\Delta(1)=1\otimes1\), make \(A\) a counital bialgebra.  An antipode is
+given by
+\begin{equation}\label{eq:antipode}
+\begin{aligned}
+ S(e_1)&=e_1+\omega e_2+(y+z)e_3,\\
+ S(e_2)&=e_2+d e_3,\\
+ S(e_3)&=(3+\eta)e_3,\qquad S(1)=1.
+\end{aligned}
+\end{equation}
+Consequently \(G=\Spec A\) is a finite locally free group scheme of rank
+four over \(R\).
+\end{proposition}
+
+\begin{proof}[Exact verification]
+All claims are identities in the 1024-element ring of composition length ten described in
+Section~\ref{sec:base}.  The algebra associators reduce immediately from
+\eqref{eq:A-multiplication}.  For example,
+\[
+ (e_1^2)e_2=xe_3+yz e_2=xe_3=e_1(e_1e_2),
+\]
+and
+\[
+ (e_1^2)e_3=x^2e_3+yz e_3=2e_3=e_1(e_1e_3).
+\]
+The remaining basis triples are of the same size.
+The coordinate formula for multiplication in \(R\) is biadditive by
+construction.  As an implementation gate, the verifier also checks the
+distributive translation identity for every one of the \(1024\) ring
+elements and every pair of additive generators.
+
+For the coproduct, direct expansion verifies
+\[
+ (\Delta\otimes\id)\Delta(e_i)
+ =(\id\otimes\Delta)\Delta(e_i),
+ \qquad
+ \Delta(e_ie_j)=\Delta(e_i)\Delta(e_j)
+\]
+for all basis indices.  The exact dependency-free verifier listed in
+Section~\ref{sec:audit} checks all \(4^3=64\) algebra associators, all
+\(4^2=16\) multiplicativity identities in the \(16\)-element tensor basis,
+and all four coassociativity identities in the \(64\)-element triple-tensor
+basis.  It then checks both convolution equations
+\[
+ \id*S=\iota\eps=S*\id
+\]
+for the explicit map \eqref{eq:antipode}.  The computation uses the literal
+ring table and integer bit tuples; it invokes neither a solver nor a
+Groebner basis.  A separate substitution into the independently exported
+\(189\) universal bialgebra equations gives zero in every coordinate.
+These finite coefficient checks prove the displayed identities exactly.
+\end{proof}
+
+Modulo \(\m\), the formulas reduce to
+\[
+ A/\m A\simeq\F_2[e_1,e_2]/(e_1^2,e_2^2),\qquad e_3=e_1e_2,
+\]
+with the usual coproduct of \(\alpha_2\times\alpha_2\).  Thus the failure
+below is purely infinitesimal.
+
+\section{Other descriptions of the group scheme}\label{sec:descriptions}
+
+\subsection{A relative complete intersection and its functor of points}
+
+The six products in \eqref{eq:A-multiplication} can be compressed to two
+monic equations.
+
+\begin{proposition}\label{prop:complete-intersection}
+There is an augmented-algebra isomorphism
+\begin{equation}\label{eq:CI-presentation}
+ A\simeq R[U,V]/(U^2-xU-yV,\ V^2-zV),
+ \qquad e_1=U,\quad e_2=V,\quad e_3=UV.
+\end{equation}
+In particular, the underlying finite flat scheme is an iterated pair of
+monic quadratic covers, a relative complete intersection, and relative
+Gorenstein.
+\end{proposition}
+
+\begin{proof}
+The two monic relations reduce every polynomial uniquely to the
+\(R\)-span of \(1,U,V,UV\).  They imply
+\[
+ U(UV)=xUV+yzV=xUV,\qquad V(UV)=zUV,
+\]
+and
+\[
+ (UV)^2=(xU+yV)(zV)=xz(UV),
+\]
+because \(yz=0\).  Thus they reproduce the full multiplication table
+\eqref{eq:A-multiplication}; both sides are free of rank four, so the
+displayed surjection is an isomorphism.  The final assertions are the
+standard consequences of a monic codimension-two complete intersection.
+\end{proof}
+
+Consequently, for every commutative \(R\)-algebra \(T\),
+\begin{equation}\label{eq:points}
+ G(T)=\{(u,v)\in T^2:u^2=xu+yv,\ v^2=zv\}.
+\end{equation}
+Put \(w=uv\), and write a second point as
+\(P'=(u',v',w')\), where \(w'=u'v'\).  Evaluating the coproduct gives
+\begin{equation}\label{eq:point-law}
+\begin{aligned}
+ u''={}&u+u'+u'\bigl(xu+(y+z)v+q uv\bigr),\\
+ v''={}&v+v'+v\bigl(du'+(y+z)v'+q u'v'\bigr),\\
+ w''={}&u''v''.
+\end{aligned}
+\end{equation}
+The identity is \((0,0)\), and the inverse is
+\begin{equation}\label{eq:point-inverse}
+ (u,v)^{-1}
+ =\bigl(u+\omega v+(y+z)uv,\ v+duv\bigr).
+\end{equation}
+These formulas are polynomial identities subject to
+\eqref{eq:points}; no choice of geometric points is involved.  Modulo
+\(\m\), they become ordinary addition on
+\(\alpha_2^2(T)=\{(u,v):u^2=v^2=0\}\).
+
+\subsection{The dual measure Hopf algebra}
+
+Let \(D=A^\vee=\operatorname{Hom}_R(A,R)\), let \(1_D=\eps\), and let
+\(E_i\) be dual to \(e_i\) and vanish on \(1\).  Dualizing the coproduct
+of \(A\) gives the following multiplication table:
+\begin{equation}\label{eq:dual-multiplication}
+\begin{array}{lll}
+E_1^2=xE_1,&E_1E_2=E_3,
+ &E_2E_1=(y+z)E_1+dE_2+(3+\eta)E_3,\\
+E_1E_3=xE_3,&E_3E_1=qE_1+(x+d)E_3,
+ &E_2^2=(y+z)E_2+qE_3,\\
+E_2E_3=qE_2+\sigma E_3,
+ &E_3E_2=(y+z+\sigma)E_3,&E_3^2=qE_3.
+\end{array}
+\end{equation}
+Thus \(D\) is a PBW-type algebra with basis
+\(1,E_1,E_2,E_1E_2\).  Its decisive reordering relation is
+\begin{equation}\label{eq:dual-reordering}
+ E_2E_1=(y+z)E_1+dE_2+(3+\eta)E_1E_2.
+\end{equation}
+In particular, noncommutativity can be read either from \(\Delta_A\) or
+from multiplication in \(D\).
+
+Dualizing the multiplication of \(A\) gives the cocommutative coalgebra
+\begin{align}
+ \Delta_D(E_1)={}&E_1\otimes1+1\otimes E_1+xE_1\otimes E_1,
+ \label{eq:dual-Delta1}\\
+ \Delta_D(E_2)={}&E_2\otimes1+1\otimes E_2
+  +yE_1\otimes E_1+zE_2\otimes E_2,
+ \label{eq:dual-Delta2}\\
+ \Delta_D(E_3)={}&E_3\otimes1+1\otimes E_3
+  +E_1\otimes E_2+E_2\otimes E_1\nonumber\\
+ &+x(E_1\otimes E_3+E_3\otimes E_1)
+  +z(E_2\otimes E_3+E_3\otimes E_2)
+  +\xi E_3\otimes E_3.\label{eq:dual-Delta3}
+\end{align}
+The antipode is
+\begin{equation}\label{eq:dual-antipode}
+\begin{aligned}
+ S_D(E_1)&=E_1,\\
+ S_D(E_2)&=\omega E_1+E_2,\\
+ S_D(E_3)&=(y+z)E_1+dE_2+(3+\eta)E_3.
+\end{aligned}
+\end{equation}
+This is the finite distribution, or measure, Hopf algebra of \(G\).
+Because its algebra is noncommutative, \(D\) is not the coordinate ring of
+a Cartier-dual affine group scheme.  On the special fiber it becomes
+\(\F_2[E_1,E_2]/(E_1^2,E_2^2)\), the usual measure algebra of
+\(\alpha_2^2\).
+
+\section{Faithful linear representations}\label{sec:linear}
+
+For \(g=(u,v,w)\in G(T)\), right translation on functions is
+\(r_g^*=(\id\otimes g)\Delta\).  In the basis
+\((1,e_1,e_2,e_3)\), put
+\begin{equation}\label{eq:KLM}
+\begin{aligned}
+ K&=1+du+(y+z)v+qw,\\
+ L&=(3+\eta)u+qv+\sigma w,\\
+ M&=1+(x+d)u+(y+z+\sigma)v+qw.
+\end{aligned}
+\end{equation}
+Then
+\begin{equation}\label{eq:GL4-matrix}
+ \widetilde\rho(g)=
+ \begin{pmatrix}
+ 1&u&v&w\\
+ 0&1+xu&0&v+xw\\
+ 0&(y+z)u&K&L\\
+ 0&qu&0&M
+ \end{pmatrix}.
+\end{equation}
+Coassociativity gives
+\(\widetilde\rho(gg')=\widetilde\rho(g)\widetilde\rho(g')\), and the
+inverse matrix is \(\widetilde\rho(g^{-1})\).  Since the first row contains
+the three universal coordinate functions, this already realizes \(G\) as a
+closed subgroup of \(\GL_{4,R}\).
+
+There is a smaller faithful representation.  The constant line \(R1\) is
+fixed, so right translation descends to the free rank-three quotient
+\begin{equation}\label{eq:reduced-regular}
+ Q=A/R1=R\{\bar e_1,\bar e_2,\bar e_3\}.
+\end{equation}
+The resulting reduced right regular representation is
+\begin{equation}\label{eq:GL3-matrix}
+ \rho(g)=
+ \begin{pmatrix}
+ 1+xu&0&v+xw\\
+ (y+z)u&K&L\\
+ qu&0&M
+ \end{pmatrix}.
+\end{equation}
+
+\begin{theorem}\label{thm:GL3-minimal}
+The morphism
+\[
+ \rho:G\longrightarrow\GL(Q)\simeq\GL_{3,R}
+\]
+is a closed immersion.  No closed immersion
+\(G\hookrightarrow\GL_{2,R}\) exists.  Thus three is the minimal dimension
+of a faithful finite locally free representation of \(G\).
+\end{theorem}
+
+\begin{proof}
+Invertibility of \eqref{eq:GL3-matrix} follows either from
+\eqref{eq:GL4-matrix}, which fixes \(R1\), or directly from
+\(\rho(g^{-1})\).  To prove scheme-theoretic faithfulness, consider its two
+matrix coefficients
+\[
+ \mathcal U=e_2+xe_3,\qquad
+ \mathcal V=(3+\eta)e_1+qe_2+\sigma e_3.
+\]
+The base-ring identities
+\[
+ qx=\sigma,\qquad (3+\eta)^2=1
+\]
+give
+\begin{equation}\label{eq:recover-e1}
+ e_1=(3+\eta)(\mathcal V-q\mathcal U).
+\end{equation}
+Moreover
+\[
+ \mathcal U=(1+xe_1)e_2.
+\]
+If \(t=xe_1\), then \(t^4=0\) because \(x^4=0\).  Hence
+\begin{equation}\label{eq:recover-e2}
+ e_2=(1-t+t^2-t^3)\mathcal U,
+ \qquad e_3=e_1e_2.
+\end{equation}
+Thus the matrix coefficients generate all of \(A\), which says precisely
+that \(\mathcal O(\GL_3)\to A\) is surjective.
+
+For minimality, base change to \(k=R/\m=\F_2\).  The representation becomes
+\begin{equation}\label{eq:special-GL3}
+ (u,v)\longmapsto
+ \begin{pmatrix}1&0&v\\0&1&u\\0&0&1\end{pmatrix},
+ \qquad G_k\simeq\alpha_2^2.
+\end{equation}
+A closed immersion \(\alpha_2^2\hookrightarrow\GL_{2,k}\) would inject
+restricted Lie algebras and therefore give two linearly independent,
+commuting, square-zero matrices in \(M_2(k)\).  A nonzero square-zero
+matrix is conjugate to \(E_{12}\).  Its centralizer consists of
+\(aI+bE_{12}\), and the square-zero elements in this centralizer are only
+the multiples \(bE_{12}\).  Such an independent pair cannot exist.
+\end{proof}
+
+The representation itself has a useful filtration:
+\begin{equation}\label{eq:module-filtration}
+ 0\subset R\bar e_2\subset Q.
+\end{equation}
+Indeed, the middle column of \eqref{eq:GL3-matrix} is
+\((0,K,0)^{\mathsf t}\).  In the reordered basis
+\((\bar e_2,\bar e_1,\bar e_3)\), the image lies in the parabolic stabilizing
+a line.  This is a filtration of a \(G\)-module, not a filtration of \(G\)
+by subgroup schemes.  On the special fiber, the invariant line is trivial
+and sees neither \(\alpha_2\)-direction; the two-dimensional quotient sees
+only the \(v\)-direction.  The off-diagonal extension entry
+\(L\bmod\m=u\) records the other direction.
+
+\section{Rank-two subgroups, cosets, and filtrations}
+\label{sec:subgroups}
+
+\subsection{An explicit Oort--Tate subgroup and its coset space}
+
+Setting \(e_2=e_3=0\) in the Hopf algebra gives a surjection
+\begin{equation}\label{eq:basic-H-quotient}
+ A\longrightarrow B_x=R[T]/(T^2-xT),\qquad
+ e_1\mapsto T,\quad e_2,e_3\mapsto0,
+\end{equation}
+where
+\begin{equation}\label{eq:basic-H-Hopf}
+ \Delta(T)=T\otimes1+1\otimes T+xT\otimes T,
+ \qquad S(T)=T.
+\end{equation}
+Thus it defines a rank-two closed subgroup \(H_x\subset G\).  In the
+normalization used here, this is the self-dual Oort--Tate group with
+parameter pair \((x,x)\); the parameter relation is \(x^2=2=-2\).  It is
+killed by two because
+\begin{equation}\label{eq:H-killed-two}
+ [2]^\#(T)=2T+xT^2=(2+x^2)T=0.
+\end{equation}
+
+The subgroup has a concrete quotient as a homogeneous space.  Put
+\begin{equation}\label{eq:left-coset-algebra}
+ C=R[V]/(V^2-zV).
+\end{equation}
+By \eqref{eq:CI-presentation}, \(A=C[U]/(U^2-xU-yV)\), free of rank two
+over \(C\).  The left \(H_x\)-coaction is
+\begin{equation}\label{eq:left-H-coaction}
+ \lambda(V)=1\otimes V,\qquad
+ \lambda(U)=T\otimes1+1\otimes U+xT\otimes U.
+\end{equation}
+It follows that \(C=A^{H_x}\), and
+\begin{equation}\label{eq:left-coset}
+ H_x\backslash G\simeq\Spec C.
+\end{equation}
+For completeness, the torsor identity can be seen without invoking a
+general quotient theorem.  Since \((1+xU)^2=1\),
+\[
+ T\otimes1=(\lambda(U)-1\otimes U)(1\otimes(1+xU)).
+\]
+This makes the canonical torsor map surjective; its source and target are
+finite locally free of the same rank, hence it is an isomorphism.
+
+Although \(C\) has the shape of an Oort--Tate algebra, it is not a quotient
+\emph{group} algebra of \(G\).  Indeed,
+\begin{equation}\label{eq:e2-external-terms}
+ \Delta(e_2)=e_2\otimes1+1\otimes e_2
+ +d e_2\otimes e_1+(y+z)e_2\otimes e_2+q e_2\otimes e_3
+\end{equation}
+has terms outside \(C\otimes C\).  Thus \(H_x\subset G\) is a
+nonnormal Oort--Tate torsor fibration, not an extension of two rank-two
+groups.
+
+\subsection{Classification of all rank-two subgroups over
+\texorpdfstring{\(R\)}{R}}
+
+There are several embeddings of the same abstract subgroup.  For
+\((\epsilon,\alpha,\beta,\gamma)\in\F_2^4\), put
+\begin{equation}\label{eq:subgroup-parameters}
+\begin{aligned}
+ r&=\epsilon d+\alpha\eta+\beta q+\gamma\sigma,\\
+ t&=x+\epsilon q+\alpha\sigma,\\
+ s&=\epsilon\eta+(\epsilon+\beta)\sigma.
+\end{aligned}
+\end{equation}
+Here the coefficient \(\epsilon+\beta\) is taken in \(\F_2\).
+
+\begin{theorem}\label{thm:subgroup-classification}
+For every quadruple in \eqref{eq:subgroup-parameters}, \(t^2=2\), and
+\[
+ B_t=R[f]/(f^2-tf),\qquad
+ \Delta(f)=f\otimes1+1\otimes f+t f\otimes f,\qquad S(f)=f
+\]
+is a rank-two Hopf algebra.  The assignments
+\begin{equation}\label{eq:all-subgroup-maps}
+ e_1\mapsto f,\qquad e_2\mapsto rf,\qquad e_3\mapsto sf
+\end{equation}
+are Hopf surjections with pairwise distinct kernels
+\begin{equation}\label{eq:all-subgroup-ideals}
+ I_{\epsilon,\alpha,\beta,\gamma}
+ =(e_2-re_1,\ e_3-se_1).
+\end{equation}
+These are exactly the rank-two finite locally free closed subgroups of
+\(G\) defined over \(R\).  All sixteen are abstractly isomorphic to
+\(H_x\), and all reduce to the same \(\alpha_2\)-line
+\(e_2=e_3=0\) in \(G_k=\alpha_2^2\).
+\end{theorem}
+
+\begin{proof}
+Direct substitution of \eqref{eq:subgroup-parameters} into
+\eqref{eq:A-multiplication}--\eqref{eq:Delta3} proves that
+\eqref{eq:all-subgroup-maps} is a Hopf map.  Here is also a short
+completeness argument.  For any rank-two Hopf quotient, the augmentation
+splitting and locality of \(R\) give
+\[
+ B=R\oplus Rf,\qquad f^2=tf,\qquad
+ \Delta(f)=f\otimes1+1\otimes f+c f\otimes f.
+\]
+At least one of the images of \(e_1,e_2\) generates \(Rf\).  The branch in
+which only the image of \(e_2\) is a generator is impossible modulo
+\(\m^2\): after normalizing \(e_2\mapsto f\), one has \(t=z\), and
+\(e_1\mapsto af\), with \(a\in\m\), would force
+\(a^2z=xa+y\), whose two sides have incompatible degree-one parts.
+
+Normalize therefore \(e_1\mapsto f\), and write \(e_2\mapsto rf\).  The
+algebra equations first give
+\begin{equation}\label{eq:subgroup-derivation-one}
+ t=x+yr,\qquad e_3\mapsto rt\,f.
+\end{equation}
+The relation \(e_2^2=ze_2\) then forces, in the additive normal basis,
+\[
+ r=\lambda y+\epsilon d+\rho\xi+\alpha\eta
+       +\tau\omega+\gamma\sigma.
+\]
+Comparing the \(f\otimes f\) coefficient in \(\Delta(e_2)\) forces
+\(\lambda=0\) and \(\rho=\tau\).  Thus \(r\) is exactly the first line of
+\eqref{eq:subgroup-parameters}; \eqref{eq:subgroup-derivation-one} and the
+remaining equations give the displayed \(t,s\), and also \(c=t\).
+
+Finally, put
+\[
+ a_0=1+\epsilon(y+z)+\alpha\xi.
+\]
+Then \(t=a_0x\) and \(a_0^2x=x\).  The change of generator
+\(f\mapsto a_0T\) identifies \(B_t\) with \(B_x\), including coproducts.
+Distinct pairs \((r,s)\) give distinct kernels, so there are exactly
+sixteen.
+\end{proof}
+
+This classification is over the original base \(R\).  After a
+non-faithfully-flat specialization the group can acquire additional
+subgroups: for example, \(G_k=\alpha_2^2\) has the usual projective line of
+\(\alpha_2\)-subgroups.  Over \(\F_2\), its other two rational lines do not
+lift to \(R\); the one line which does lift has the sixteen infinitesimally
+distinct embeddings above.
+
+\subsection{Why none is normal, and why no composition filtration exists}
+
+There is a direct certificate for the failure of normality.  If
+\(q_r:A\to B_t\) denotes \eqref{eq:all-subgroup-maps} and
+\[
+ \Ad^*(a)=\sum a_{(2)}\otimes a_{(1)}S(a_{(3)}),
+\]
+then exact expansion gives
+\begin{equation}\label{eq:all-nonnormal-certificate}
+ (q_r\otimes\id)\Ad^*(e_3-se_1)
+ =f\otimes(\eta+\epsilon\sigma)e_2\ne0.
+\end{equation}
+Thus none of the sixteen subgroups is normal.  There is also a more
+structural argument, which remains valid after faithfully flat base change.
+
+\begin{lemma}\label{lem:rank-two-killed-two}
+Every finite locally free group scheme of rank two is killed by two.
+\end{lemma}
+
+\begin{proof}
+The assertion is local on the base.  In a rank-two augmented Hopf algebra,
+choose a basis \(1,T\) with
+\[
+ T^2=aT,\qquad
+ \Delta(T)=T\otimes1+1\otimes T+bT\otimes T.
+\]
+Multiplicativity of \(\Delta\) gives
+\((ab+1)(ab+2)=0\).  If \(S(T)=cT\), the antipode equation says
+\(1+c(1+ab)=0\), so \(1+ab\) is a unit.  Hence \(ab=-2\), and
+\[
+ [2]^\#(T)=2T+bT^2=(2+ab)T=0.
+\]
+\end{proof}
+
+If a rank-two subgroup \(H\subset G\) were normal, the fppf quotient
+\(G/H\) would also have rank two.  Both \(H\) and \(G/H\) would be killed
+by two.  The image of any section \(g\) in the quotient would satisfy
+\(\bar g^2=1\), so fppf-locally \(g^2\in H\), and hence \(g^4=1\).
+This would make \([4]\) trivial on \(G\), contradicting
+\eqref{eq:fourth-power}.  Faithful flatness preserves the nonzero free-basis
+coefficient \(\sigma\), so a normal rank-two subgroup cannot appear even
+after a faithfully flat extension of \(R\).
+
+Finally, the ranks in a finite locally free normal filtration multiply.
+A nontrivial proper step in rank four would therefore have rank two.  We
+conclude:
+\begin{center}
+\emph{The group \(G\) has rank-two subgroups, but no nontrivial normal or}\\
+\emph{composition filtration by finite flat group schemes.}
+\end{center}
+The chains \(1\subset H\subset G\) exist as subgroup chains, and
+\(H\backslash G\) is a rank-two homogeneous space, but there is no
+rank-two quotient group.
+
+\section{The power words by hand}\label{sec:powers}
+
+Let \(m_A:A\otimes_R A\to A\) be multiplication and set
+\[
+ \phi=m_A\circ\Delta=[2]^\#.
+\]
+Contracting \eqref{eq:Delta1}--\eqref{eq:Delta3} with the multiplication
+table gives the remarkably small formulas
+\begin{equation}\label{eq:phi}
+\begin{aligned}
+ \phi(e_1)&=\omega e_2+(y+z+\sigma)e_3,\\
+ \phi(e_2)&=d e_3,\\
+ \phi(e_3)&=0.
+\end{aligned}
+\end{equation}
+For example, the two primitive legs and the term \(x e_1\otimes e_1\)
+contribute
+\[
+ 2e_1+x e_1^2=2e_1+(2e_1+\omega e_2)=\omega e_2,
+\]
+while
+\[
+ q(e_3e_1)=qx e_3=x^2(y+z)e_3=\sigma e_3.
+\]
+This proves the first line of \eqref{eq:phi}; the other two follow by the
+same direct contraction.
+
+Since \([4]^\#=\phi\circ\phi\), one obtains
+\begin{equation}\label{eq:fourth-power}
+\begin{aligned}
+ [4]^\#(e_1)&=\omega d\,e_3=xyd\,e_3=\sigma e_3,\\
+ [4]^\#(e_2)&=0,\qquad [4]^\#(e_3)=0.
+\end{aligned}
+\end{equation}
+Indeed, \(yd=xz+xy\) gives
+\begin{equation}\label{eq:socle-carry}
+ xyd=x(xz+xy)=x^2z+x^2y=2z+2y=\sigma.
+\end{equation}
+The element \(\sigma=2z\) is the nonzero socle generator, so
+\eqref{eq:fourth-power} proves that \(G\) is not killed by four.
+
+There is also an exact quasi-idempotence relation.  Let
+\(\iota:R\to A\) denote the unit and let
+\[
+ P=\iota\eps,\qquad \psi=\phi-P.
+\]
+On the augmentation ideal, \(P=0\), and \eqref{eq:phi} gives
+\begin{equation}\label{eq:psi-relation-small}
+ \psi^2=2\psi.
+\end{equation}
+Indeed, \(2\omega=2d=0\) and
+\(2(y+z+\sigma)=2z=\sigma\).  It follows that
+\[
+ \psi^3=4\psi=0.
+\]
+Moreover \(P^2=P\) and \(P\psi=\psi P=0\).  Therefore
+\(\phi^3=(P+\psi)^3=P+\psi^3=P\), which is equivalently
+\begin{equation}\label{eq:eighth}
+ [8]^\#=P.
+\end{equation}
+Thus the exact pointwise power-word exponent is eight.
+
+Finally, the group is genuinely noncommutative.  In \(\Delta(e_1)\), the
+coefficient of \(e_1\otimes e_2\) is zero, whereas the coefficient of
+\(e_2\otimes e_1\) is \(y+z\ne0\).  Hence \(\Delta\) is not
+cocommutative.
+
+\section{Conceptual explanation: carry times cocommutator}
+\label{sec:conceptual}
+
+\subsection{The intrinsic first symbol}
+
+Let \(A_0=A/\m A\), let \(J_0=\ker(\eps:A_0\to\F_2)\), and put
+\[
+ V_0=J_0/J_0^2,\qquad L=J_0^2=\F_2e_3.
+\]
+The first \(\m\)-adic symbol of \(\psi\) is
+\[
+ N\in\gr_1(R)\otimes_{\F_2}\operatorname{Hom}_{\F_2}(V_0,L)
+\]
+with
+\begin{equation}\label{eq:N}
+ N(\bar e_1)=(\bar y+\bar z)\otimes e_3,\qquad
+ N(\bar e_2)=\bar d\otimes e_3.
+\end{equation}
+Here bars on coefficients denote classes in \(\gr_1(R)\).  Extend \(N\) by
+zero on \(L\subset J_0\); then it is an element of
+\(\gr_1(R)\otimes\operatorname{End}_{\F_2}(J_0)\), and its graded square is
+zero because its image lies in \(L\).  This is the conceptual reason that
+the putative quadratic fourth-power obstruction cancels.
+
+The mixed-characteristic secondary class is
+\[
+ \delta=\operatorname{in}_2(2)\in\m^2/\m^3.
+\]
+The first nonzero fourth-power symbol is
+\begin{equation}\label{eq:deltaN}
+ \operatorname{in}_3(\psi^2)=\delta N
+ \in\gr_3(R)\otimes_{\F_2}\operatorname{Hom}_{\F_2}(V_0,L).
+\end{equation}
+For this example, \(2=x^2=z^2\), and
+\[
+ (\delta N)(\bar e_1)=\overline{2(y+z)}\otimes e_3
+   =\bar\sigma\otimes e_3,\qquad
+ (\delta N)(\bar e_2)=\overline{2d}\otimes e_3=0.
+\]
+Unlike a particular monomial normal form, the factors \(\delta\), \(N\),
+and their product are invariant under a change of frame.
+
+\subsection{The Oort--Tate carry and the skew direction}
+
+In the universal coordinates, the decisive normal class was
+\begin{equation}\label{eq:universal-normal-class}
+ m_{11}^{\,1}c_{111}(c_{112}+c_{121}).
+\end{equation}
+In the compressed ring,
+\begin{equation}\label{eq:mechanism-one-line}
+ m_{11}^{\,1}=c_{111}=x,\qquad
+ c_{112}+c_{121}=y+z,
+\end{equation}
+and therefore
+\[
+ m_{11}^{\,1}c_{111}(c_{112}+c_{121})
+ =x^2(y+z)=2(y+z)=2z=\sigma.
+\]
+
+The product \(m_{11}^{\,1}c_{111}=2\) is the characteristic-two
+binomial carry appearing in the compatibility equation
+\(\Delta(e_1^2)=\Delta(e_1)^2\).  It is the same local mechanism as the
+familiar multiplication--coproduct parameter pairing in a rank-two
+Oort--Tate chart.  The second factor is a first-order skew coproduct
+coefficient: in characteristic two, the sum and difference of
+\(c_{112}\) and \(c_{121}\) have the same initial class.  Thus mixed
+characteristic supplies the carry, while noncommutativity supplies the
+direction on which it acts.
+
+This also explains two necessary features of the example.
+\begin{itemize}
+\item Setting \(2=0\) kills \(\delta\) and hence the defect.
+\item Imposing cocommutativity kills the skew map \(N\) and hence the defect.
+\end{itemize}
+The construction is therefore neither an equal-characteristic accident nor
+a hidden commutative example.
+
+\subsection{The exact universal identity}
+
+The relation \eqref{eq:psi-relation-small} is not a coincidence of the
+chosen quotient.  Exact filtered reduction of all nine coordinates on the
+universal cubic base proves
+\begin{equation}\label{eq:universal-psi}
+ \boxed{\ \psi^2=2\psi\ }.
+\end{equation}
+Equivalently,
+\[
+ [4]^\#-P=2([2]^\#-P).
+\]
+The supplied checker reduces every coordinate of
+\(T_{ir}-2\phi_i^{\,r}\) through the complete degree-three filtered ideal;
+all nine cubic remainders are zero.  Formula \eqref{eq:deltaN} is the
+associated-graded shadow of this exact identity.
+
+\subsection{A deformation tower: normal extension, nonnormal torsor,
+and fourth-power defect}\label{sec:deformation-tower}
+
+The construction becomes more transparent when reduced along two different
+filtrations of the base.  The \(\m\)-adic filtration records the order at
+which the power obstruction appears.  Modulo \(\m\), the group is the
+commutative group \(\alpha_2^2\).  Modulo \(\m^2\), its reduced doubling map
+is already nonzero:
+\begin{equation}\label{eq:first-order-doubling}
+ \psi(e_1)=(y+z)e_3,\qquad
+ \psi(e_2)=de_3,\qquad \psi(e_3)=0
+ \pmod{\m^2}.
+\end{equation}
+This is precisely the symbol \(N\) of \eqref{eq:N}.  Its image lies in the
+special-fiber square \(L=\F_2e_3\), on which it vanishes, so its first-order
+square is zero.  The group is therefore still killed by four at this order.
+
+The same tensor is the first skew coproduct symbol.  If
+\(a,b\in\F_2\), then
+\begin{equation}\label{eq:first-skew-symbol}
+\begin{split}
+ (\Delta-\tau\Delta)(ae_1+be_2)
+ \equiv{}&\bigl(a(\bar y+\bar z)+b\bar d\bigr)\\
+ &\otimes(e_2\otimes e_1-e_1\otimes e_2)
+ \pmod{\m^2}.
+\end{split}
+\end{equation}
+Since \(\bar y+\bar z\) and \(\bar d\) are independent in
+\(\m/\m^2\), this map has no nonzero tangent kernel.  Thus the first-order
+deformation has already destroyed every possible cocommutative rank-two
+quotient direction, even though it has not yet produced a fourth-power
+defect.  To spell out the quotient argument, a normal rank-two subgroup
+would give a rank-two quotient \(K\), hence a rank-two Hopf subalgebra
+\(\mathcal O(K)\subset A\).  Its special-fiber augmentation generator must
+have a nonzero tangent term \(ae_1+be_2\): a pure \(e_3\)-term cannot
+generate a Hopf subalgebra because \(\Delta_0(e_3)\) contains
+\(e_1\otimes e_2+e_2\otimes e_1\).  A rank-two Hopf algebra has
+cocommutative coproduct, while corrections in \(\m A\) have cocommutative
+special-fiber coproduct and cannot cancel \eqref{eq:first-skew-symbol}.
+The injectivity just proved is therefore a contradiction.  Since passing to
+\(R_8\) does not change \(\m/\m^2\), this also excludes every normal
+rank-two subgroup over the intermediate length-eight base, not merely the
+particular subgroup \(H_x\).
+
+Killing the two skew directions gives the length-four quotient
+\begin{equation}\label{eq:commutative-quotient}
+ R/(d,y+z)\simeq\F_2[x,z]/(x^2,z^2),
+\end{equation}
+over which the entire coproduct becomes cocommutative.  This is one precise
+sense in which the original group is a noncommutative deformation of a
+simpler commutative one.
+
+At the opposite end, \(\m^3=\F_2\sigma\).  Hence
+\begin{equation}\label{eq:socle-reduction}
+ \bar R=R/(\sigma)=R/\m^3
+\end{equation}
+has length nine, and \(G_{\bar R}\) is killed by four.  The surjection
+\(R\to\bar R\) has square-zero kernel.  Lifting across this final socle
+extension changes the fourth-power map from zero to
+\(\sigma e_3\).  Thus the counterexample itself is a first-order
+deformation, in the square-zero direction \(\sigma\), of a rank-four group
+which is killed by four.  The exact identity \(\psi^2=2\psi\) says that the
+obstruction to lifting the relation \([4]=e\) is the Bockstein-type carry
+applied to the first-order skew class; no separate connecting morphism is
+being asserted by this terminology.
+
+There is a second tower which isolates normality even more sharply.  Let
+\begin{equation}\label{eq:d-ideal}
+ I=(d)=\F_2\{d,\eta,q,\sigma\}.
+\end{equation}
+The base relations give
+\begin{equation}\label{eq:d-ideal-powers}
+ I^2=\F_2\{\eta,\sigma\},\qquad I^3=0,
+ \qquad d^2=\eta,\qquad dq=\omega d=\sigma.
+\end{equation}
+Consequently the quotients
+\begin{equation}\label{eq:6-8-10-tower}
+ R_{10}=R\twoheadrightarrow
+ R_8=R/I^2\twoheadrightarrow R_6=R/I
+\end{equation}
+have the indicated lengths, and both successive kernels are square-zero.
+
+Over the length-six base, the group has the simpler form anticipated in the
+question.  Explicitly,
+\begin{equation}\label{eq:R6-presentation}
+ R_6\simeq
+ (\Z/4)[x,y,z]/
+ (2x,2y,2z,x^2-2,z^2-2,y^2,yz,x(y+z)).
+\end{equation}
+Here \(d=\eta=q=\sigma=0\), so \(R_6\{1,e_2\}\subset A_{R_6}\) is a Hopf
+subalgebra:
+\begin{equation}\label{eq:K6}
+\begin{aligned}
+ e_2^2&=ze_2,\\
+ \Delta(e_2)&=e_2\otimes1+1\otimes e_2
+ +(y+z)e_2\otimes e_2,\\
+ S(e_2)&=e_2.
+\end{aligned}
+\end{equation}
+It is the coordinate algebra of a rank-two Oort--Tate quotient \(K_6\),
+with parameter pair \((z,y+z)\); indeed \(z(y+z)=2\).  There is an exact
+sequence of finite flat group schemes
+\begin{equation}\label{eq:R6-extension}
+ 1\longrightarrow (H_x)_{R_6}
+ \longrightarrow G_{R_6}\longrightarrow K_6\longrightarrow1.
+\end{equation}
+Both outer terms are killed by two, so \(G_{R_6}\) is killed by four.
+Thus the length-six reduction really does have a rank-two-by-rank-two
+normal filtration.
+
+The first square-zero lift, from \(R_6\) to \(R_8\), turns on the classes
+\(d\) and \(q=yd\).  The external terms
+\begin{equation}\label{eq:normality-breaking-terms}
+ d e_2\otimes e_1+q e_2\otimes e_3
+\end{equation}
+in \(\Delta(e_2)\) mean that \(R_8\{1,e_2\}\) is no longer a Hopf
+subalgebra; the quotient group in \eqref{eq:R6-extension} has deformed into
+only a coset space.  Dually, the subgroup \(H_x\) corresponds to the Hopf
+subalgebra \(R\{1,E_1\}\subset D\).  Directly from
+\eqref{eq:dual-multiplication}--\eqref{eq:dual-Delta3}, its adjoint
+obstructions are
+\begin{equation}\label{eq:dual-adjoint-normality}
+\begin{aligned}
+ \operatorname{ad}_{E_2}(E_1)
+  &=(y+z)E_1+dE_2+\eta E_3,\\
+ \operatorname{ad}_{E_3}(E_1)
+  &=qE_1+\eta E_2.
+\end{aligned}
+\end{equation}
+They lie in \(R\{1,E_1\}\) after a base change precisely when \(d=0\).
+This proves that \(d\) is the deformation parameter which breaks
+normality.  Since \(\sigma=0\) on \(R_8\), however, this intermediate group
+is still killed by four.
+
+The last square-zero lift, from \(R_8\) to \(R_{10}\), turns on
+\(\eta=d^2\) and \(\sigma=dq=\omega d\).  Formula \eqref{eq:phi} now has
+the composable path
+\begin{equation}\label{eq:deformation-path}
+ e_1\ \xmapsto{\ \omega\ }\ e_2
+ \ \xmapsto{\ d\ }\ e_3,
+ \qquad \omega d=\sigma,
+\end{equation}
+and hence \(\phi^2(e_1)=\sigma e_3\).  In summary,
+\begin{center}
+\begin{tabular}{@{}llll@{}}
+\toprule
+base & length & subgroup structure & power relation\\
+\midrule
+\(R_6=R/(d)\) & \(6\) & rank-two-by-rank-two extension & \([4]=e\)\\
+\(R_8=R/(\eta,\sigma)\) & \(8\) & normality broken by \(d\) & \([4]=e\)\\
+\(R\) & \(10\) & only nonnormal rank-two subgroups & \([4]\ne e\), \([8]=e\)\\
+\bottomrule
+\end{tabular}
+\end{center}
+The deformation therefore breaks the normal filtration one infinitesimal
+layer before it breaks the fourth-power relation.  This separation is the
+most concrete deformation-theoretic explanation of why the final group is
+both non-filterable and not killed by its rank.
+
+\section{How the smaller ring was found}\label{sec:discovery}
+
+\subsection{From a cubic defect to an inverse system}
+
+Let \(B\) be the previously audited universal cubic base.  Its maximal ideal
+satisfies \(\m_B^4=0\), and
+\[
+ H_B=(1,15,107,509).
+\]
+The two possible nonzero fourth-power coordinates lie in
+\(\m_B^3\).  To retain one while shrinking the base, choose an additive
+functional on \(\m_B^3\) which is nonzero on that coordinate and annihilates
+the cubic ideal relations.  Passing to its annihilator produces a
+Gorenstein quotient.  On the associated graded, this functional is a cubic
+inverse system; the rank of its first catalecticant determines the sizes of
+the degree-one and degree-two layers.
+
+The first \(38\)-term dual certificate from the universal audit had
+catalecticant rank seven and led to a valid quotient of Hilbert function
+\((1,7,7,1)\), hence length sixteen.  Varying the dual functional, rather
+than merely quotienting that first ring, lowers the rank to four.  A
+particularly sparse representative is the cubic \(\mathcal G\) in
+\eqref{eq:cubic}.
+
+Its four first contractions are
+\begin{equation}\label{eq:contractions}
+ XZ+YD,\quad XD+D^{[2]},\quad
+ X^{[2]}+Z^{[2]},\quad XY+YD.
+\end{equation}
+They are linearly independent, so the first catalecticant has rank four.
+The corresponding apolar Hilbert function is therefore
+\[
+ (1,4,4,1).
+\]
+The filtered identifications \(Z^\vee=2\) and \(s=2Z\) lift this homogeneous
+apolar algebra to the characteristic-four ring in Section~\ref{sec:base}.
+
+\subsection{Exact specialization of the universal parameters}
+
+Appendix~\ref{app:specialization} gives the complete \(45\)-parameter map.
+Substitution into the raw integral export makes every one of the \(189\)
+bialgebra equations vanish and gives the target vector
+\[
+ (0,0,\sigma,0,0,0,0,0,0).
+\]
+This verifies that the inverse-system construction lifts exactly; it is not
+merely a tangent-cone or associated-graded solution.
+Every displayed parameter lies in \(\m_R\), so the fourth power of the
+universal augmentation ideal maps to zero by \(\m_R^4=0\); the \(189\)
+vanishing equations kill the universal bialgebra ideal.  Hence the
+specialization factors through a map \(B\to R\).  It is surjective because
+\(p_0,p_1,p_{10},p_{30}\) map respectively to the ring generators
+\(x,y,z,d\).  Thus \(R\) is genuinely an Artin quotient of \(B\).
+
+\subsection{Search chronology and methodological lessons}
+\label{sec:search-process}
+
+The construction emerged from an attempted proof of the killed-by-rank
+assertion, and the reversal in viewpoint is worth recording.  The initial
+program studied universal deformation charts around the local--local
+rank-four fibers and expanded the reduced doubling operator in the
+maximal-ideal filtration.  Its first symbol \(N\) always has square zero.
+This explains the persistent cancellation of the naively quadratic
+fourth-power obstruction, but it does not imply that the complete filtered
+fourth-power class vanishes.  Considerable equal-characteristic and
+low-depth work proved genuine special cases; resource failures and vanishing
+in those cases were never a proof of the mixed-characteristic statement.
+
+The decisive change was to preserve the integral filtration.  If
+\(\mathfrak q=(2,p_0,\ldots,p_{44})\) in the universal chart, the relevant order of
+an integral term is
+\[
+ \operatorname{ord}_{\mathfrak q}(c\,p^\alpha)=v_2(c)+|\alpha|.
+\]
+Integer terms must be added before this initial order is taken.  In
+particular, two equal odd terms produce \(2f\), one filtration step higher;
+reducing modulo two first would replace \(f+f\) by zero and erase precisely
+the carry which produces the example.  With this convention, the quadratic
+targets still cancel, but two cubic fourth-power targets on the
+\(\alpha_2^2\)-chart survive.  At that point the project changed from
+trying to prove universal membership to constructing exact nonmembership
+certificates.
+
+A nonzero normal form for one elimination order was not considered adequate
+evidence.  The first audit instead produced an \(\F_2\)-linear functional
+which annihilated all \(45{,}414\) exhaustive cubic ideal candidates and
+evaluated to one on the target.  A second program parsed the integral
+Macaulay2 export, used a different polynomial representation and elimination
+implementation, and reconstructed independent dual certificates.  A
+separate comparison checked the integral coefficients of all \(189\)
+equations and nine targets before taking initial forms.  Only after these
+data paths agreed was the counterexample interpretation accepted.
+
+The first target-detecting \(38\)-term functional had catalecticant rank
+seven and therefore produced the length-sixteen Gorenstein quotient
+mentioned above.  That witness was not canonical: sparse support and small
+catalecticant rank are different objectives.  Moreover, every proper
+quotient of a fixed Artin Gorenstein witness kills its socle target, so
+trying to compress that one ring further was the wrong search space.  The
+successful move was to vary the functional in the full space of cubics
+annihilating the universal relations and detecting a target.  Minimizing
+the first catalecticant in that space produced the rank-four cubic
+\(\mathcal G\).  Its apolar algebra suggested the small ring, while the
+exact \(45\)-parameter substitution proved that the result was a genuine
+inhomogeneous Hopf-algebra specialization rather than only an
+associated-graded model.
+
+Once the compact table had been found, the proof was deliberately rebuilt
+without the universal elimination.  The \(1024\)-element tuple verifier
+checks the ring and Hopf identities directly, and a second additive
+coordinate model independently checks the same theorem.  The universal
+chart now explains provenance, and the MinRank calculation addresses
+relative compression; neither is needed for the finite direct proof that
+\([4]^\#(e_1)=\sigma e_3\ne0\).
+
+Finally, the conceptual descriptions were obtained by ablation after the
+example was secure.  Killing the first skew directions makes the group
+commutative.  Killing the socle class \(\sigma\) restores \([4]=e\).
+Killing \(d\) restores a normal Oort--Tate filtration.  These reductions led
+to the tower in Section~\ref{sec:deformation-tower} and separate the
+first-order obstruction to normality from the later power-word obstruction.
+
+The main methodological lessons are:
+\begin{itemize}
+\item preserve mixed-characteristic carries before passing to an associated
+  graded ring;
+\item optimize an invariant such as catalecticant rank, rather than the
+  superficial number of variables in one presentation;
+\item use associated-graded calculations for discovery, but lift every
+  candidate through the exact inhomogeneous equations;
+\item replace a large universal proof by finite direct arithmetic once a
+  small model is known, and use genuinely independent implementations;
+\item classify timeouts, out-of-memory exits, missing output, and solver
+  \texttt{unknown} as inconclusive rather than as mathematical evidence;
+\item separate unconditional existence from solver-dependent relative
+  minimality.
+\end{itemize}
+
+These qualifications also delimit the next search.  Conditional on the
+recorded MinRank verdict, no shorter quotient exists inside this cubic
+chart.  A global example of length seven, eight, or nine would have to use a
+different admissible dual, greater Loewy depth, another special fiber or
+chart, or a mechanism not visible at cubic order.
+
+\section{Optimality within the universal cubic construction}
+\label{sec:minimality}
+
+\subsection{The global MinRank calculation}
+
+Let
+\[
+ V_B=\gr_1(B),\qquad W_B=\gr_2(B),\qquad U_B=\gr_3(B).
+\]
+Their dimensions are \((15,107,509)\).  For a cubic functional
+\(L\in U_B^\vee\), form the first catalecticant
+\[
+ C_L:V_B\longrightarrow W_B^\vee.
+\]
+The exact question is whether some \(L\), nonzero on either fourth-power
+target, has \(\operatorname{rank}C_L\le3\).
+
+The computation reconstructs the \(15\) tangent generators and the \(171\)
+independent relations in the \(680\)-dimensional space
+\(\operatorname{Sym}^3(\F_2^{15})\).  In the ambient \(120\)-dimensional
+quadratic monomial space, rank at most three is encoded without loss by
+\begin{equation}\label{eq:rank-factorization}
+ C=U_{15\times3}V_{3\times120}.
+\end{equation}
+Symmetry/integrability, annihilation of all \(171\) cubic relations, and
+nonvanishing on at least one of the two targets are then Boolean equations.
+Every matrix of rank at most three admits \eqref{eq:rank-factorization}, so
+the encoding is complete rather than heuristic.
+
+The resulting instance has \(405\) factor variables and \(1292\) assertions.
+Z3~4.16.0 returns \texttt{UNSAT}.  The audited run used a 120-second timeout
+and a 1024-MiB memory ceiling and completed in \(18.64\) seconds.  The
+canonical SMT payload hash is
+\[
+\texttt{7f20f68bb134f26bbbe943089f0a92fcec206a0ebb48da48db528f3f76a4f1df}.
+\]
+This hash makes the encoding reproducible; it is not a separately checked
+solver proof object.  Accordingly, the minimality conclusion below is a
+computer-assisted conclusion conditional on the correctness of the Z3
+UNSAT verdict.
+The cubic \(\mathcal G\) supplies a rank-four witness.  Thus four is the
+minimum catalecticant rank among \emph{all} cubic duals of this universal
+chart which detect either target.
+
+\subsection{From catalecticant rank to quotient length}
+
+\begin{theorem}[Computer-assisted]\label{thm:minimal-quotient}
+If \(D\) is an Artin quotient of the universal cubic base \(B\) and a
+fourth-power target remains nonzero in \(D\), then
+\[
+ \length(D)\ge10.
+\]
+The ring \(R\) constructed above attains equality.
+\end{theorem}
+
+\begin{proof}
+Quotient \(D\) further by an ideal maximal among those which do not kill the
+chosen target \(\theta\).  In the resulting ring \(D'\), every nonzero ideal
+contains \(\theta\).  Hence the socle is the one-dimensional line generated
+by \(\theta\), so \(D'\) is Artin Gorenstein.  More explicitly,
+\(\theta\in\n^3\) and \(\n^4=0\), hence \(\n\theta=0\); maximality then
+forces every nonzero socle element to span the same line.
+Since \(B\) has fourth power of its maximal ideal zero and \(\theta\) is a
+nonzero cubic class,
+\[
+ H_{D'}=(1,h_1,h_2,1).
+\]
+
+Multiplication gives a pairing
+\[
+ (\n/\n^2)\times(\n^2/\n^3)\longrightarrow\n^3.
+\]
+It is nondegenerate on the second factor: a degree-two class annihilated by
+\(\n\) would lift to a socle element and hence already lie in \(\n^3\).
+Thus \(h_1\ge h_2\).  Choose the socle functional
+\(\ell:\n^3\to\F_2\) with \(\ell(\theta)=1\).  The induced cubic functional
+on \(\gr(D')\) pulls back along the surjection
+\(\gr(B)\twoheadrightarrow\gr(D')\) to an element of \(U_B^\vee\) which
+detects the universal target.  Since
+\(\operatorname{Sym}^2(\n/\n^2)\twoheadrightarrow\n^2/\n^3\), its first
+catalecticant factors as
+\[
+ \n/\n^2\twoheadrightarrow(\n^2/\n^3)^\vee
+ \hookrightarrow\operatorname{Sym}^2(\n/\n^2)^\vee
+\]
+and has rank exactly \(h_2\).  The bounded MinRank UNSAT computation therefore
+forces \(h_2\ge4\), conditional on its solver verdict.  Consequently
+\[
+ \length(D)\ge\length(D')=2+h_1+h_2\ge2+4+4=10.
+\]
+The ring \(R\) has Hilbert function \((1,4,4,1)\), so equality occurs.
+\end{proof}
+
+Because \(R\) is Gorenstein with socle \(\F_2\sigma\), every nonzero ideal
+of \(R\) contains \(\sigma\).  Thus every proper quotient of this particular
+base kills the displayed defect.  Moreover the Hopf coefficients contain
+\(x,y,z,d\), which generate the entire ring, so the table is not secretly
+written over a smaller coefficient subring.
+
+The theorem concerns quotients of the cubic universal construction.  A
+counterexample of length seven, eight, or nine could in principle arise at
+greater Loewy depth, from a different closed fiber, or by a mechanism not
+visible in this third-order chart.  Excluding that possibility requires a
+separate global argument or search.
+
+\section{Exact audit trail}\label{sec:audit}
+
+Seven complementary checks were frozen in the workspace.
+\begin{center}
+\begin{longtable}{@{}p{0.49\textwidth}p{0.43\textwidth}@{}}
+\toprule
+file & role\\
+\midrule
+\endhead
+\path{scripts/verify_rank4_length10_counterexample_20260710.py}
+& dependency-free direct construction of \(R,A,\Delta,S,[4],[8]\), including
+  exhaustive base socle and ring gates\\
+\path{scripts/audit_rank4_length10_specialization_20260710.py}
+& substitution of the \(45\) displayed values into the independently
+  exported \(189\) equations and nine targets\\
+\path{scripts/audit_rank4_psi_quasi_idempotent_20260710.py}
+& exact filtered proof of \(\psi^2=2\psi\) on the universal cubic base\\
+\path{scripts/audit_rank4_catalecticant_minimum_20260710.py}
+& rank-four witness and bounded global rank-at-most-three UNSAT computation\\
+\path{scripts/independent_verify_rank4_length10_counterexample_20260710.py}
+& independent additive-coordinate model, exhaustive maximal-ideal powers,
+  raw-equation evaluation, power maps, and convolution antipode\\
+\path{scripts/audit_rank4_descriptions_20260710.py}
+& exact regular \(\GL_4\) and reduced \(\GL_3\) matrices and inverses,
+  recovery of all coordinate generators, dual Hopf table, and the basic
+  rank-two subgroup\\
+\path{scripts/audit_rank4_subgroups_deformations_20260711.py}
+& exhaustive 1024-case classification of normalized rank-two Hopf quotients,
+  adjoint nonnormality certificates, and exact length-\(6\to8\to10\)
+  deformation tower\\
+\bottomrule
+\end{longtable}
+\end{center}
+
+The principal terminal output is:
+\begin{verbatim}
+BASE PASS: local characteristic 4; |R|=2^10; length 10
+BASE PASS: Hilbert function (1,4,4,1); socle={0,s}; s=2Z!=0
+BASE PASS: generator-level distributivity gates for the biadditive law
+HOPF PASS: algebra, counit, multiplicativity, coassociativity
+HOPF PASS: explicit two-sided convolution antipode constructed
+POWER IDENTITY PASS: psi^2=2psi for psi=[2]^#-unit*epsilon
+[4]^#(e1)=(s)e3
+[4]^#(e2)=0
+[4]^#(e3)=0
+[8]^#=unit*epsilon PASS
+NONCOMMUTATIVE PASS: Delta(e1) is not cocommutative
+\end{verbatim}
+The structural and deformation audit prints
+\begin{verbatim}
+GL4 PASS: displayed right-regular matrix and antipode inverse
+GL3 PASS: quotient matrix invertible; e1,e2,e3 recovered exactly
+DUAL HOPF PASS: all displayed products and coproducts
+SUBGROUP CLASSIFICATION PASS: exactly 16 normalized Hopf quotients
+ADJOINT PASS: H_x normal exactly after killing d
+DEFORMATION PASS: lengths 6 -> 8 -> 10 with square-zero steps
+DEFORMATION PASS: normality breaks at length 8; [4] at length 10
+COMMUTATIVE QUOTIENT PASS: kill d and y+z (length 4)
+\end{verbatim}
+The raw universal export has SHA-256
+\begin{verbatim}
+686c35c91b74af2a414dd119024411266fb0056865dd1d19676c20485f93b6b7
+\end{verbatim}
+and the specialization audit prints
+\begin{verbatim}
+UNIVERSAL SPECIALIZATION PASS: 189/189 equations vanish
+TARGETS PASS: [0,0,s,0,0,0,0,0,0], s=2Z!=0
+\end{verbatim}
+
+The universal quasi-idempotence check reproduces the filtered ranks
+\[
+ \operatorname{rank}_2=974,\qquad
+ \operatorname{rank}_3=16787
+\]
+from \(45414\) cubic candidates, and reduces all nine coordinates of
+\(T-2\phi\) to zero.  The MinRank script reconstructs all \(171\) cubic
+relations before building its Boolean instance.
+
+The direct verifier and raw-equation evaluator were also reconstructed
+independently in a second implementation.  It exhaustively enumerated all
+\(1024\) base elements, found socle \(\{0,\sigma\}\), evaluated all \(189\)
+equations to zero, obtained the same target vector, and independently built
+a two-sided convolution antipode.  Thus the headline result does not rest on
+one parser, one Hopf implementation, or the MinRank solver.
+
+\section{Conclusion}
+
+The rank-four counterexample admits a human-sized form.  Its base is the
+1024-element ring
+\[
+(\Z/4)[x,y,z,d]/
+(2x,2y,2d,x^2-2,z^2-2,y^2,yz,zd,d^2-xd,yd-xz-xy),
+\]
+and its Hopf algebra is given by
+\eqref{eq:A-multiplication}--\eqref{eq:Delta3}.  The fourth-power word is
+nontrivial because
+\[
+ x^2(y+z)=2(y+z)=2z\ne0.
+\]
+This formula isolates the conceptual mechanism: the characteristic-two
+binomial carry \(x^2=2\) multiplies a noncocommutative first-order direction,
+and the result lands in the top socle.  In invariant language, the cubic
+obstruction is \(\delta N\), and the exact endomorphism identity is
+\(\psi^2=2\psi\).
+
+The same group also has a concrete geometric and representation-theoretic
+shape.  It is the relative complete intersection
+\[
+ R[U,V]/(U^2-xU-yV,V^2-zV),
+\]
+its dual measure algebra is the noncommutative PBW deformation in
+\eqref{eq:dual-multiplication}, and its reduced regular representation is a
+minimal closed immersion into \(\GL_{3,R}\).  It contains sixteen rank-two
+Oort--Tate subgroups over \(R\), all isomorphic and all nonnormal.  Hence it
+has subgroup chains but no normal composition filtration.
+
+The deformation tower explains why.  Over \(R_6=R/(d)\), the group is a
+genuine extension of two rank-two Oort--Tate groups.  The square-zero lift
+to \(R_8\) turns on \(d\) and destroys normality, while preserving
+\([4]=e\).  The final square-zero lift turns on
+\(\sigma=dq=\omega d\), and the path
+\(e_1\xmapsto{\omega}e_2\xmapsto{d}e_3\) produces
+\([4]^\#(e_1)=\sigma e_3\).  Thus failure of a normal filtration and failure
+of the order bound are successive, rather than simultaneous, deformation
+obstructions.
+
+The divided-power cubic
+\(X^{[2]}Z+XYD+YD^{[2]}+Z^{[3]}\) packages the entire base multiplication.
+Conditional on the recorded rank-at-most-three UNSAT verdict, its
+catalecticant rank four is minimal in the full universal cubic dual space,
+so length ten is the best possible compression by an Artin quotient of this
+construction.  Determining whether an essentially
+different counterexample exists over a base of length seven, eight, or nine
+remains the next genuinely new minimization problem.
+
+\appendix
+
+\section{The complete universal specialization}\label{app:specialization}
+
+Use the variable numbering of the universal chart:
+\[
+ p_{3\rho(i,j)+r-1}=m_{ij}^{\,r},\qquad
+ p_{18+9(i-1)+3(j-1)+(k-1)}=c_{ijk},
+\]
+where \(\rho\) assigns the positions \(0,\ldots,5\), in order, to
+\((1,1),(1,2),(1,3),(2,2),(2,3),(3,3)\).
+The nonzero values are
+\begin{center}
+\begin{longtable}{@{}cl@{}}
+\toprule
+indices & value\\
+\midrule
+\endhead
+\(p_0,p_8,p_{18},p_{38}\) & \(x\)\\
+\(p_1\) & \(y\)\\
+\(p_{10},p_{14}\) & \(z\)\\
+\(p_{17}\) & \(\xi=xz\)\\
+\(p_{21},p_{31}\) & \(y+z\)\\
+\(p_{24},p_{32},p_{40},p_{44}\) & \(\xi+\omega=xz+xy=q\)\\
+\(p_{30}\) & \(d\)\\
+\(p_{39}\) & \(2+\eta=2+xd\)\\
+\(p_{41}\) & \(\sigma=2z\)\\
+\(p_{42}\) & \(x+d\)\\
+\(p_{43}\) & \(y+z+\sigma\)\\
+\bottomrule
+\end{longtable}
+\end{center}
+All omitted \(p_i\) are zero.  Decoding this table gives exactly
+\eqref{eq:A-multiplication}--\eqref{eq:Delta3}.
+
+\section{The rank-four inverse-system map}
+
+In the preliminary seven-variable compression, the surviving tangent
+directions were labelled \(u,b,v,w,a,d,g\).  On these directions, the map
+to \(\F_2\{X,Y,Z,D\}\) is
+\[
+ u,w\longmapsto X,\qquad b\longmapsto Y,
+ \qquad v\longmapsto Z,
+ \qquad a,g\longmapsto Y+Z,
+ \qquad d\longmapsto D.
+\]
+In universal variable indices, its nonzero values are
+\[
+\begin{array}{c|c}
+\{0,8,18,38\}&X\\
+\{1\}&Y\\
+\{10,14\}&Z\\
+\{21,31,43\}&Y+Z\\
+\{30\}&D\\
+\{42\}&X+D.
+\end{array}
+\]
+Pulling back the functional defined by \(\mathcal G\) annihilates the full
+set of \(45414\) exhaustive cubic ideal candidates and evaluates to one on
+the \(T_{13}\) normal class.  Its support in the \(15\)-variable cubic space
+has size \(28\), and its catalecticant has rank four.
+
+\end{document}

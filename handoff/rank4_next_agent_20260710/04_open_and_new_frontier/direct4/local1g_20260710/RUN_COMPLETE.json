@@ -1,0 +1,39 @@
+{
+  "completed_utc": "2026-07-10T16:47:52Z",
+  "elapsed_seconds": 88.714,
+  "format": "rank4-monogenic-direct4-local-run-v1",
+  "logs": {
+    "q00_a0": {
+      "path": "logs/monogenic_direct4_local_local1g_20260710_task4_q00_a0.log",
+      "sha256": "536e84bb5d15e42e923804620d1385d6850cf06888bf44078c1200c30affc00b",
+      "task": 4
+    },
+    "q00_a1": {
+      "path": "logs/monogenic_direct4_local_local1g_20260710_task5_q00_a1.log",
+      "sha256": "8e4b016a6fb2103184e94b5843d867480472cf85c5c5b70e780f01df9ca32a07",
+      "task": 5
+    },
+    "sf2_g0_a0": {
+      "path": "logs/monogenic_direct4_local_local1g_20260710_task0_sf2_g0_a0.log",
+      "sha256": "6443d910de8110f1f6c5b3dcb05e7758ef9c756409499f627a9d186af9ab145d",
+      "task": 0
+    },
+    "sf2_g0_a1": {
+      "path": "logs/monogenic_direct4_local_local1g_20260710_task1_sf2_g0_a1.log",
+      "sha256": "df579cac7437257bf5607c5bbacd6ba9270814048200347e7253bce37cc88d6a",
+      "task": 1
+    },
+    "sf2_g1_a0": {
+      "path": "logs/monogenic_direct4_local_local1g_20260710_task2_sf2_g1_a0.log",
+      "sha256": "2697cf5b813e06923917cc5892026740f701e1434713df05873e8a938b478f35",
+      "task": 2
+    },
+    "sf2_g1_a1": {
+      "path": "logs/monogenic_direct4_local_local1g_20260710_task3_sf2_g1_a1.log",
+      "sha256": "23b7b751067bd03d5144a81b3e94548eade8bb09f128cba6786ec1651b700b85",
+      "task": 3
+    }
+  },
+  "manifest_sha256": "6a2e338b7826a9a338a5df90590a377e0fa14c7b995e84fe809e60b36886b55d",
+  "run_id": "local1g_20260710"
+}

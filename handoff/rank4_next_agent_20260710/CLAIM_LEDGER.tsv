@@ -1,0 +1,19 @@
+id	claim	status	scope	primary_artifacts	caveat
+C0	Full Grothendieck conjecture	open	arbitrary finite locally free group schemes	START_HERE.md	No proof or counterexample
+C1	Rank-four groups are killed by 4	open	rank 4 over arbitrary base	OPEN_FRONTIER.md	Equivalent remaining condition is (1+delta)J=0
+C2	Rank-four groups are killed by 8	proved_independently_audited	rank 4 arbitrary base	01_current_theory/REGULAR_TRANSLATION_RANK4_EXPONENT8_2026-07-10.md; audit	The group law may be noncommutative
+C3	The fourth-power defect D is killed by 2	proved_independently_audited	rank 4 arbitrary base	exponent-8 report; audit	Does not imply D=0 on base 2-torsion
+C4	Exact conormal obstruction (1+delta)J	proved_independently_audited	rank 4 arbitrary base	01_current_theory/RANK4_CONORMAL_DIRECT4_ATTACK_2026-07-10.md; audit	Quadratic layer killed; linear layer remains
+C5	All deformations of alpha2 semidirect mu2 are killed by 4	literature_theorem_plus_checked_specialization	local Artin bases, residue characteristic 2	RANK4_CONORMAL_TORTI_AUDIT_2026-07-10.md	Torti proof has a printed false stronger [2] claim; [4] checked directly
+C6	Commutative fibers with nontrivial multiplicative part force commutative lifts	proved; partially independently audited	rank 4 Artin-local deformation setting	BLOCK_RIGIDITY_ALPHA2_MU2.md; THEORY_order4 section 17	BR-prime deserves another formal audit
+C7	Only local-local fibers remain	proved synthesis	rank 4 after standard reductions	START_HERE.md; Torti and block artifacts	Fibers alpha2^2, W2[F], four t4 forms
+C8	Two stretched t4_11 timeout branches contain no [4]-counterexample	exact_finite_computation_independently_static_audited	six Gorenstein socle-lift presentations	MONOGENIC_STRETCHED_DIRECT4_RESULT_2026-07-10.md; static audit	Same Z3 implementation for SMT and qfbv tactics
+C9	Residue-F2 stretched length-seven profile is closed for actual [4]	bounded_computational_theorem	under minimal-Gorenstein and socle reductions	direct4 result; stretched reports	Not a proof of S-prime on the two quotient rows
+C10	H=(1,2,2,1) type-two frontier is complete	bounded_computational_theorem	190 quotient/fiber rows	H1221_COMPLETE_RESULT_2026-07-10.md; 510 logs	160 closed UNSAT plus 30 H0-vacuous
+C11	Residue-F2 bases of length at most 6 are excluded	conditional_bounded_computational_theorem	under recorded structural reductions	structural reports; M2 certificates	Review exact reduction hypotheses before reuse
+C12	Principal local-local length-seven frontier is partial	inconclusive_partial	60 filtered rows	FROZEN_PRINCIPAL_AUDIT_2026-07-10.txt	12 closed, 2 vacuous, 5 unknown, 41 incomplete at freeze
+C13	A universal normal rank-two filtration does not exist	proved_independently_audited	explicit height-one rank-four example	RANK4_NO_NORMAL_RANK2_FILTRATION reports	The example is nevertheless killed by 4
+C14	All height-one rank-four groups in characteristic 2 are killed by 4	proved_independently_audited	height-one scope	RANK4_NO_NORMAL_RANK2_FILTRATION reports	Not all local-local lifts are height one
+C15	Trace and three scoped tight-chain exclusions	proved_independently_audited	stated scopes only	RELATIVE_TOP_DEFECT and TIGHT_CHAIN reports	Mixed-characteristic Omega analogue remains conditional
+C16	A rank-four counterexample was found	false	no scope	all audits	No SAT candidate survived
+C17	s5t4gen and fp3gen currently prove new claims	inconclusive_live_snapshots	inherited local M2 jobs	INHERITED_M2_MONITOR_2026-07-10.md	No terminal banners at freeze

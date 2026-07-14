@@ -1,0 +1,2076 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{array,booktabs}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{xurl}
+\usepackage[colorlinks=true,
+            linkcolor=blue!55!black,
+            citecolor=blue!55!black,
+            urlcolor=blue!55!black]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Z}{\mathbf Z}
+\newcommand{\F}{\mathbf F}
+\newcommand{\Ga}{\mathbb G_a}
+\newcommand{\Gm}{\mathbb G_m}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Soc}{\operatorname{Soc}}
+\newcommand{\Ann}{\operatorname{Ann}}
+\newcommand{\Der}{\operatorname{Der}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\gr}{\operatorname{gr}}
+\newcommand{\length}{\operatorname{length}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\m}{\mathfrak m}
+\newcommand{\n}{\mathfrak n}
+\newcommand{\ot}{\otimes}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\unit}{\mathrm e}
+
+\title[A fourth-power carry in rank four]
+      {A Fourth-Power Carry in a Finite Flat\\
+       Group Scheme of Rank Four}
+\author{}
+\date{}
+\subjclass[2020]{14L15, 16T05}
+\keywords{finite flat group scheme, Hopf algebra, power word,
+Artin complete intersection}
+
+\begin{document}
+
+\begin{abstract}
+The analogue of Lagrange's theorem for a finite locally free group scheme
+asks whether its rank annihilates the power word.  We give an explicit
+negative example in rank four.  Its base is the length-nine local Artin
+complete intersection
+\[
+ C=\Z[r,s]/(r^3+2,\ s^3+2,\ rs^2),
+\]
+and its coordinate algebra is free on \(1,U,V,UV\).  Its special fiber is
+\(\alpha _2\times\alpha _2\), and every geometric fiber is obtained from
+this one by scalar extension.  The total group scheme is nevertheless
+noncommutative and its fourth-power word is nontrivial; its eighth-power
+word is trivial.
+
+The construction is governed by a simple mechanism.  A group-like element
+of the form \(\lambda=1+\theta\), with \(\theta^2=0\), leaves the geometric
+sum carry
+\[
+ 1+\lambda+\lambda^2+\lambda^3=2\theta
+\]
+in characteristic four.  Two elementary rank-two cancellation patterns,
+joined by one mixed bridge, realize this mechanism inside a closed
+submonoid of \(\Ga^2\rtimes\Gm\).  The carry becomes the socle class
+\(2sUV\); periodicity then supplies the inverse and turns the submonoid into
+a group scheme.  It may also be viewed as a square-zero deformation of an
+exponent-four group: the failure to lift the equation \([4]=\unit\) is the
+nonzero cotangent-theoretic derivation \(dU\mapsto2sUV\), \(dV\mapsto0\).
+Thus the failure is entirely relative: it lives in the last infinitesimal
+layer and is invisible on every geometric fiber.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+If a finite group has order \(n\), then every element has \(n\)-th power
+equal to the identity.  The corresponding question for a finite locally
+free group scheme \(G\to S\) of rank \(n\) is whether the power word
+\[
+ [n]\colon G\longrightarrow G,\qquad g\longmapsto g^n,
+\]
+is the constant unit word.  This question is recorded in SGA~3; see
+\cite[Exp.~VIII, Rem.~7.3.1]{SGA3II} and the account in
+\cite{SchoofSurvey}.  When \(G\) is noncommutative, the power word need not
+be a homomorphism, but it remains a perfectly well-defined morphism of
+schemes.  On a coordinate Hopf algebra \(A\), killedness by \(n\) means
+\[
+ [n]^\#=\eta\eps\colon A\longrightarrow A.
+\]
+
+The answer over a field is proved in
+\cite[Exp.~VIIA, Prop.~8.5]{SGA3I}; it follows that the answer is also
+positive over a reduced base.  Deligne proved it for commutative finite
+locally free group schemes over an arbitrary base.  His argument first
+appeared in \cite[\S1]{OortTate}; later expositions include
+\cite[\S3.8]{TateFiniteFlat}, \cite[\S3.3]{Stix}, and
+\cite[\S3]{SchoofSurvey}.  Any counterexample must therefore use both
+nilpotents in the base and a noncommutative group law.
+
+There are also strong positive results in the remaining, genuinely
+relative setting.  Let \(R\) be a local Artin ring with residue
+characteristic \(p>0\) and maximal ideal \(\mathfrak m_R\).  Schoof proved
+that every finite flat group scheme over \(R\) is killed by its order if
+\begin{equation}\label{eq:Schoof-range}
+ \mathfrak m_R^p=p\mathfrak m_R=0;
+\end{equation}
+in particular this applies when \(\mathfrak m_R^2=0\)
+\cite{Schoof2001,SchoofSurvey}.  Schoof also proved, without a restriction
+on the length of \(R\), killedness for deformations of a distinguished
+noncommutative matrix group in characteristic \(p\).  Torti extended this
+deformation-theoretic result to an explicit family
+\(G_\lambda\simeq\alpha_p\rtimes_\lambda\mu_{p^m}\) of noncommutative
+special fibers \cite{Torti}.  These results, together
+with the original references, are surveyed in
+\cite{SchoofSurvey,Torti}.
+
+The example below lies just beyond these positive ranges.  Its residue
+characteristic is \(2\), but its maximal ideal satisfies
+\[
+ \mathfrak m^2\ne0,
+ \qquad
+ 2\mathfrak m=(2s)\ne0,
+\]
+so \eqref{eq:Schoof-range} fails in both ways.  Moreover, its special fiber
+is the commutative group \(\alpha_2\times\alpha_2\), rather than one of the
+noncommutative semidirect products treated in the deformation results
+above.  Noncommutativity itself is created by the nilpotent thickening.
+Thus both features excluded by the classical theorems will be visible,
+rather than incidental, in the construction.
+
+There is a basic reason that the relative question can behave differently
+from its fiberwise analogue.  A morphism over a nonreduced base may vanish
+on every geometric fiber and still survive in a nilpotent direction.  The
+example below makes this possibility concrete in a compact form: its
+fourth-power defect is a generator of the socle of the total
+coordinate algebra.
+
+Here is the complete statement.
+
+\begin{theorem}\label{thm:main}
+Let
+\begin{equation}\label{eq:C-intro}
+ C=\Z[r,s]/(r^3+2,\ s^3+2,\ rs^2),
+\end{equation}
+and define
+\begin{equation}\label{eq:A-intro}
+ A=C[U,V]/(U^2-r^2U+rsV,\ V^2-s^2V).
+\end{equation}
+Put \(W=UV\) and
+\begin{equation}\label{eq:lambda-intro}
+ \lambda=(1+rU)(1+sV).
+\end{equation}
+Then the following assertions hold.
+\begin{enumerate}
+\item The ring \(C\) is a local Artin complete intersection of length nine,
+with residue field \(\F_2\), characteristic four, and
+\[
+ \Soc(C)=\F_2(2s).
+\]
+\item The algebra \(A\) is free of rank four over \(C\), with basis
+\[
+ 1,\qquad U,\qquad V,\qquad W.
+\]
+It is a Hopf algebra with counit \(\eps(U)=\eps(V)=0\) and coproduct
+\begin{equation}\label{eq:Delta-intro}
+ \Delta(U)=U\ot1+\lambda\ot U,
+ \qquad
+ \Delta(V)=V\ot\lambda+1\ot V.
+\end{equation}
+\item For \(G=\Spec A\), the special fiber is
+\(\alpha _2\times\alpha _2\); consequently every geometric fiber is its
+scalar extension to an algebraic closure.  The group scheme \(G\) itself
+is noncommutative.
+\item The power words satisfy
+\begin{equation}\label{eq:powers-intro}
+ [4]^\#(U)=2sW\ne0,
+ \qquad
+ [4]^\#(V)=[4]^\#(W)=0,
+ \qquad
+ [8]=\unit.
+\end{equation}
+In fact \(2sW\) spans the socle of the local Artin ring \(A\).
+\end{enumerate}
+In particular, \(G\) is a finite locally free group scheme of rank four
+which is not killed by four.
+\end{theorem}
+
+The formulas in the theorem were not found by guessing a large Hopf table.
+They can be reconstructed from one elementary observation.  If \(\lambda\)
+is group-like and \(U\) is \(\lambda\)-skew primitive, then
+\[
+ [n]^\#(U)=(1+\lambda+\cdots+\lambda^{n-1})U.
+\]
+If \(\lambda=1+\theta\), \(\theta^2=0\), and \(4=0\), the four-term
+geometric sum is \(2\theta\), not necessarily zero.  The problem is
+therefore to build a rank-four algebra in which \(2\theta U\) survives.
+
+The rest of the paper follows this reverse-engineering argument.  We first
+isolate the geometric-sum carry.  We then explain how two rank-two Hopf
+patterns and one bridge produce exactly the three equations in
+\eqref{eq:C-intro}.  Next we study the geometry of the base and realize the
+construction as a closed submonoid of an elementary matrix group.  The
+eighth-power calculation supplies inverses automatically.  We then
+identify the fourth-power carry as the obstruction to lifting a power
+relation across a square-zero extension.  Finally, we describe the special
+fiber, noncommutativity, a nonnormal rank-two subgroup, and the
+precise---but deliberately limited---sense in which the three base
+equations are economical.
+
+\section{The design principle: skew primitives and geometric sums}
+
+Let \(R\) be a commutative ring and let \(M=\Spec B\) be an affine monoid
+scheme over \(R\).  We use the same terminology as for Hopf algebras: an
+element \(l\in B\) is \emph{group-like} if
+\(\Delta(l)=l\ot l\) and \(\eps(l)=1\), and \(x\in B\) is left
+\(l\)-\emph{skew primitive} if
+\[
+ \Delta(x)=x\ot1+l\ot x.
+\]
+No inverse is needed for these notions.
+
+\begin{remark}[The geometric dictionary]\label{rem:geometric-dictionary}
+A function \(l\in B\) is the same thing as a morphism of schemes
+\[
+ l\colon M\longrightarrow\mathbb A^1_R.
+\]
+The two group-like identities say exactly that this morphism respects
+multiplication and the unit, where the target is given its multiplicative
+monoid structure.  Thus a group-like element is a character
+\[
+ M\longrightarrow\mathbb A^1_{\mathrm{mult}}.
+\]
+If \(M\) is a group scheme, then \(l\) is automatically invertible, with
+inverse \(S(l)\), and the map lands in \(\Gm\).  In that case a group-like
+element is literally a homomorphism of group schemes
+\[
+ l\colon M\longrightarrow\Gm.
+\]
+
+A skew-primitive function is almost, but not quite, a map to \(\Ga\).
+When \(l\) is invertible, the pair \((x,l)\) is a homomorphism to the
+affine group
+\begin{equation}\label{eq:affine-group}
+ \operatorname{Aff}_1=\Ga\rtimes\Gm
+ =
+ \left\{
+ \begin{pmatrix}z&u\\0&1\end{pmatrix}
+ \right\},
+ \qquad
+ (u,z)(u',z')=(u+zu',zz').
+\end{equation}
+Indeed, on points the two coproduct identities are precisely
+\begin{equation}\label{eq:skew-primitive-on-points}
+ l(gh)=l(g)l(h),
+ \qquad
+ x(gh)=x(g)+l(g)x(h),
+\end{equation}
+which say that
+\[
+ g\longmapsto
+ \begin{pmatrix}l(g)&x(g)\\0&1\end{pmatrix}
+\]
+respects multiplication.  Equivalently, \(x\) is a crossed homomorphism,
+or \(1\)-cocycle, for the one-dimensional action defined by the character
+\(l\).  When \(l=1\), the twisting disappears:
+\(\Delta(x)=x\ot1+1\ot x\), and \(x\colon M\to\Ga\) is an ordinary
+homomorphism.
+
+The right skew-primitive identity
+\[
+ \Delta(y)=y\ot l+1\ot y
+\]
+has the same meaning using lower-triangular matrices:
+\[
+ g\longmapsto
+ \begin{pmatrix}l(g)&0\\y(g)&1\end{pmatrix},
+ \qquad
+ y(gh)=y(g)l(h)+y(h).
+\]
+Without the invertibility of \(l\), the same statements define a map to
+the affine-transformation \emph{monoid}
+\(\Ga\rtimes\mathbb A^1_{\mathrm{mult}}\).  In the construction below,
+\(\lambda\) is a unit, so the target is already the affine group.
+\end{remark}
+
+\begin{lemma}[The norm formula]\label{lem:norm}
+Suppose \(l\in B\) is group-like.  If \(x\) is left \(l\)-skew primitive,
+then
+\begin{equation}\label{eq:left-norm}
+ [n]^\#(x)=N_n(l)x,
+ \qquad
+ N_n(T)=1+T+\cdots+T^{n-1}.
+\end{equation}
+If instead
+\(\Delta(y)=y\ot l+1\ot y\), then
+\begin{equation}\label{eq:right-norm}
+ [n]^\#(y)=yN_n(l).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+In the affine-transformation monoid (and hence in the group
+\eqref{eq:affine-group} when \(l\) is invertible), ordinary matrix
+multiplication gives
+\[
+ (u,z)^n=\bigl(N_n(z)u,z^n\bigr).
+\]
+Pulling the first coordinate back along the homomorphism \((x,l)\) gives
+\eqref{eq:left-norm}.  Equivalently, iterating the coproduct gives
+\[
+ x\ot1\ot\cdots\ot1
+ +l\ot x\ot1\ot\cdots\ot1
+ +\cdots+l\ot\cdots\ot l\ot x.
+\]
+Multiplying the tensor factors gives \eqref{eq:left-norm}.  The right
+skew-primitive formula is the same calculation with the lower-triangular
+matrices above.
+\end{proof}
+
+The identity which drives the example is now immediate.
+
+\begin{lemma}[The characteristic-four carry]\label{lem:carry}
+Assume \(4=0\) in \(R\).  If \(\theta^2=0\) and \(l=1+\theta\), then
+\begin{equation}\label{eq:carry}
+ N_4(l)=2\theta,
+ \qquad
+ l^4=1,
+ \qquad
+ N_8(l)=0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Since \(l^i=1+i\theta\),
+\[
+ N_4(l)=4+(1+2+3)\theta=4+6\theta=2\theta.
+\]
+Also \(l^4=1+4\theta=1\), and hence
+\[
+ N_8(l)=N_4(l)(1+l^4)=2N_4(l)=4\theta=0.
+\]
+\end{proof}
+
+Thus a counterexample of the desired kind will follow from four pieces of
+data:
+\begin{equation}\label{eq:design-target}
+ \boxed{
+ \begin{gathered}
+ 4=0,\qquad \lambda=1+\theta,\qquad \theta^2=0,\\
+ \Delta(U)=U\ot1+\lambda\ot U,
+ \qquad 2\theta U\ne0.
+ \end{gathered}}
+\end{equation}
+The next section explains why two quadratic coordinates are enough to
+realize these requirements.
+
+\section{Two rank-two cancellations and one bridge}
+
+The elementary rank-two calculation is worth separating from the final
+example.  Suppose that \(T^2=aT\), set \(g=1+bT\), and try to multiply two
+copies of \(T\) by the rule
+\[
+ T_*=T_1+g_1T_2.
+\]
+Then
+\begin{equation}\label{eq:rank-two-defect}
+ T_*^2-aT_*
+ =g_1\bigl(2T_1+a(g_1-1)\bigr)T_2
+ =g_1(2+ab)T_1T_2.
+\end{equation}
+Consequently the single scalar identity
+\begin{equation}\label{eq:rank-two-cancellation}
+ ab=-2
+\end{equation}
+cancels the cross term.  Under this identity \(g\) is group-like,
+\(g^2=1\), and
+\[
+ \Delta(T)=T\ot1+g\ot T
+\]
+is the familiar rank-two Hopf pattern.  Indeed,
+\[
+ \Delta(g)=g\ot g,
+ \qquad
+ [2]^\#(T)=(1+g)T=(2+ab)T=0,
+\]
+so coassociativity is formal and one may take \(S(T)=T\).  This is a
+special case of the rank-two constructions appearing in the Oort--Tate
+classification
+\cite{OortTate}, but only the one-line calculation
+\eqref{eq:rank-two-defect} is needed here.
+
+To obtain rank four, begin formally with two such patterns.  Write
+\[
+ U^2=\alpha U+\beta V,
+ \qquad
+ V^2=\gamma V,
+ \qquad
+ \lambda=(1+rU)(1+sV).
+\]
+The term \(\beta V\) is the bridge between the two coordinates.  Expanding
+the bridge ansatz suggests the following compact compatibility list:
+\begin{equation}\label{eq:five-conditions}
+\begin{array}{c@{\qquad}c@{\qquad}l}
+ \alpha r=-2,&\gamma s=-2,
+   &\text{the two diagonal cancellations},\\[2pt]
+ \gamma r=0,&\beta s=0,
+   &\text{the two mixed vanishings},\\[2pt]
+ \multicolumn{2}{c}{\beta r=-\alpha s}
+   &\text{the bridge balance}.
+\end{array}
+\end{equation}
+The list separates the two diagonal cancellations, the two mixed
+vanishings, and the bridge balance.  We only need the specialization below;
+Section~\ref{sec:ambient} proves its sufficiency structurally through an
+ambient matrix group, and Appendix~\ref{app:closure} records the complete
+defect calculation.
+
+There is a particularly economical way to solve
+\eqref{eq:five-conditions}.  Take
+\begin{equation}\label{eq:coefficient-specialization}
+ \alpha=r^2,
+ \qquad
+ \beta=-rs,
+ \qquad
+ \gamma=s^2.
+\end{equation}
+The five conditions become
+\[
+ \underbrace{r^3=-2,\quad s^3=-2}_{\text{two cancellations}},
+ \qquad
+ \underbrace{rs^2=0}_{\text{both mixed vanishings}},
+ \qquad
+ -r^2s=-r^2s.
+\]
+The last balance is automatic.  This is the origin of the base
+\[
+ C=\Z[r,s]/(r^3+2,s^3+2,rs^2)
+\]
+and of the bridge equation
+\[
+ U^2=r^2U-rsV.
+\]
+No nilpotence cutoff has been added: the same three equations which make
+the multiplication work will turn out to force the base to be Artinian.
+
+The direct product of the two rank-two patterns would correspond to no
+bridge.  That is not enough for our purpose.  The correction \(-rsV\) in
+\(U^2\) changes the square of \(1+rU\) by the term which will eventually
+become the nonzero fourth-power carry.  In this sense the bridge does not
+merely couple the two blocks; it stores the obstruction.
+
+\section{The base and its last infinitesimal layer}\label{sec:base}
+
+We now study the three-relation base on its own.  Besides certifying the
+nonvanishing needed later, its structure explains where the obstruction
+lives.
+
+\begin{proposition}\label{prop:base}
+Let \(C\) be as in \eqref{eq:C-intro}.  Then \(C\) is a local Artin
+complete intersection with maximal ideal
+\[
+ \m=(r,s)=(2,r,s)
+\]
+and residue field \(\F_2\).  As an abelian group,
+\begin{equation}\label{eq:additive-C}
+ C_{\mathrm{add}}
+ \cong (\Z/4)\{1\}\oplus(\Z/4)\{s\}
+ \oplus(\Z/2)\{s^2,r,rs,r^2,r^2s\}.
+\end{equation}
+In particular, \(C\) has characteristic four, cardinality \(2^9\), length
+nine, and \(2s\ne0\).
+
+The powers of the maximal ideal have successive \(\F_2\)-bases
+\begin{equation}\label{eq:loewy-bases}
+\begin{array}{c|c}
+ \text{quotient}&\text{basis}\\ \hline
+ C/\m&1\\
+ \m/\m^2&r,\ s\\
+ \m^2/\m^3&r^2,\ rs,\ s^2\\
+ \m^3/\m^4&2,\ r^2s\\
+ \m^4&2s.
+\end{array}
+\end{equation}
+Thus \(\m^5=0\), the Hilbert function is \((1,2,3,2,1)\), and
+\begin{equation}\label{eq:socle-C}
+ \Soc(C)=\F_2(2s).
+\end{equation}
+More conceptually,
+\begin{equation}\label{eq:gr-C}
+ \gr_{\m}(C)
+ \cong \F_2[R,S]/(RS^2,R^3+S^3).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+First put
+\[
+ C_0=\Z[r,s]/(r^3+2,s^3+2).
+\]
+Because both polynomials are monic, \(C_0\) is free over \(\Z\) on the
+nine monomials \(r^is^j\), \(0\le i,j\le2\).  Let \(t=rs^2\).  On the
+ordered basis
+\[
+ (1,s,s^2,r,rs,rs^2,r^2,r^2s,r^2s^2),
+\]
+multiplication by \(t\) gives
+\[
+ (rs^2,-2r,-2rs,r^2s^2,-2r^2,-2r^2s,-2s^2,4,4s).
+\]
+These nine entries lie in nine distinct basis directions.  Quotienting by
+\((t)\) therefore gives exactly the additive normal form
+\eqref{eq:additive-C}.  In particular \(2s\ne0\), while \(4=0\).
+
+For later use, the three defining relations also give directly
+\begin{equation}\label{eq:base-consequences}
+ 2r=0,
+ \qquad
+ 2s^2=0,
+ \qquad
+ 4=0.
+\end{equation}
+For example,
+\[
+ 2r=r(s^3+2)-s(rs^2),
+ \qquad
+ 2s^2=s^2(r^3+2)-r^2(rs^2),
+\]
+and \(4=0\) follows by multiplying \(2r=0\) by \(r^2\).
+
+Since \(2=-r^3\), the ideals \((r,s)\) and \((2,r,s)\) agree.  Moreover
+\(r^4=0\), \(s^5=0\), and \(C/(r,s)=\F_2\).  Thus \(C\) is local Artin with
+the stated maximal ideal.  Multiplying the normal forms gives
+\begin{align*}
+ \m^2&=\F_2\{r^2,rs,s^2,r^2s,2,2s\},\\
+ \m^3&=\F_2\{2,r^2s,2s\},\\
+ \m^4&=\F_2\{2s\},
+ \qquad \m^5=0,
+\end{align*}
+which proves \eqref{eq:loewy-bases}.
+
+For completeness, the three defining equations form a regular sequence.
+The first is a nonzerodivisor in \(\Z[r,s]\); modulo it, \(s^3+2\) is monic
+in \(s\), hence is again a nonzerodivisor.  The resulting ring \(C_0\) is
+free over \(\Z\), and \(rs^2\) becomes a unit after tensoring with
+\(\mathbb Q\).  It is therefore a nonzerodivisor on \(C_0\).  Hence \(C\)
+is a zero-dimensional complete intersection and is Gorenstein.  The
+nonzero element \(2s\) is annihilated by \(r\) and \(s\), so the
+one-dimensional socle is \eqref{eq:socle-C}.
+
+Finally, the classes of \(r,s\) induce a surjection from the right side of
+\eqref{eq:gr-C} to \(\gr_{\m}(C)\): the initial relations are \(RS^2=0\)
+and \(R^3+S^3=0\).  The source is a homogeneous complete intersection of
+two cubics, with Hilbert function \((1,2,3,2,1)\).  The equality of lengths
+shows that the surjection is an isomorphism.
+\end{proof}
+
+The top class has a useful interpretation.  In the tangent cone it is
+\(R^3S=S^4\); in \(C\) it lifts, up to sign, to
+\[
+ r^3s=-2s.
+\]
+Thus the two equations \(r^3=s^3=-2\) identify the two cubic directions
+with the same arithmetic element, while the mixed equation \(rs^2=0\)
+leaves their product with \(s\) as the unique final class.  This is exactly
+the coefficient which appears in the fourth-power word.
+
+\begin{corollary}[Quotient-minimality of this witness]\label{cor:quotient-minimal}
+Every nonzero ideal of \(C\) contains \(2s\).  Consequently every proper
+quotient \(C/J\) with \(0\ne J\subsetneq C\) kills the fourth-power defect
+constructed below.  Equivalently, if a unital map \(C\to D\) sends \(2s\)
+to a nonzero element, then the map is injective.
+\end{corollary}
+
+\begin{proof}
+Every nonzero ideal in an Artin local ring meets the socle: multiply a
+nonzero element by a largest possible power of the maximal ideal.  Now use
+\eqref{eq:socle-C}.
+\end{proof}
+
+\section{The ambient matrix group}\label{sec:ambient}
+
+We next explain conceptually why the coproduct in Theorem~\ref{thm:main}
+is coassociative.  The point is not to check coassociativity coefficient by
+coefficient.  Rather, the two coordinates form a closed submonoid of a
+simple matrix group, so associativity is inherited.
+
+We begin with a few identities in \(A\).  Monic reduction in \(V\) and
+then in \(U\) gives
+\begin{equation}\label{eq:A-free}
+ A=C\{1,U,V,W\},\qquad W=UV.
+\end{equation}
+The basic products are
+\begin{equation}\label{eq:W-products}
+ UW=r^2W,
+ \qquad
+ VW=s^2W,
+ \qquad
+ W^2=0.
+\end{equation}
+Set
+\begin{equation}\label{eq:L-M-theta}
+ L=1+rU,
+ \qquad
+ M=1+sV,
+ \qquad
+ \lambda=LM=1+\theta.
+\end{equation}
+
+\begin{lemma}\label{lem:theta}
+In \(A\) one has
+\begin{equation}\label{eq:factor-squares}
+ M^2=1,
+ \qquad
+ L^2=1+2sV,
+ \qquad
+ \lambda^2=1+2sV,
+\end{equation}
+and
+\begin{equation}\label{eq:theta-core}
+ 2\theta=2sV,
+ \qquad
+ \theta^2=0,
+ \qquad
+ \lambda^{-1}=1-\theta.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The identity \(V^2=s^2V\), together with \(s^3=-2\), gives
+\[
+ (1+sV)^2=1+(2s+s^4)V=1.
+\]
+Similarly, the bridge term in \(U^2=r^2U-rsV\) gives
+\[
+ (1+rU)^2=1+r^2U^2
+ =1+r^4U-r^3sV=1+2sV,
+\]
+where \(2r=0\).  This proves \eqref{eq:factor-squares}.  Since
+\[
+ \theta=rU+sV+rsW,
+\]
+the base identities give \(2\theta=2sV\).  Comparing
+\((1+\theta)^2\) with \(\lambda^2=1+2sV\) now gives \(\theta^2=0\), and the
+last formula follows.
+\end{proof}
+
+The two factors \(L\) and \(M\) remember the two rank-two building blocks,
+but after the bridge is inserted neither factor is itself a character.
+Their product \(\lambda\) will be the character.  This distinction is the
+reason for using an ambient group with one multiplicative coordinate.
+
+Let
+\[
+ H=\Spec C[u,v,z,z^{-1}]
+\]
+with multiplication
+\begin{equation}\label{eq:H-law}
+ (u,v,z)(u',v',z')
+ =\bigl(u+zu',\ vz'+v',\ zz'\bigr).
+\end{equation}
+This is visibly associative from the block-diagonal matrix realization
+\begin{equation}\label{eq:matrix-realization}
+ (u,v,z)\longmapsto
+ \begin{pmatrix}z&u\\0&1\end{pmatrix}
+ \oplus
+ \begin{pmatrix}1&v\\0&z\end{pmatrix}.
+\end{equation}
+After replacing \(v\) by \(v/z\), it is the semidirect product
+\(\Ga^2\rtimes\Gm\) in which \(\Gm\) acts with weights \(1\) and \(-1\).
+
+Because \(\lambda\) is a unit, \(G_0=\Spec A\) is the closed subscheme of
+\(H\) defined by
+\begin{equation}\label{eq:G-in-H}
+ u^2-r^2u+rsv=0,
+ \qquad
+ v^2-s^2v=0,
+ \qquad
+ z=(1+ru)(1+sv).
+\end{equation}
+At first \(G_0\) is only a pointed scheme.  The next proposition gives it
+an associative multiplication.
+
+\begin{proposition}\label{prop:submonoid}
+The closed subscheme \(G_0\subset H\) contains the identity and is stable
+under the multiplication of \(H\).  It is therefore a closed submonoid
+scheme.  On its coordinate algebra, the induced coproduct is
+\begin{equation}\label{eq:Delta-main}
+ \Delta(U)=U\ot1+\lambda\ot U,
+ \qquad
+ \Delta(V)=V\ot\lambda+1\ot V,
+ \qquad
+ \Delta(\lambda)=\lambda\ot\lambda.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The identity \((0,0,1)\) plainly satisfies \eqref{eq:G-in-H}.  For the
+product of two points of \(G_0\), write
+\begin{equation}\label{eq:product-coordinates}
+ U_*=U_1+\lambda_1U_2,
+ \qquad
+ V_*=V_1\lambda_2+V_2.
+\end{equation}
+The two quadratic relations for \(U_*,V_*\) follow from the two rank-two
+cancellations and the bridge identities; the exact two-line reduction is
+given in Appendix~\ref{app:closure}.
+
+The graph equation has a factorization which displays the role of the
+bridge.  Put \(L_i=1+rU_i\), \(M_i=1+sV_i\), and
+\[
+ E=rsV_1U_2.
+\]
+The ambient product gives
+\[
+ 1+rU_*=L_1(1+rM_1U_2),
+ \qquad
+ 1+sV_*=(1+sV_1L_2)M_2.
+\]
+It follows that
+\begin{equation}\label{eq:graph-factor}
+ (1+rU_*)(1+sV_*)-\lambda_1\lambda_2
+ =L_1M_2E(2+rU_2+sV_1+E).
+\end{equation}
+Every term on the right vanishes.  Indeed,
+\[
+ 2E=E(sV_1)=E^2=0,
+\]
+using \(2r=rs^2=0\), while
+\[
+ E(rU_2)
+ =r^2sV_1(r^2U_2-rsV_2)=0
+\]
+using \(2r=2s^2=0\).  Thus the graph equation is stable and
+\(\lambda_*=\lambda_1\lambda_2\).  The multiplication and associativity
+are inherited from \(H\), and the coordinate formulas are
+\eqref{eq:Delta-main}.
+\end{proof}
+
+This proposition is the conceptual source of the bialgebra structure.  In
+particular, coassociativity is no longer a separate identity to be checked:
+it is simply associativity of the matrices in
+\eqref{eq:matrix-realization}.  We have deliberately called \(G_0\) a
+submonoid rather than a subgroup; inverses will emerge from the power
+calculation itself.
+
+\section{The fourth-power carry and the existence of inverses}
+\label{sec:powers}
+
+Proposition~\ref{prop:submonoid} and Lemma~\ref{lem:norm} give, already in
+the monoid \(G_0\),
+\begin{equation}\label{eq:norm-both}
+ [n]^\#(U)=N_n(\lambda)U,
+ \qquad
+ [n]^\#(V)=VN_n(\lambda).
+\end{equation}
+By Lemmas~\ref{lem:theta} and \ref{lem:carry},
+\begin{equation}\label{eq:N4-lambda}
+ N_4(\lambda)=2\theta=2sV.
+\end{equation}
+Consequently
+\begin{equation}\label{eq:fourth-U}
+ [4]^\#(U)=2sVU=2sW.
+\end{equation}
+This is nonzero: \(A\) is free on \(1,U,V,W\), and Proposition
+\ref{prop:base} proves \(2s\ne0\).
+
+The other coordinate vanishes:
+\begin{equation}\label{eq:fourth-V}
+ [4]^\#(V)=2sV^2=2s^3V=-4V=0.
+\end{equation}
+Since the comorphism of a word is an algebra map,
+\([4]^\#(W)=0\) as well.  This already proves that the fourth-power word is
+not the unit word.
+
+The same calculation at eight has an additional consequence.  Since
+\(\lambda^4=1\),
+\[
+ N_8(\lambda)=N_4(\lambda)(1+\lambda^4)=0.
+\]
+Both \(U\) and \(V\) go to zero under \([8]^\#\), so
+\begin{equation}\label{eq:eighth-unit}
+ [8]=\unit
+\end{equation}
+as a word of the monoid \(G_0\).
+
+\begin{proposition}\label{prop:inverse-by-seven}
+The monoid scheme \(G_0\) is a group scheme.  Its inverse morphism is the
+seventh-power word.
+\end{proposition}
+
+\begin{proof}
+For every \(C\)-algebra \(R\) and every \(g\in G_0(R)\), associativity and
+\eqref{eq:eighth-unit} give
+\[
+ g\,g^7=g^8=1=g^7g.
+\]
+Thus the morphism \([7]\colon G_0\to G_0\) is a functorial two-sided
+inverse.  Hence \(G_0\) is a group object.
+\end{proof}
+
+We may therefore write \(G=G_0\).  On coordinate rings,
+Proposition~\ref{prop:inverse-by-seven} supplies the antipode and completes
+the Hopf algebra proof.  If an explicit formula is desired, the ambient
+inverse gives
+\begin{equation}\label{eq:explicit-antipode}
+ S(U)=-\lambda^{-1}U=U-sW+r^2sV,
+ \qquad
+ S(V)=-V\lambda^{-1}=V+rW.
+\end{equation}
+These formulas are a check, not the reason inverses exist.
+
+The nonzero class in \eqref{eq:fourth-U} is as deep as possible.
+
+\begin{proposition}\label{prop:socle-A}
+The ring \(A\) is a local Artin complete intersection of length \(36\), and
+\begin{equation}\label{eq:socle-A}
+ \Soc(A)=\F_2(2sW).
+\end{equation}
+In particular, the only nonzero coordinate of the fourth-power word spans
+the socle of the total coordinate algebra.
+\end{proposition}
+
+\begin{proof}
+The special fiber of \(A\) is local, so the finite algebra \(A\) over the
+local ring \(C\) is local, with maximal ideal
+\(\n=(r,s,U,V)\).  Its length is \(4\length(C)=36\).  Starting from the
+regular sequence defining \(C\), first adjoin the monic relation
+\(V^2-s^2V\), then the monic relation \(U^2-r^2U+rsV\).  Thus \(A\) is a
+zero-dimensional complete intersection and has one-dimensional socle.
+
+The element \(2sW\) is nonzero, and the identities
+\[
+ 2rsW=2s^2W=2sUW=2sVW=0
+\]
+follow from \eqref{eq:base-consequences} and
+\eqref{eq:W-products}.  It is therefore annihilated by \(\n\) and must
+span the socle.
+\end{proof}
+
+We can now read the construction in one sentence.  The bridge turns the
+failure of \(L=1+rU\) to remain an involution into the square-zero term
+\(2sV\); the four-term geometric sum remembers that term, and
+multiplication by \(U\) places it in the unique top class \(2sUV\).  The
+eight-term sum sees the same carry twice and cancels it.
+
+\section{A square-zero deformation and its obstruction class}
+\label{sec:square-zero}
+
+There are three useful scales at which to view the deformation.  The first
+removes exactly the mixed bridge.  Put
+\[
+ q=rs,
+ \qquad Q=(q)\subset C,
+ \qquad D=C/Q.
+\]
+Since \(q^2=r^2s^2=r(rs^2)=0\), the map \(C\to D\) is a square-zero
+extension.  Moreover \(2s=-r^2q\), so it already kills the fourth-power
+class.
+
+\begin{proposition}[The bridge-free matched product]
+\label{prop:matched-product}
+Over \(D\), the coordinate algebra becomes
+\begin{equation}\label{eq:bridge-free-algebra}
+ A_D
+ \cong
+ D[U,V]/(U^2-r^2U,\ V^2-s^2V),
+\end{equation}
+and \(L=1+rU\) and \(M=1+sV\) are separate group-like involutions.  The
+closed rank-two subgroup schemes
+\[
+ H_U=(V=0),
+ \qquad H_V=(U=0)
+\]
+are both killed by two, and multiplication induces an isomorphism of
+\(D\)-schemes
+\begin{equation}\label{eq:matched-factorization}
+ H_U\mathbin{\times}_D H_V\xrightarrow{\ \sim\ }G_D.
+\end{equation}
+Thus \(G_D\) is the exact matched product of its two elementary rank-two
+factors.
+
+Upstairs, the failures of the two factors to remain group-like are the
+\(Q\)-valued terms
+\begin{equation}\label{eq:character-cocycles}
+ \begin{split}
+  c_L&=\Delta(L)-L\ot L=q\,LV\ot U,\\
+  c_M&=\Delta(M)-M\ot M=q\,V\ot UM.
+ \end{split}
+\end{equation}
+They are normalized twisted co-Hochschild \(2\)-cocycles, and their weighted
+sum vanishes so that \(LM=\lambda\) remains group-like.
+\end{proposition}
+
+\begin{proof}
+Setting \(q=0\) removes the bridge from the relation for \(U^2\), proving
+\eqref{eq:bridge-free-algebra}.  The formulas of Lemma~\ref{lem:theta} give
+\(L^2=M^2=1\), because \(2s=-r^2q=0\) in \(D\).  For group-likeness, the
+product coordinates give
+\begin{align*}
+ \Delta(L)-L_1L_2
+ &=rL_1(M_1-1)U_2=qL_1V_1U_2,\\
+ \Delta(M)-M_1M_2
+ &=sV_1(L_2-1)M_2=qV_1U_2M_2.
+\end{align*}
+These are both zero over \(D\), and over \(C\) they are exactly
+\eqref{eq:character-cocycles}.
+
+The two quotient Hopf algebras are the familiar rank-two algebras
+\(D[U]/(U^2-r^2U)\) and \(D[V]/(V^2-s^2V)\).  The rank-two cancellation
+\((2+rU)U=(2+r^3)U=0\), and its \((s,V)\) analogue, shows that both subgroup
+schemes are killed by two.  As an algebra, \(A_D\) is the tensor product of
+these two rank-two coordinate algebras.  More geometrically, the ambient
+law gives the unique factorization
+\[
+ (u,v,LM)=(u,0,L)(0,v,M),
+\]
+which proves \eqref{eq:matched-factorization}.  Reversing the order produces
+the mutual actions, so this is a matched product rather than a claimed
+direct product of groups.
+
+Finally, coassociativity of \(\Delta\) and \(Q^2=0\) linearize to
+\[
+ (\overline\Delta\ot\id)c_L+c_L\ot\overline L
+ = (\id\ot\overline\Delta)c_L+\overline L\ot c_L,
+\]
+and similarly for \(c_M\); the counit makes them normalized.  This is the
+twisted co-Hochschild cocycle equation.  Expanding
+\(\Delta(LM)=\Delta(L)\Delta(M)\) to first order in \(Q\), and using
+\(\Delta(\lambda)=\lambda\ot\lambda\), gives
+\[
+ c_L(\overline M\ot\overline M)
+ +(\overline L\ot\overline L)c_M=0.
+\]
+Thus the two individual character defects cancel in their product.
+\end{proof}
+
+\subsection{What is being deformed?}
+\label{subsec:what-deforms}
+
+There is an important distinction hidden in
+\eqref{eq:matched-factorization}.  The multiplication map identifies
+\(G_D\) with \(H_U\times_DH_V\) as a \emph{scheme}, but not in general as
+a group scheme.  The group law remembers mutual actions between the two
+factors; equivalently, \(G_D\) is an exact matched product.  Only after
+passing all the way to the closed fiber do the actions disappear and give
+the literal direct product
+\(\alpha _2\times\alpha _2\).  Thus the extension
+\[
+ 0\longrightarrow Q\longrightarrow C\longrightarrow D\longrightarrow0
+\]
+asks us to lift an exact factorization, not merely to lift a direct
+product.
+
+Three kinds of data can change in such a lift.  The two rank-two group
+schemes can deform separately; their mutual actions, and hence the
+coproduct on their tensor-product coordinate algebra, can deform; and the
+tensor-product algebra itself can acquire a mixed multiplication term.
+The last kind of term is the bridge.  These are useful descriptions, but
+they are not three independent summands of a deformation space.  The
+identity that the coproduct is an algebra map couples multiplication and
+coproduct corrections.  A bridge in the algebra will usually force a
+mixed correction to the coproduct.
+
+Here is the standard cohomological formulation.  Put \(A_0=A_D\) and
+\(M=Q\ot_DA_0\simeq QA\).  Frame a lift by identifying its underlying
+\(C\)-module with a chosen lift of the free \(D\)-module \(A_0\).  If
+\((m_1,\Delta_1)\) and \((m_2,\Delta_2)\) are two \emph{actual} framed
+bialgebra lifts, their differences descend to \(D\)-linear maps
+\[
+ \mu\colon A_0\ot_DA_0\longrightarrow M,
+ \qquad
+ \delta\colon A_0\longrightarrow
+ Q\ot_D(A_0\ot_DA_0).
+\]
+The hypothesis \(Q^2=0\) makes every bialgebra identity linear in
+\((\mu,\delta)\).  Thus \(\mu\) is a normalized Hochschild \(2\)-cocycle,
+\(\delta\) is a normalized co-Hochschild \(2\)-cocycle, and they satisfy
+the mixed equation
+\begin{align}
+ \delta(ab)+\overline\Delta\bigl(\mu(a,b)\bigr)
+ &=
+ \delta(a)\overline\Delta(b)
+ +\overline\Delta(a)\delta(b)
+ +\mu^{(2)}(\overline\Delta(a),\overline\Delta(b)),
+ \label{eq:GS-mixed}
+\\[-2pt]
+ \mu^{(2)}(a_1\ot a_2,b_1\ot b_2)
+ &=
+ \mu(a_1,b_1)\ot a_2b_2
+ +a_1b_1\ot\mu(a_2,b_2).
+ \nonumber
+\end{align}
+For completeness, the coalgebra equation is
+\begin{equation}\label{eq:GS-coalgebra}
+ (\overline\Delta\ot\id)\delta
+ +(\delta\ot\id)\overline\Delta
+ =
+ (\id\ot\overline\Delta)\delta
+ +(\id\ot\delta)\overline\Delta .
+\end{equation}
+A framed coordinate change \(\id+h\), where
+\(h\colon A_0\to M\) is normalized, changes the pair by
+\begin{align}
+ \mu(a,b)&\longmapsto
+ \mu(a,b)+a h(b)-h(ab)+h(a)b,\label{eq:GS-gauge-m}\\
+ \delta&\longmapsto
+ \delta+\overline\Delta h
+ -(h\ot\id+\id\ot h)\overline\Delta .
+ \label{eq:GS-gauge-d}
+\end{align}
+These are the Gerstenhaber--Schack cocycle and coboundary equations
+\cite{GerstenhaberSchack}.  Because an affine group scheme has a
+commutative coordinate algebra, our deformation problem is the
+commutative subproblem in which \(\mu\) is symmetric.  In this language
+infinitesimal automorphisms, deformations, and existence obstructions are
+measured in degrees \(1,2,3\), respectively.
+
+There are two qualifications to this slogan.  First, \(C\to D\) is not a
+split square-zero extension.  A coefficientwise lift of the formulas over
+\(D\) need not itself satisfy the bialgebra identities, so its correction
+obeys an \emph{inhomogeneous} version of
+\eqref{eq:GS-mixed}.  Once one actual lift has been chosen, differences
+from it are honest cocycles.  The set of lifts is therefore naturally
+affine, or torsorial, rather than a vector space with a canonical zero.
+Second, no separate infinitesimal antipode has to be chosen.  In the
+convolution algebra, an inverse modulo a nilpotent ideal lifts by a finite
+geometric series, so a bialgebra lift of a Hopf algebra is again Hopf.
+
+For our chosen coefficientwise lift of the bridge-free presentation, the
+visible corrections are
+\begin{equation}\label{eq:visible-GS-corrections}
+ \mu(U,U)=-qV,
+ \qquad
+ \delta(U)=qW\ot U,
+ \qquad
+ \delta(V)=qV\ot W.
+\end{equation}
+Here the last two terms come from
+\(\lambda=1+rU+sV+qW\).  They are components of one compatible
+bialgebra correction, not three unrelated choices.  The character
+cocycles \(c_L,c_M\) of \eqref{eq:character-cocycles} give a more
+intrinsic view of its coalgebra part: neither of the two rank-two
+characters remains group-like, but their defects cancel so that
+\(LM=\lambda\) does.
+
+\subsection{An explicit chart of possible lifts}
+\label{subsec:explicit-lifts}
+
+The general cohomology is useful for orientation, but in the present
+example the relevant part of the deformation problem can be written as a
+five-term linear calculation.  Consider the triangular bridge chart
+\[
+ U^2=\alpha U+\beta V,\qquad V^2=\gamma V,\qquad
+ \lambda=(1+rU)(1+sV),
+\]
+with the same skew-primitive formulas for \(U,V\).  The five compatibility
+equations are those of \eqref{eq:five-conditions}:
+\begin{equation}\label{eq:bridge-chart-again}
+ \alpha r=-2,\quad \gamma s=-2,\quad
+ \gamma r=0,\quad \beta s=0,\quad
+ \beta r+\alpha s=0.
+\end{equation}
+
+\begin{lemma}[The bridge chart is Hopf]\label{lem:bridge-chart-Hopf}
+The five equations \eqref{eq:bridge-chart-again} make both quadrics stable
+under the coproduct and make \(\lambda\) group-like.  They therefore
+define a rank-four Hopf algebra.  Its antipode is
+\begin{equation}\label{eq:general-bridge-antipode}
+ S(U)=U-sUV+\alpha sV,\qquad S(V)=V+rUV.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We give the calculation because it displays how the bridge equation enters
+the Hopf axioms.  The five scalar identities first imply
+\[
+ 2r=4=\alpha s^2=2s^2=0,
+ \qquad
+ r^2\beta=2s.
+\]
+Put \(L=1+rU\), \(M=1+sV\), and \(\theta=\lambda-1\).  Then
+\begin{equation}\label{eq:general-bridge-identities}
+ \begin{gathered}
+  M^2=1,\qquad L^2=\lambda^2=1+2sV,\qquad \theta^2=0,\\
+  \gamma(\lambda-1)=-2V,\qquad
+  \beta(\lambda-1)=-\alpha sU,\qquad
+  \beta(\lambda^2-1)=0,\\
+  2\lambda U+\alpha(\lambda^2-\lambda)=-\alpha sV.
+ \end{gathered}
+\end{equation}
+For example, the last identity follows by adding
+\[
+ 2\lambda U=2U-2\alpha sV+2sUV
+\]
+and
+\[
+ \alpha(\lambda^2-\lambda)=2U+\alpha sV+2sUV.
+\]
+
+On two universal points write
+\[
+ U_*=U_1+\lambda_1U_2,\qquad
+ V_*=V_1\lambda_2+V_2.
+\]
+Reduction by the two monic quadrics gives
+\begin{align*}
+ V_*^2-\gamma V_*
+ &=V_1\lambda_2
+   \bigl(\gamma(\lambda_2-1)+2V_2\bigr),\\
+ U_*^2-\alpha U_*-\beta V_*
+ &=\beta V_1(1-\lambda_2)\\
+ &\quad+
+ \bigl(2\lambda_1U_1+\alpha(\lambda_1^2-\lambda_1)\bigr)U_2
+ +\beta(\lambda_1^2-1)V_2.
+\end{align*}
+The first line vanishes by \eqref{eq:general-bridge-identities}.  In the
+second, the first two terms are respectively
+\(\alpha sV_1U_2\) and \(-\alpha sV_1U_2\), while the last is zero.
+Thus both relations are preserved.
+
+It remains to check the graph coordinate.  Put \(t=rs\).  Directly from
+the definitions,
+\[
+ \Delta(L)=L_1L_2+tL_1V_1U_2,\qquad
+ \Delta(M)=M_1M_2+tV_1U_2M_2.
+\]
+After factoring out \(L_1M_2\), the error in
+\(\Delta(LM)=L_1M_1L_2M_2\) is
+\[
+ tV_1U_2(L_2+M_1)+t^2V_1^2U_2^2.
+\]
+It vanishes after substituting \(L_2+M_1=2+rU_2+sV_1\):
+the four resulting coefficients reduce respectively by
+\[
+ 2t=0,\qquad tr\alpha=tr\beta=0,\qquad ts\gamma=0,
+ \qquad t\gamma=0.
+\]
+Hence \(\lambda=LM\) is group-like.  Coassociativity is now formal from
+the two skew-primitive formulas, and the counit is the evident one.
+
+Finally, \(4=0\) and \(\theta^2=0\) imply
+\(\lambda^4=1\) and \(N_8(\lambda)=0\) by
+Lemma~\ref{lem:carry}.  The skew-primitive power formulas show that the
+eighth-power word is the unit word.  The seventh-power word is therefore
+an inverse and supplies the antipode.  Reducing its two coordinates gives
+\eqref{eq:general-bridge-antipode}.
+\end{proof}
+
+This chart does not claim to classify every abstract rank-four Hopf
+deformation; it classifies the deformations which preserve the two named
+axes, the triangular quadratic normal form, and the skew-primitive
+coproduct.
+
+It is helpful to record its tangent complex.  Let \(R'\to R\) be a
+square-zero extension with kernel \(J\), and start at a bridge-free point
+\[
+ (\overline\alpha,0,\overline\gamma,\overline r,\overline s)
+\]
+of \eqref{eq:bridge-chart-again}.  The difference between two lifts is a
+tuple
+\[
+ (a,b,c,\rho,\sigma)\in J^5,
+\]
+corresponding in order to
+\((\alpha,\beta,\gamma,r,s)\).  Linearizing the five equations gives
+\begin{equation}\label{eq:explicit-deformation-d1}
+ d_1
+ \begin{pmatrix}a\\ b\\ c\\ \rho\\ \sigma\end{pmatrix}
+ =
+ \begin{pmatrix}
+  \overline r a+\overline\alpha\rho\\
+  \overline s c+\overline\gamma\sigma\\
+  \overline r c+\overline\gamma\rho\\
+  \overline s b\\
+  \overline s a+\overline r b+\overline\alpha\sigma
+ \end{pmatrix}.
+\end{equation}
+The diagonal coordinate changes
+\[
+ U'=xU,\qquad V'=yV
+\]
+act by
+\[
+ (\alpha,\beta,\gamma,r,s)\longmapsto
+ (x\alpha,x^2y^{-1}\beta,y\gamma,x^{-1}r,y^{-1}s).
+\]
+Writing \(x=1+\xi\) and \(y=1+\eta\), their infinitesimal action at the
+bridge-free point is
+\begin{equation}\label{eq:explicit-deformation-d0}
+ d_0(\xi,\eta)=
+ (\overline\alpha\xi,0,\overline\gamma\eta,
+  -\overline r\xi,-\overline s\eta).
+\end{equation}
+Thus
+\[
+ J^2\xrightarrow{\ d_0\ }J^5\xrightarrow{\ d_1\ }J^5
+\]
+is a concrete presentation-level shadow of the
+Gerstenhaber--Schack complex.  If one lift exists, its framed companions
+form an affine space under \(\ker(d_1)\), and quotienting by
+\(\operatorname{im}(d_0)\) accounts for these coordinate gauges.
+For a nonsplit base extension, a naive coefficientwise lift has a
+curvature vector \(o\in J^5\), and the actual lifting equation is
+\[
+ d_1(a,b,c,\rho,\sigma)=-o.
+\]
+
+In our case the downstairs point is
+\[
+ (r^2,0,s^2,r,s)\quad\text{over }D.
+\]
+Its naive lift to \(C\), still with \(\beta=0\), violates exactly the last
+equation of \eqref{eq:bridge-chart-again}:
+\[
+ \beta r+\alpha s=r^2s=rq.
+\]
+At the level of the coproduct the same curvature is the single defect
+\begin{equation}\label{eq:naive-lift-curvature}
+ \Delta(U)^2-r^2\Delta(U)=rq\,V\ot U.
+\end{equation}
+The other quadratic relation and the graph equation for \(\lambda\)
+remain valid.  Thus \(rq\) is the primary mixed obstruction to retaining
+the tensor-product algebra upstairs.  The correction
+\[
+ (a,b,c,\rho,\sigma)=(0,-q,0,0,0)
+\]
+has \(d_1(0,-q,0,0,0)=(0,0,0,0,-rq)\), so the bridge is literally a
+cochain which null-homotopes this curvature.
+
+\begin{proposition}[The triangular lifts across \(Q\)]
+\label{prop:triangular-lifts}
+Keep \(r,s\) fixed and consider all lifts in the triangular chart.  They
+are precisely
+\begin{equation}\label{eq:eight-triangular-lifts}
+ \alpha=r^2+a,\qquad
+ \gamma=s^2+c,\qquad
+ \beta=-q+j,
+ \qquad
+ a,c,j\in(2s).
+\end{equation}
+Since \((2s)\simeq\F_2\), these are eight framed normal-form lifts.  If the
+two diagonal rank-two data are also fixed, there are exactly two:
+\[
+ \beta=-q\quad\text{or}\quad \beta=-q+2s.
+\]
+No assertion is made here that the eight framings give eight abstract
+isomorphism classes.
+
+Every lift in \eqref{eq:eight-triangular-lifts} has the same nonzero
+fourth-power word:
+\begin{equation}\label{eq:all-lifts-same-carry}
+ [4]^\#(U)=2sW,\qquad [4]^\#(V)=0.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+As a \(D\)-module, the square-zero kernel is
+\begin{equation}\label{eq:Q-module-chain}
+ Q=\F_2\{q,rq,r^2q\},
+ \qquad
+ q\xmapsto{\ r\ }rq
+ \xmapsto{\ r\ }r^2q=-2s
+ \xmapsto{\ r\ }0,
+\end{equation}
+and \(sQ=2Q=0\).  Hence
+\[
+ \Ann_Q(r)=(r^2q)=(2s).
+\]
+This also proves that \(C\to D\) is nonsplit.  Indeed, any lifts of
+\(\overline r,\overline s\) have the form \(r+a,s+b\) with \(a,b\in Q\),
+and their product is \(q+rb\), because \(sQ=Q^2=0\).  It cannot vanish:
+\(q\notin rQ=\F_2\{rq,r^2q\}\).
+Write
+\(\alpha=r^2+a\), \(\gamma=s^2+c\), and \(\beta\in Q\).
+Substitution into \eqref{eq:bridge-chart-again} gives
+\[
+ ra=0,\qquad sc=0,\qquad rc=0,\qquad
+ s\beta=0,\qquad r(\beta+q)+sa=0.
+\]
+The equations containing \(sQ\) are automatic, leaving
+\[
+ a,c\in\Ann_Q(r),
+ \qquad
+ \beta=-q+j,\quad j\in\Ann_Q(r).
+\]
+This proves \eqref{eq:eight-triangular-lifts}.
+
+The bridge balance itself already contains the secondary invariant.
+Multiplying \(\beta r=-\alpha s\) by \(r\) and using
+\(\alpha r=-2\) gives
+\begin{equation}\label{eq:secondary-bridge-residue}
+ r^2\beta=-r\alpha s=2s.
+\end{equation}
+The two diagonal cancellations imply
+\[
+ (1+sV)^2=1,\qquad
+ (1+rU)^2=1+r^2\beta V=1+2sV.
+\]
+Therefore \(\lambda^2=1+2sV\), while
+\((\lambda-1)^2=0\), and Lemma~\ref{lem:carry} gives
+\[
+ N_4(\lambda)=2sV.
+\]
+The skew-primitive power formulas now yield
+\[
+ [4]^\#(U)=N_4(\lambda)U=2sW,
+ \qquad
+ [4]^\#(V)=V N_4(\lambda)=2s\gamma V=0.
+\]
+The first element is nonzero by freeness of \(A\) over \(C\) and
+\(2s\ne0\).
+\end{proof}
+
+The proposition gives a particularly elementary cohomological picture.
+If the two diagonal factors are fixed, a bridge is an element
+\(\beta\in Q\) satisfying
+\begin{equation}\label{eq:bridge-nullhomotopy}
+ s\beta=0,\qquad r\beta=-rq.
+\end{equation}
+Thus the obstruction to combining the lifted rank-two blocks is the class
+of \((0,-rq)\) in the cokernel of
+\[
+ Q\longrightarrow Q\oplus Q,\qquad
+ b\longmapsto(sb,rb).
+\]
+When that class vanishes, the possible null-homotopies form a torsor under
+\(\Ann_Q(r,s)\).  In our example this torsor has the two elements displayed
+above.  Its secondary residue \(r^2\beta=2s\) is independent of the
+null-homotopy, since two choices differ by an element killed by \(r\).
+The power word identifies this well-defined secondary residue, multiplied
+by \(W\), with the failure of killedness.
+
+This behavior would be impossible for a split, factor-fixed perturbation
+in which the downstairs equality \(\alpha s=0\) lifted unchanged.  The
+bridge equations would then give \(r\beta=s\beta=0\), hence
+\(r^2\beta=0\).  What makes the present construction work is the
+nonsplit multiplication in the base: \(rs=0\) downstairs lifts to
+\(rs=q\ne0\) upstairs.  Moreover \(Q\) is square-zero but not a small
+one-step module; the three-term \(r\)-chain
+\eqref{eq:Q-module-chain} remembers one further multiplication.  The
+bridge kills the primary defect \(rq\), while that extra multiplication
+leaves the secondary class \(2s\).
+
+\begin{remark}[The exact factorization does not lift]
+\label{rem:factorization-does-not-lift}
+The factor \(H_U\) lifts, since \((V)\) remains a Hopf ideal.  There is,
+however, no finite flat rank-two closed subgroup of \(G\) lifting the
+complement \(H_V\).  Indeed, suppose its coordinate algebra \(E\) existed.
+If \(u,v\) are the images of \(U,V\), then \(1,v\) is a \(C\)-basis after
+Nakayama's lemma, and \(u\) reduces to zero modulo \(Q\).  We may therefore
+write
+\[
+ u=q(a+bv).
+\]
+Since \(Q^2=0\), one has \(u^2=0\).  The relation
+\(U^2-r^2U+qV=0\) then gives \(qv=r^2u\).  Comparing the coefficients of
+\(v\) in the basis \(1,v\) gives
+\[
+ q(1-r^2b)=0.
+\]
+The factor \(1-r^2b\) is a unit, whereas \(q\ne0\) remains nonzero in the
+free \(C\)-module \(E\), a contradiction.  Thus the multiplication
+cocycle in \eqref{eq:visible-GS-corrections} measures the actual loss of
+the exact factorization, not merely a change of coordinates.
+\end{remark}
+
+\subsection{Why this is a counterexample to the rank-times-power conjecture}
+\label{subsec:why-counterexample}
+
+The Hopf algebra and the equation \([4]=\unit\) have distinct deformation
+theories.  The Gerstenhaber--Schack equations ask whether multiplication
+and coproduct lift at all.  The bridge solves that problem.  Once a Hopf
+lift exists, the additional equality of the fourth-power word with the
+unit word has its own obstruction.
+
+Indeed, \(G_D\) is killed by four, so the two algebra maps
+\([4]^\#\) and \(e^\#=\eta\eps\) agree modulo \(Q\).  Their difference
+\[
+ \omega_4=[4]^\#-e^\#\colon A\longrightarrow QA
+\]
+kills \(QA\) and descends to an \(e\)-derivation on \(A_0\).  Explicitly,
+\begin{equation}\label{eq:Q-power-obstruction}
+ [\omega_4]\in
+ \Der_D(A_0,(QA)_e)
+ \cong
+ \Hom_{A_0}\bigl(\Omega^1_{A_0/D},(QA)_e\bigr),
+ \qquad
+ \omega_4(U)=2sW,\quad \omega_4(V)=0.
+\end{equation}
+The derivation identity follows directly by expanding the difference of
+two algebra maps; its quadratic error lies in \(Q^2A=0\).  The class is
+nonzero.  After choosing one Hopf lift as origin, formation of the power
+word therefore gives a linear infinitesimal operation from differences of
+Hopf deformation classes to augmentation derivations.  Before choosing an
+origin, it is more accurately an affine obstruction map on the torsor of
+lifts.  Proposition~\ref{prop:triangular-lifts} says that its value is the
+same nonzero class on every point of our explicit chart.
+
+Grothendieck's rank-times-power question predicts that every finite
+locally free group scheme of rank \(n\) should have trivial \(n\)-th power
+word.  Here the two monic quadrics keep \(A\) finite free of rank four,
+and all of the Hopf axioms hold, but
+\[
+ [4]^\#(U)=2sUV\ne0=e^\#(U).
+\]
+Thus \([4]\ne\unit\), which is exactly a counterexample in rank four.
+Every geometric fiber kills \(Q\), and so sees none of this vertical
+derivation.  Deligne's commutative theorem does not apply because the
+coproduct deformation is noncocommutative.  In short, nilpotence allows
+the nonzero vertical obstruction to survive, while noncommutativity allows
+it to occur as a power word.
+
+The mechanism may be summarized as
+\[
+ \boxed{
+ \begin{gathered}
+ \text{the lifted matched product has curvature }rq,\\
+ r\beta=-rq\text{ makes the Hopf lift exist},\\
+ r^2\beta=2s\text{ is the secondary residue},\\
+ [4]^\#(U)=2sUV\ne0.
+ \end{gathered}}
+\]
+
+At the first infinitesimal neighborhood one can also see the primary
+bialgebra deformation datum directly.  Set
+\[
+ C^{(1)}=C/\m^2\cong\F_2[r,s]/(r,s)^2.
+\]
+There the underlying algebra is simply
+\[
+ A^{(1)}=C^{(1)}[U,V]/(U^2,V^2),
+\]
+and, if \(\Delta_0\) denotes the primitive coproduct, then
+\begin{equation}\label{eq:first-order-coproduct}
+ \Delta=\Delta_0+r\Phi_r+s\Phi_s,
+ \qquad
+ \begin{array}{c|cc}
+  &U&V\\ \hline
+  \Phi_r&U\ot U&V\ot U\\
+  \Phi_s&V\ot U&V\ot V.
+ \end{array}
+\end{equation}
+The requirement that \(\Delta\) be an algebra map and the coassociativity
+identity, linearized modulo \((r,s)^2\), say exactly that
+\(\Phi_r,\Phi_s\) are the coproduct components of first-order bialgebra
+\(2\)-cocycles.  In Gerstenhaber--Schack terminology this is the primary
+deformation datum \cite{GerstenhaberSchack}.  It is already
+noncocommutative, while
+\begin{equation}\label{eq:first-order-doubling}
+ [2]^\#(U)=sW,
+ \qquad
+ [2]^\#(V)=rW,
+ \qquad
+ [4]=\unit.
+\end{equation}
+The bridge \(-rsV\) is invisible at this order: it is a second-order
+compatibility correction.  Thus noncommutativity occurs in the primary
+deformation, whereas failure of the fourth-power relation is a secondary
+effect supported in the final Loewy layer.
+
+A different square-zero quotient makes the power calculation itself
+transparent.  Let \(\m=(r,s)\subset C\), and put
+\begin{equation}\label{eq:square-zero-extension}
+ I=\m^3=(2,r^2s,2s),
+ \qquad
+ B=C/I.
+\end{equation}
+The Loewy calculation in Proposition~\ref{prop:base} gives
+\begin{equation}\label{eq:easy-base}
+ I^2=0,
+ \qquad
+ B\cong \F_2[r,s]/(r,s)^3.
+\end{equation}
+Thus \(C\) is a square-zero thickening of a particularly transparent
+characteristic-two base.  Write
+\[
+ A_0=A/IA,
+ \qquad
+ G_0=G\mathbin{\times}_{\Spec C}\Spec B,
+ \qquad
+ \phi=[2]\colon G\longrightarrow G.
+\]
+
+\begin{proposition}[The square-zero carry]\label{prop:square-zero-carry}
+On \(A\), the doubling word is
+\begin{equation}\label{eq:doubling-upstairs}
+ \phi^\#(U)=-sW-r^2sV,
+ \qquad
+ \phi^\#(V)=rW,
+ \qquad
+ \phi^\#(W)=0.
+\end{equation}
+After reduction to \(A_0\), these formulas become
+\begin{equation}\label{eq:doubling-downstairs}
+ \overline\phi^{\,\#}(U)=sW,
+ \qquad
+ \overline\phi^{\,\#}(V)=rW,
+ \qquad
+ \overline\phi^{\,\#}(W)=0.
+\end{equation}
+Consequently \([4]=\unit\) on \(G_0\), whereas on its square-zero lift
+\(G\) one has
+\begin{equation}\label{eq:bockstein-carry}
+ [4]^\#(U)
+ =-r^2s\,\phi^\#(V)
+ =-r^3sW
+ =2sW\ne0.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The equality \(I=\m^3\) is \eqref{eq:loewy-bases}; since \(\m^5=0\), it
+implies \(I^2=0\).  Killing \(I\) kills \(2\) and all monomials of degree
+three in \(r,s\), which proves the presentation of \(B\) in
+\eqref{eq:easy-base}.
+
+Since \(U\) and \(V\) are respectively left and right
+\(\lambda\)-skew primitive,
+\[
+ \phi^\#(U)=(1+\lambda)U,
+ \qquad
+ \phi^\#(V)=V(1+\lambda).
+\]
+Using \(U^2=r^2U-rsV\), \(UW=r^2W\), and \(r^3=-2\), the first expression
+reduces to
+\begin{align*}
+ (2+rU+sV+rsW)U
+ &=2U+r^3U-r^2sV+sW+r^3sW\\
+ &=-sW-r^2sV.
+\end{align*}
+Similarly, \(V^2=s^2V\), \(VW=s^2W\), \(s^3=-2\), and \(2r=0\) give
+\(\phi^\#(V)=rW\).  Their product is zero, so
+\(\phi^\#(W)=0\).  Modulo \(I\), the element \(r^2s\) and the scalar \(2\)
+vanish, and minus equals plus; this proves
+\eqref{eq:doubling-downstairs}.  In particular the image of doubling is
+contained in the square-zero \(W\)-direction, which doubling itself kills.
+Thus \(\overline\phi^2=\unit\).  Applying \(\phi^\#\) once more to the
+first formula in \eqref{eq:doubling-upstairs} gives
+\[
+ \phi^{\#2}(U)
+ =-s\phi^\#(W)-r^2s\phi^\#(V)
+ =-r^3sW=2sW,
+\]
+and proves \eqref{eq:bockstein-carry}.
+\end{proof}
+
+The last line has the shape of a Bockstein calculation.  Downstairs,
+doubling sends \(V\) to \(rW\).  The lift of the other doubling coordinate
+contains the correction \(-r^2sV\in IA\).  Composing the two multiplies
+that correction by \(r\), and the lifted cubic relation
+\(r^3=-2\) turns it into the final class \(2sW\).  The square-zero ideal
+\(I\) is not annihilated by \(\m\): indeed
+\(r(r^2s)=-2s\ne0\).  This is exactly what permits a first-order
+correction to fall one Loewy step farther and remain visible.
+
+For the sharp cohomological statement, pass to the final Loewy layer.  Put
+\begin{equation}\label{eq:minimal-square-zero}
+ J=(c)=\m^4\subset C,
+ \qquad c=2s,
+ \qquad \overline C=C/J,
+ \qquad \overline A=A/JA.
+\end{equation}
+Then \(J^2=0\), and in fact \(\m J=0\).  Let
+\(e^\#\colon A\to A\) be the algebra map obtained by applying the counit
+and then including \(C\) into \(A\).  The precise infinitesimal difference
+between the two word maps is
+\begin{equation}\label{eq:obstruction-derivation}
+ D=[4]^\#-e^\#\colon A\longrightarrow JA.
+\end{equation}
+The target is correct because \([4]=\unit\) after reduction to
+\(\overline C\).  Moreover \((JA)^2=0\), so the difference of the two
+algebra maps satisfies
+\begin{equation}\label{eq:e-derivation}
+ D(ab)=e^\#(a)D(b)+D(a)e^\#(b).
+\end{equation}
+It kills \(JA\), and hence descends to an \(e\)-derivation on
+\(\overline A\).  If \(M=JA\) is regarded as an \(\overline A\)-module
+through the identity section, then the resulting canonical class is
+\begin{equation}\label{eq:cotangent-class}
+ [D]\in
+ \operatorname{Der}_{\overline C}(\overline A,M_e)
+ \cong
+ \operatorname{Hom}_{\overline A}
+       (\Omega^1_{\overline A/\overline C},M_e)
+ \cong
+ \mathrm H^0\operatorname{RHom}_{\overline A}
+       (\mathbb L_{\overline A/\overline C},M_e).
+\end{equation}
+This is the standard cotangent-complex description of infinitesimal
+differences between maps \cite{IllusieCotangent}.
+In coordinates it is simply
+\begin{equation}\label{eq:class-coordinates}
+ D(U)=2sW,
+ \qquad
+ D(V)=0.
+\end{equation}
+For example, pulling the relative cotangent module back to the identity
+gives
+\[
+ e^*\Omega^1_{\overline A/\overline C}
+ \cong
+ \frac{\overline C\,dU\oplus\overline C\,dV}
+      {(r^2dU-rsdV,\ s^2dV)}.
+\]
+The assignment \(dU\mapsto2sW\), \(dV\mapsto0\) respects these relations,
+since \(2r^2s=0\), and it is nonzero by
+Proposition~\ref{prop:socle-A}.  Thus \([D]\) is the exact infinitesimal
+obstruction to lifting the equality \([4]=\unit\) from
+\(G_{\overline C}\) to \(G\).
+
+This also locates the relevant cohomological degree.  The Hopf algebra
+itself has already been lifted, so there is no obstruction to the existence
+of the multiplication or antipode waiting in a higher deformation group.
+What fails to lift is an equality between two morphisms.  Across a
+square-zero extension, the difference between such morphisms is measured
+by a derivation, hence by the degree-zero cotangent cohomology in
+\eqref{eq:cotangent-class}.
+
+The same minimal layer has an additional character interpretation.  The
+base change of \(G\) to \(\overline C\) is killed by four.  On the lift,
+there is first a character-valued obstruction:
+\begin{equation}\label{eq:infinitesimal-character}
+ \kappa(\lambda)=\lambda^2-1=cV.
+\end{equation}
+It is primitive.  Indeed \(c\theta=0\), hence \(c\lambda=c\), and
+\begin{equation}\label{eq:cV-primitive}
+ \Delta(cV)
+ =c(V\ot\lambda+1\ot V)
+ =cV\ot1+1\ot cV.
+\end{equation}
+For a square-zero ideal, the kernel of reduction on multiplicative units is
+the additive group \(1+JA\).  Thus the nonzero primitive element \(cV\)
+is precisely the infinitesimal character measuring the failure of the
+order-two character \(\overline\lambda\) to lift as an order-two character.
+This obstruction is independent of the chosen character lift: another
+lift has the form \(\lambda(1+y)\), with \(y\in JA\) primitive, and
+\((1+y)^2=1\) because \(2JA=(JA)^2=0\).  Hence every character lift has
+square \(1+cV\).  Equivalently, \(\lambda\) factors through \(\mu_4\) but
+not through \(\mu_2\).
+
+The Bockstein terminology is literal.  Multiplication by two in
+\(0\to JA\to A\to\overline A\to0\) gives
+\begin{equation}\label{eq:literal-bockstein}
+ \beta\colon \overline A[2]\longrightarrow JA,
+ \qquad
+ \beta(\overline x)=2x,
+\end{equation}
+where independence of the lift again uses \(2JA=0\).  For
+\(\theta=\lambda-1\), one has \(2\overline\theta=0\) and
+\begin{equation}\label{eq:theta-bockstein}
+ \beta(\overline\theta)=2\theta=cV.
+\end{equation}
+The geometric sum converts this character obstruction into the power-word
+obstruction:
+\begin{equation}\label{eq:character-to-word-obstruction}
+ N_4(\lambda)=2\theta=\beta(\overline\theta)=cV,
+ \qquad
+ D(U)=\kappa(\lambda)U=cW.
+\end{equation}
+This is the same cotangent class \((2sW,0)\) found above.
+
+Since every nonzero ideal of \(C\) contains \(J\),
+Corollary~\ref{cor:quotient-minimal} says that this is the smallest possible
+nonzero layer on which the obstruction can live.  The coarser quotient by
+\(I=\m^3\) makes the doubling law transparent; the finer quotient by the
+socle isolates precisely the obstruction class.
+
+For comparison, there are square-zero quotients internal to the Hopf
+algebra.  The ideal \((\theta)=(\lambda-1)\) is a square-zero Hopf ideal,
+because
+\[
+ \Delta(\theta)=\theta\ot1+1\ot\theta+\theta\ot\theta,
+ \qquad S(\theta)=-\theta.
+\]
+Modulo it, \(\lambda=1\), so \(U,V\) are primitive and the quotient is
+killed by four.  Likewise \((cV)\) is a square-zero Hopf ideal by
+\eqref{eq:cV-primitive}.  These quotients are not flat over \(C\), so they
+do not describe deformations through rank-four finite flat group schemes.
+It is also important that the final defect ideal \((cW)=\Soc(A)\) is not a
+Hopf ideal: direct expansion gives
+\[
+ \Delta(cW)=c\bigl(W\ot1+U\ot V+V\ot U+1\ot W\bigr).
+\]
+Thus the primitive source \(cV\), rather than only its product \(cW\), is
+the intrinsic Hopf-theoretic obstruction to kill.
+
+There is also an elementary cyclic-cohomological reading of the norm.  For
+a \(C\)-algebra \(R\) and \(g\in G(R)\), put
+\(a=\lambda(g)\) and \(u=U(g)\).  The skew-primitive product law says that
+the restriction of \(U\) along \(\Z\to G(R)\), \(n\mapsto g^n\), is the
+crossed homomorphism, for \(n\ge0\),
+\[
+ z_g(n)=N_n(a)u.
+\]
+Thus \(z_g\) is a \(1\)-cocycle for the action of \(\Z\) on \(R\) in which
+one acts by \(a\).  Since \(a^4=1\), the action factors through the cyclic
+group \(C_4\).  The cocycle descends to \(C_4\) precisely when its cyclic
+norm
+\[
+ z_g(4)=N_4(a)u
+\]
+vanishes.  Universally this norm is \(2sW\), so the cocycle does not descend
+to \(C_4\); it does descend to \(C_8\), because \(N_8(\lambda)=0\).  This
+is exactly the norm differential in the standard periodic resolution of a
+cyclic group.  Notice the scope of the statement: it concerns the
+one-generated subgroup attached to each \(g\).  Since \(G\) is
+noncommutative, the global power map \([4]\) is not itself being claimed to
+be a group homomorphism or an ordinary group-cohomology class.
+
+The two square-zero quotients fit into
+\[
+ C\longrightarrow\overline C=C/(2s)
+ \longrightarrow B=C/\m^3.
+\]
+The ring \(B\) has characteristic two.  Lifting from \(B\) to
+\(\overline C\) restores characteristic four but still does not break the
+fourth-power relation.  Only the final one-dimensional socle extension
+from \(\overline C\) to \(C\) creates the obstruction.  Altogether the
+nilpotent deformation raises the exponent in two visible steps:
+\[
+ \begin{array}{c|c|c|c}
+  \text{base}&\text{characteristic}&\text{power behavior}
+             &\text{exact bound}\\ \hline
+  \F_2&2&[2]=\unit&2\\
+  B=\F_2[r,s]/(r,s)^3&2&[2]\ne\unit,\ [4]=\unit&4\\
+  \overline C=C/(2s)&4&[2]\ne\unit,\ [4]=\unit&4\\
+  C&4&[4]\ne\unit,\ [8]=\unit&8.
+ \end{array}
+\]
+Thus it is the group-theoretic equation \([4]=\unit\), rather than the
+scalar equation \(4=0\), which breaks under the square-zero deformation:
+the final base ring still has characteristic four.
+
+\section{The closed fiber and the total family}\label{sec:geometry}
+
+The formulas become more informative when compared with the closed fiber.
+Modulo \(\m=(r,s)\),
+\[
+ A\ot_C\F_2=\F_2[U,V]/(U^2,V^2),
+ \qquad \lambda=1,
+\]
+and both \(U\) and \(V\) are primitive.  Hence
+\begin{equation}\label{eq:special-fiber}
+ G_{\F_2}\cong\alpha _2\times\alpha _2.
+\end{equation}
+The special fiber is commutative and is already killed by two.  Thus no
+geometric point witnesses the failure of killedness; the fourth-power word
+is a genuinely vertical morphism supported in the nilpotent structure of
+the base.
+
+The total group scheme is not commutative.  Let
+\(\tau\colon A\ot_C A\to A\ot_C A\) exchange the two factors.  From
+\eqref{eq:Delta-main},
+\begin{equation}\label{eq:noncocommutative-defect}
+ \Delta(U)-\tau\Delta(U)
+ =\theta\ot U-U\ot\theta.
+\end{equation}
+The coefficient of \(V\ot U\) is \(s\), which is nonzero because
+\(2s\ne0\).  Since \(A\ot_C A\) is free on the sixteen tensor products of
+\(1,U,V,W\), the right side of
+\eqref{eq:noncocommutative-defect} is nonzero.  Thus the coproduct is not
+cocommutative and \(G\) is noncommutative.  Both commutativity and the
+power relation therefore jump between the closed fiber and the total
+family, as the positive results recalled in the introduction predict.
+
+There is also a useful rank-two shadow of the construction.  The equation
+\(V=0\) defines a finite locally free closed subgroup
+\begin{equation}\label{eq:H0}
+ H_0\subset G,
+ \qquad
+ \mathcal O(H_0)=C[U]/(U^2-r^2U).
+\end{equation}
+Indeed, \((V)\) is a Hopf ideal.  On \(H_0\), the character is
+\(1+rU\), and the rank-two calculation gives
+\[
+ [2]^\#(U)=(2+rU)U=(2+r^3)U=0.
+\]
+Thus \(H_0\) is killed by two.  Since \([4]^\#(V)=0\), the fourth-power
+word of \(G\) factors nontrivially through \(H_0\); squaring once more
+kills its image.  This gives a group-theoretic complement to the norm
+explanation of \([8]=\unit\).
+
+The subgroup \(H_0\) is not normal.  To see the obstruction directly, let
+\(g=(u,v,z)\) be a point of \(G\), and let
+\(h=(a,0,1+ra)\) be a point of \(H_0\).  Conjugation inside the ambient
+group \eqref{eq:H-law} gives
+\begin{equation}\label{eq:conjugation}
+ v(ghg^{-1})=rva z^{-1}.
+\end{equation}
+Universally, its coefficient is
+\[
+ rV\lambda^{-1}=rV-r^2W\ne0.
+\]
+Indeed \(r\ne0\), since \(r^3=-2\) and \(2s\ne0\), and freeness of \(A\)
+proves the displayed nonvanishing.  The coordinate \(a\) is part of a free
+\(C\)-basis of \(\mathcal O(H_0)\), so the universal conjugation coordinate
+is nonzero as well.
+Hence the conjugation morphism does not factor through \(V=0\).  The two
+rank-two patterns should therefore not be interpreted as a normal
+extension of one rank-two group by another: the bridge destroys precisely
+that naive decomposition.
+
+\section{Economy and scope}\label{sec:economy}
+
+The presentation has two distinct and useful minimality properties.  The
+first was proved in Corollary~\ref{cor:quotient-minimal}: every proper
+quotient by a nonzero ideal kills \(2s\), hence kills the displayed
+fourth-power obstruction.  Thus the witness is supported on the final
+one-dimensional socle extension of its base.
+
+The second concerns the number of equations in the chosen parameter
+space.  Let
+\[
+ I=(r^3+2,s^3+2,rs^2)\subset\Z[r,s],
+ \qquad
+ \mathfrak p=(2,r,s).
+\]
+The consequences \(4=r^4=s^5=0\) in \(C\) show that
+\[
+ \sqrt I=\mathfrak p.
+\]
+The maximal ideal \(\mathfrak p\) has height three.  Krull's height theorem
+therefore implies that \(I\) cannot be generated by fewer than three
+elements.  More generally, every proper ideal \(J\supset I\) has radical
+\(\mathfrak p\) and also requires at least three generators.  Thus the
+closed compatibility locus used in this paper cannot be cut out inside
+\(\Spec\Z[r,s]\) by fewer equations.
+
+This statement has a deliberately restricted scope.  The number of
+relations in an arbitrary presentation is not an intrinsic invariant, and
+we do not claim that every possible rank-four counterexample must use
+three equations or a length-nine base.  What the argument proves is
+precise: after choosing the two parameters \(r,s\) and the bridge
+coefficients
+\[
+ \alpha=r^2,
+ \qquad \beta=-rs,
+ \qquad \gamma=s^2,
+\]
+the two diagonal cancellations and the one mixed vanishing give an
+equation-minimal locus in this fixed ambient space.  No fourth relation and
+no independent Artinian truncation is hidden in the construction.
+
+\section{Perspective}
+
+The example can be remembered through the following chain:
+\[
+ \boxed{
+ \begin{gathered}
+ \text{two rank-two cancellations and one bridge}\\
+ \Downarrow\\
+ \text{a nearly trivial character }\lambda=1+\theta,
+ \quad\theta^2=0\\
+ \Downarrow\\
+ N_4(\lambda)=2\theta=2sV\\
+ \Downarrow\\
+ [4]^\#(U)=2sUV\in\Soc(A),\qquad [8]=\unit.
+ \end{gathered}}
+\]
+The main point is not the particular reduction table.  It is that a
+geometric sum in characteristic four can remember a square-zero
+deformation which all geometric fibers forget.  Skew-primitive coordinates
+turn that arithmetic carry into a power word, and the bridge moves it to
+the last infinitesimal layer where it cannot cancel prematurely.
+
+This viewpoint suggests a broader way to look for relative power
+obstructions: begin with a group-like element infinitesimally close to one,
+study the relevant geometric sum, and then ask for a finite flat algebra
+which stores the surviving coefficient in its socle.  In the present
+example all of those roles are visible in two coordinates and three base
+relations.
+
+\appendix
+
+\section{The subgroup calculation}\label{app:closure}
+
+We record the reductions used in Proposition~\ref{prop:submonoid}.  This
+appendix contains the bookkeeping so that the main argument can emphasize
+the ambient group.
+
+Four consequences of the defining relations are
+\begin{align}
+ s^2(\lambda-1)&=-2V,\label{eq:aux-1}\\
+ rs(\lambda-1)&=r^2sU,\label{eq:aux-2}\\
+ rs(\lambda^2-1)&=0,\label{eq:aux-3}\\
+ 2\lambda U+r^2(\lambda^2-\lambda)+r^2sV&=0.
+ \label{eq:aux-4}
+\end{align}
+For example, the first two follow by multiplying
+\(\lambda-1=rU+sV+rsW\) by \(s^2\) and \(rs\), respectively.  The third
+uses \(\lambda^2-1=2sV\).  For the fourth, note that
+\(\lambda^2-\lambda=\theta\), and expand using \(2\theta=2sV\).
+
+For \(V_*=V_1\lambda_2+V_2\), one obtains
+\begin{align*}
+ V_*^2-s^2V_*
+ &=V_1\lambda_2\bigl(s^2(\lambda_2-1)+2V_2\bigr)=0
+\end{align*}
+by \eqref{eq:aux-1}.  For \(U_*=U_1+\lambda_1U_2\), expansion gives
+\begin{align*}
+ U_*^2-r^2U_*+rsV_*
+ &=-rsV_1(1-\lambda_2)\\
+ &\quad+
+ \bigl(2\lambda_1U_1+r^2(\lambda_1^2-\lambda_1)\bigr)U_2
+ -rs(\lambda_1^2-1)V_2.
+\end{align*}
+Equations \eqref{eq:aux-2} and \eqref{eq:aux-3} turn this into
+\[
+ \bigl(r^2sV_1+2\lambda_1U_1
+       +r^2(\lambda_1^2-\lambda_1)\bigr)U_2,
+\]
+which vanishes by \eqref{eq:aux-4}.  This proves preservation of both
+quadrics.  The graph equation is the factorization
+\eqref{eq:graph-factor} proved in the main text.
+
+As an optional independent check, the ambient inverse is
+\[
+ (u,v,z)^{-1}=(-z^{-1}u,-vz^{-1},z^{-1}).
+\]
+Substitution of \eqref{eq:explicit-antipode} into the two quadrics gives
+zero, and \(S(\lambda)=\lambda^{-1}\).  Thus one may also prove inverse
+stability directly, although Proposition~\ref{prop:inverse-by-seven} makes
+that calculation unnecessary.
+
+\section{Exact algebra audit}\label{app:audit}
+
+All proofs above are by hand.  For reproducibility, the polynomial
+identities were also checked by exact strong Gr\"obner reduction over
+\(\Z\).  With lexicographic order \(r>s\), a strong Gr\"obner basis of the
+base ideal is
+\[
+ (4,\ 2s^2,\ s^3+2,\ 2r,\ rs^2,\ r^3+2).
+\]
+It leaves \(2s\) in nonzero normal form.  The accompanying bounded
+Macaulay2 scripts are
+\begin{center}
+ \path{m2/verify_rank4_counterexample_simple.m2},
+ \qquad
+ \path{m2/audit_rank4_unoptimized_bridge_20260711.m2}.
+\end{center}
+From the project root it can be run with
+\begin{verbatim}
+M2 --script m2/verify_rank4_counterexample_simple.m2
+M2 --script m2/audit_rank4_unoptimized_bridge_20260711.m2
+\end{verbatim}
+The first script independently verifies the regular-sequence ideal quotients,
+the base relations and Loewy filtration, both socles, the tangent-cone
+Hilbert function, and the special fiber.  It also checks the elementary
+identities of Lemma~\ref{lem:theta}, the four reductions in
+Appendix~\ref{app:closure}, and the graph factorization
+\eqref{eq:graph-factor}.
+
+In particular, the Hopf algebra assertion is checked at the level of the
+presentation, not merely inferred from the power calculation.  The script
+verifies that the proposed coproduct preserves both defining quadrics and
+that \(\Delta(\lambda)=\lambda\ot\lambda\); it checks both counit
+identities on \(U,V\); it compares the two parenthesizations of the product
+on three universal points; and it verifies that the displayed antipode
+preserves the relations and satisfies both convolution identities on
+\(U,V\).  Since \(A\) is generated as a \(C\)-algebra by \(U,V\), these
+are precisely the bialgebra and antipode axioms.  The same computation
+checks noncocommutativity, the rank-two Hopf ideal and its nonnormality,
+agreement of the seventh-power word with the antipode, and the four normal
+forms
+\[
+ \bigl([4]^\#(U),[4]^\#(V),[8]^\#(U),[8]^\#(V)\bigr)
+ =(2sUV,0,0,0).
+\]
+It further verifies the square-zero identities for \((rs)\), \(\m^3\),
+and \((2s)\); the two character cocycles
+\eqref{eq:character-cocycles}; the first-order coproduct
+\eqref{eq:first-order-coproduct}; the reduced doubling formulas
+\eqref{eq:doubling-downstairs}; and the vanishing of the fourth-power word
+after each relevant base quotient.  It also checks the two internal Hopf
+quotients above and verifies directly that the socle defect ideal itself is
+not a Hopf ideal.  Finally, it verifies the naive-lift curvature
+\eqref{eq:naive-lift-curvature}.  The second script works over the
+untruncated five-parameter bridge ring: it verifies that
+\eqref{eq:bridge-chart-again} preserves both quadrics, makes \(\lambda\)
+group-like, supplies the displayed antipode, and gives
+\([4]^\#(U)=2sUV\).  It then checks all eight framed lifts in
+\eqref{eq:eight-triangular-lifts} separately and confirms that every one
+has the same fourth-power carry.
+The remaining passages in the paper are formal deductions rather than
+additional polynomial identities: for example, monic division gives the
+free bases and the lengths, the regular sequences give the complete
+intersection assertions, and the two minimality statements use the
+standard socle and height arguments written in the text.  Historical and
+literature statements are of course outside the scope of a computer
+algebra audit.  Thus the computation checks every algebraic identity used
+in the construction and the explicit inputs to the structural arguments;
+it remains supplementary, and no proof in the paper depends on it.
+
+\begin{thebibliography}{99}
+
+\bibitem{SGA3I}
+M.~Demazure and A.~Grothendieck (eds.),
+\emph{Sch\'emas en groupes I: Propri\'et\'es g\'en\'erales des sch\'emas
+en groupes (SGA 3)},
+Lecture Notes in Mathematics, vol.~151, Springer-Verlag, 1970.
+
+\bibitem{SGA3II}
+M.~Demazure and A.~Grothendieck (eds.),
+\emph{Sch\'emas en groupes II: Groupes de type multiplicatif, et structure
+des sch\'emas en groupes g\'en\'eraux (SGA 3)},
+Lecture Notes in Mathematics, vol.~152, Springer-Verlag, 1970.
+
+\bibitem{GerstenhaberSchack}
+M.~Gerstenhaber and S.~D.~Schack,
+\emph{Bialgebra cohomology, deformations, and quantum groups},
+Proc. Natl. Acad. Sci. USA \textbf{87} (1990), no.~1, 478--481,
+\href{https://doi.org/10.1073/pnas.87.1.478}
+{doi:10.1073/pnas.87.1.478}.
+
+\bibitem{IllusieCotangent}
+L.~Illusie,
+\emph{Complexe cotangent et d\'eformations I},
+Lecture Notes in Mathematics, vol.~239, Springer-Verlag, 1971,
+\href{https://doi.org/10.1007/BFb0059052}
+{doi:10.1007/BFb0059052}.
+
+\bibitem{OortTate}
+J.~Tate and F.~Oort,
+\emph{Group schemes of prime order},
+Ann. Sci. \'Ecole Norm. Sup. (4) \textbf{3} (1970), no.~1, 1--21.
+
+\bibitem{Schoof2001}
+R.~Schoof,
+\emph{Finite flat group schemes over local Artin rings},
+Compos. Math. \textbf{128} (2001), no.~1, 1--15,
+\href{https://doi.org/10.1023/A:1017560215203}{doi:10.1023/A:1017560215203}.
+
+\bibitem{SchoofSurvey}
+R.~Schoof,
+\emph{Is a finite locally free group scheme killed by its order?},
+in \emph{Open Problems in Arithmetic Algebraic Geometry},
+Advanced Lectures in Mathematics, vol.~46, International Press, 2019,
+1--7.
+
+\bibitem{Stix}
+J.~Stix,
+\emph{A course on finite flat group schemes and \(p\)-divisible groups},
+lecture notes, Heidelberg, 2009, revised 2012,
+\href{https://www.math.uni-frankfurt.de/~stix/skripte/STIXfinflatGrpschemes20120918.pdf}
+{available online}.
+
+\bibitem{TateFiniteFlat}
+J.~Tate,
+\emph{Finite flat group schemes},
+in \emph{Modular Forms and Fermat's Last Theorem},
+G.~Cornell, J.~H.~Silverman, and G.~Stevens (eds.),
+Springer-Verlag, New York, 1997, 121--154.
+
+\bibitem{Torti}
+E.~Torti,
+\emph{Lagrange's theorem for a class of finite flat group schemes over
+local Artin rings},
+Doc. Math. (2025), online first,
+\href{https://doi.org/10.4171/DM/1055}{doi:10.4171/DM/1055}.
+
+\end{thebibliography}
+
+\end{document}

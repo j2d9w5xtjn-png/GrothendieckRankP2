@@ -1,0 +1,1250 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array,booktabs,longtable}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{xurl}
+\usepackage[colorlinks=true,linkcolor=blue!55!black,
+            urlcolor=blue!55!black]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Z}{\mathbf Z}
+\newcommand{\F}{\mathbf F}
+\newcommand{\Gm}{\mathbf G_m}
+\newcommand{\Ga}{\mathbf G_a}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Soc}{\operatorname{Soc}}
+\newcommand{\gr}{\operatorname{gr}}
+\newcommand{\length}{\operatorname{length}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\m}{\mathfrak m}
+\newcommand{\n}{\mathfrak n}
+\newcommand{\ot}{\otimes}
+\newcommand{\id}{\operatorname{id}}
+
+\title{Audit and Conceptual Simplification of a Length-Nine\\
+Rank-Four Group Scheme Not Killed by Four}
+\author{Independent algebraic and computational verification}
+\date{11 July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We audit the claimed rank-four example over a length-nine Artin ring and find
+that it is correct.  The base is the two-generator Artin complete intersection
+\[
+ R=(\Z/4)[x,y]/(x^3,y^3,xy^2-2),
+\]
+and the coordinate algebra is the rank-four relative complete intersection
+\[
+ A=R[U,V]/(U^2-xyU-x^2V,\;V^2-y^2V).
+\]
+Writing $W=UV$ and
+\[
+ \lambda=1+yU+xV+xyW=(1+yU)(1+xV),
+\]
+the coproduct is compressed into the two skew-primitive formulas
+\[
+ \Delta(U)=U\ot1+\lambda\ot U,
+ \qquad
+ \Delta(V)=V\ot\lambda+1\ot V.
+\]
+We give hand proofs of the base length, freeness, every Hopf axiom, and the
+power calculation.  The shortest explanation is a norm calculation.  If
+$N_n(T)=1+T+\cdots+T^{n-1}$, then
+\[
+ [n]^\#(U)=N_n(\lambda)U,
+ \qquad [n]^\#(V)=VN_n(\lambda).
+\]
+Here $\lambda=1+\theta$, $\theta^2=0$, and $2\theta=2xV$.  Hence
+\[
+ N_4(\lambda)=2\theta=2xV,
+ \qquad [4]^\#(U)=2xUV\ne0,
+ \qquad [8]=e.
+\]
+Thus the example is a characteristic-four ramified norm phenomenon inside an
+ambient semidirect product: a binomial carry turns the fourth power into the
+top socle class.
+The presentation is already generator-minimal in the natural sense, but this
+norm description makes it substantially simpler conceptually.  Length nine
+is minimal for this group-like bridge family and for quotients of this base;
+global nonexistence at length eight is not proved.
+\end{abstract}
+
+\tableofcontents
+
+\section{Verdict and exact statement}
+
+The claim is correct.  It is useful to write the base as
+\begin{equation}\label{eq:R}
+ R=(\Z/4)[x,y]/(x^3,y^3,xy^2-2).
+\end{equation}
+The original presentation over $\Z$ is identical: the three relations
+$x^3=y^3=0$ and $xy^2=2$ already imply
+\[
+ 4=(xy^2)^2=x^2y^4=0.
+\]
+Define
+\begin{equation}\label{eq:A}
+ A=R[U,V]/(U^2-xyU-x^2V,\;V^2-y^2V),
+ \qquad W=UV,
+\end{equation}
+and put
+\begin{equation}\label{eq:theta-lambda}
+ \theta=yU+xV+xyW,
+ \qquad
+ \lambda=1+\theta=(1+yU)(1+xV).
+\end{equation}
+
+\begin{theorem}\label{thm:main}
+The ring $R$ is local Artin Gorenstein with residue field $\F_2$,
+characteristic $4$, cardinality $2^9$, length $9$, Hilbert function
+$(1,2,3,2,1)$, and socle $\F_2(2x)$.
+
+The $R$-algebra $A$ is free with basis $1,U,V,W$.  There is a Hopf algebra
+structure with $\eps(U)=\eps(V)=0$ and
+\begin{equation}\label{eq:Delta}
+ \Delta(U)=U\ot1+\lambda\ot U,
+ \qquad
+ \Delta(V)=V\ot\lambda+1\ot V.
+\end{equation}
+For $G=\Spec A$, the fourth-power word is not the unit word, whereas the
+eighth-power word is:
+\begin{equation}\label{eq:powers-main}
+ [4]^\#(U)=2xW\ne0,
+ \qquad [4]^\#(V)=[4]^\#(W)=0,
+ \qquad [8]=e.
+\end{equation}
+Moreover $G$ is noncommutative.
+\end{theorem}
+
+For a noncommutative group scheme, $[n]$ denotes the power word
+$g\mapsto g^n$; it need not be a group homomorphism.  The phrase ``killed by
+$n$'' means that this word factors through the unit section.  Contravariantly,
+the constant unit word has comorphism
+\[
+ A\xrightarrow{\eps}R\xrightarrow{\iota}A.
+\]
+Thus the nonzero coordinate in \eqref{eq:powers-main} proves exactly the
+claimed failure, with no appeal to the existence of an ordinary $R$-valued
+point witnessing it.
+
+\subsection*{A first explanation using only basic Hopf algebra}
+\addcontentsline{toc}{subsection}{A first explanation using only basic Hopf algebra}
+
+Here is a way to discover the construction backwards from the desired
+conclusion.  It uses only the elementary dictionary between an affine group
+scheme and its coordinate Hopf algebra.
+
+Suppose $G=\Spec A$.  The group multiplication corresponds to the coproduct
+\[
+ \Delta:A\longrightarrow A\ot_R A.
+\]
+The squaring map $g\mapsto g^2$ is obtained by applying the group
+multiplication to the diagonal.  On coordinate rings this means
+\begin{equation}\label{eq:first-reading-square}
+ [2]^\#=m_A\circ\Delta,
+\end{equation}
+where $m_A:A\ot_R A\to A$ is ordinary multiplication.
+
+Now recall two standard definitions.  An element $\lambda\in A$ is
+\emph{group-like} if
+\[
+ \Delta(\lambda)=\lambda\ot\lambda.
+\]
+An element $U\in A$ is left $\lambda$-\emph{skew primitive} if
+\[
+ \Delta(U)=U\ot1+\lambda\ot U.
+\]
+Applying \eqref{eq:first-reading-square} immediately gives
+\[
+ [2]^\#(U)=(1+\lambda)U.
+\]
+Repeating the same calculation gives the geometric-series formula
+\begin{equation}\label{eq:first-reading-norm}
+ [n]^\#(U)=N_n(\lambda)U,
+ \qquad
+ N_n(T)=1+T+\cdots+T^{n-1}.
+\end{equation}
+This formula is the central idea.  To make $[4]^\#(U)$ nonzero, we need to
+make the product $N_4(\lambda)U$ nonzero.
+
+The characteristic-four trick is to take
+\[
+ \lambda=1+\theta,
+ \qquad \theta^2=0.
+\]
+Then $\lambda^i=1+i\theta$, so
+\begin{equation}\label{eq:first-reading-carry}
+ N_4(\lambda)
+ =1+(1+\theta)+(1+2\theta)+(1+3\theta)
+ =4+6\theta=2\theta.
+\end{equation}
+Thus $\lambda^4=1$, but its fourth geometric sum need not vanish.  The whole
+problem has now been reduced to the following very concrete task:
+\begin{equation}\label{eq:first-reading-task}
+ \text{construct a rank-four Hopf algebra with}
+ \quad \theta^2=0
+ \quad\text{and}\quad 2\theta U\ne0.
+\end{equation}
+
+A convenient way to keep $2\theta U$ alive is to introduce a second
+coordinate $V$.  Take
+\[
+ R=(\Z/4)[x,y]/(x^3,y^3,xy^2-2)
+\]
+and
+\[
+ A=R[U,V]/(U^2-xyU-x^2V,\;V^2-y^2V).
+\]
+Because both relations are monic quadratics, reduction of powers of $U$ and
+$V$ leaves exactly the four-element $R$-basis
+\begin{equation}\label{eq:first-reading-basis}
+ 1,\qquad U,\qquad V,\qquad UV.
+\end{equation}
+This is why the resulting group scheme has rank four.
+
+Define
+\begin{equation}\label{eq:first-reading-lambda}
+ \theta=yU+xV+xyUV,
+ \qquad
+ \lambda=1+\theta=(1+yU)(1+xV).
+\end{equation}
+The relations give
+\begin{equation}\label{eq:first-reading-identities}
+ \theta^2=0,
+ \qquad
+ 2\theta=2xV.
+\end{equation}
+The coproduct is chosen to make $\lambda$ group-like and to make the two
+coordinates skew primitive in opposite directions:
+\begin{equation}\label{eq:first-reading-coproduct}
+ \Delta(U)=U\ot1+\lambda\ot U,
+ \qquad
+ \Delta(V)=V\ot\lambda+1\ot V.
+\end{equation}
+The same geometric-series argument applies to the right skew-primitive
+element $V$; the order of the factors causes no problem because the
+coordinate algebra $A$ is commutative.
+The later Hopf-algebra audit verifies directly that these formulas respect
+the two quadratic relations and that
+$\Delta(\lambda)=\lambda\ot\lambda$.  Once those checks are made, the power
+calculation is automatic from \eqref{eq:first-reading-norm}.
+
+Indeed, \eqref{eq:first-reading-carry} and
+\eqref{eq:first-reading-identities} give
+\begin{equation}\label{eq:first-reading-fourth}
+ [4]^\#(U)=2\theta U=2xUV,
+ \qquad
+ [4]^\#(V)=V(2\theta)=2xV^2=4V=0.
+\end{equation}
+The first answer is nonzero.  The relation $xy^2=2$ gives
+\[
+ 2x=x^2y^2\ne0
+\]
+in $R$, and $UV$ is one of the free basis elements in
+\eqref{eq:first-reading-basis}.  Therefore $2xUV\ne0$ in $A$.
+
+Finally, $\theta^2=0$ and $4=0$ imply $\lambda^4=1$, and hence
+\[
+ N_8(\lambda)
+ =N_4(\lambda)(1+\lambda^4)
+ =2N_4(\lambda)=0.
+\]
+The norm formula therefore sends both $U$ and $V$ to zero at the eighth
+power.  Since $U,V$ generate the augmented $R$-algebra $A$, $[8]$ is the
+unit word.  The complete construction can therefore be
+remembered as the single chain
+\begin{equation}\label{eq:first-reading-box}
+ \boxed{
+ \begin{gathered}
+ \Delta(U)=U\ot1+\lambda\ot U
+ \quad\Longrightarrow\quad
+ [4]^\#(U)=N_4(\lambda)U,\\
+ \lambda=1+\theta,\quad\theta^2=0
+ \quad\Longrightarrow\quad N_4(\lambda)=2\theta,\\
+ 2\theta=2xV
+ \quad\Longrightarrow\quad [4]^\#(U)=2xUV\ne0.
+ \end{gathered}}
+\end{equation}
+
+In words: a group-like element infinitesimally close to $1$ leaves a
+nonzero geometric-series carry in characteristic four, and the second
+coordinate $V$ stores that carry long enough for multiplication by $U$ to
+turn it into the surviving top class $2xUV$.  The remaining sections prove
+all the ring and Hopf-algebra identities used in this short explanation.  A
+later section also interprets the same calculation inside an ordinary
+semidirect product.
+
+\subsection*{A deliberately unoptimized five-coefficient construction}
+\addcontentsline{toc}{subsection}{A deliberately unoptimized five-coefficient construction}
+
+The preceding explanation still presents the optimized coefficients
+$xy,x^2,y^2,y,x$.  If the goal is to see why a construction of this shape
+exists, rather than to minimize the base, it is clearer not to solve for
+those coefficients.  Treat the five coefficients as separate generators.
+
+The elementary building block is worth isolating first.  Suppose
+$a,b$ belong to a ring $D$ and $ab=-2$.  On
+\[
+ C=D[T]/(T^2-aT),
+ \qquad g=1+bT,
+\]
+try the skew-primitive formula
+\[
+ \Delta(T)=T\ot1+g\ot T.
+\]
+If $T_*=T_1+g_1T_2$, then one line of calculation gives
+\begin{equation}\label{eq:rank-two-block}
+ T_*^2-aT_*
+ =g_1\bigl(2T_1+a(g_1-1)\bigr)T_2
+ =g_1(2+ab)T_1T_2=0.
+\end{equation}
+Moreover $\Delta(g)=g\ot g$ and
+$g^2=1+b(2+ab)T=1$.  Thus the single scalar equation $ab=-2$
+produces a rank-two Hopf algebra: take $\eps(T)=0$ and $S(T)=T$;
+group-likeness of $g$ makes coassociativity formal, and
+$T+gS(T)=0=S(T)+S(g)T$.  In other words, the term $abT_1T_2$
+cancels the cross-term $2T_1T_2$.  The whole construction can be checked by
+someone who has only just learned the definition of a Hopf algebra.
+
+The rank-four construction begins with two such cancellation patterns,
+$(\alpha,r)$ and $(\gamma,s)$.  It then inserts one off-diagonal
+``bridge'' term $\beta V$ into the equation for $U^2$.  Three extra scalar
+equations make that bridge compatible with the two rank-two blocks.  The
+unoptimized recipe is therefore simply
+\begin{equation}\label{eq:large-five-relations}
+ \underbrace{\alpha r=-2,\quad \gamma s=-2}_{
+   \text{two rank-two patterns}},
+ \qquad
+ \underbrace{\gamma r=0,\quad\beta s=0,\quad
+   \beta r=-\alpha s}_{\text{one compatible bridge}}.
+\end{equation}
+Rather than solve these equations economically, we use them as the
+definition of the base ring.
+
+\begin{equation}\label{eq:large-base}
+ B_{\mathrm{br}}=\Z[\alpha,\beta,\gamma,r,s]
+   /\bigl(\alpha r+2,\;\gamma s+2,\;
+           \gamma r,\;\beta s,\;\beta r+\alpha s\bigr).
+\end{equation}
+We make no attempt to force $B_{\mathrm{br}}$ to be Artinian: none is
+needed.  Indeed, setting $\alpha=\beta=\gamma=r=0$ gives a surjection
+$B_{\mathrm{br}}\twoheadrightarrow\F_2[s]$.  The group scheme will nevertheless be
+finite because its coordinate algebra is free of rank four over
+$B_{\mathrm{br}}$.
+
+Over $B_{\mathrm{br}}$, put
+\begin{equation}\label{eq:large-A}
+ A_{\mathrm{br}}=B_{\mathrm{br}}[U,V]
+ /(U^2-\alpha U-\beta V,\;V^2-\gamma V),
+ \qquad W=UV,
+\end{equation}
+and
+\begin{equation}\label{eq:large-lambda}
+ \lambda=(1+rU)(1+sV),
+ \qquad
+ \theta=\lambda-1.
+\end{equation}
+Define
+\begin{equation}\label{eq:large-Delta}
+ \Delta(U)=U\ot1+\lambda\ot U,
+ \qquad
+ \Delta(V)=V\ot\lambda+1\ot V,
+ \qquad
+ \eps(U)=\eps(V)=0.
+\end{equation}
+
+\begin{proposition}[The unoptimized bridge]\label{prop:large-bridge}
+The formulas \eqref{eq:large-A}--\eqref{eq:large-Delta} make
+$A_{\mathrm{br}}$ a finite free Hopf algebra of rank four over
+$B_{\mathrm{br}}$.  Its power words satisfy
+\begin{equation}\label{eq:large-powers}
+ [4]^\#(U)=2sW\ne0,
+ \qquad [4]^\#(V)=[4]^\#(W)=0,
+ \qquad [8]=e.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The relations in \eqref{eq:large-five-relations} imply
+\begin{equation}\label{eq:large-consequences}
+ 4=0,\qquad
+ 2\alpha=2\beta=2\gamma=2r=0,\qquad
+ \beta r^2=2s,\qquad 2s^2=0.
+\end{equation}
+For example,
+\[
+ 4=(\alpha r)(\gamma s)=\alpha s(\gamma r)=0,
+\]
+while
+\[
+ 2\gamma=-(\alpha r)\gamma=0,
+ \quad 2r=-(\gamma s)r=0,
+ \quad 2\beta=-(\gamma s)\beta=0,
+\]
+and
+\[
+ 2\alpha=-(\gamma s)\alpha
+          =-\gamma(\alpha s)=\gamma\beta r=0.
+\]
+Multiplying $\beta r+\alpha s=0$ by $r$ gives
+$\beta r^2=2s$, and then multiplication by $s$ gives $2s^2=0$.
+Since the defining relations of $A_{\mathrm{br}}$ are successively
+monic in $V$ and $U$, respectively,
+\[
+ A_{\mathrm{br}}=B_{\mathrm{br}}\{1,U,V,W\}
+\]
+is free of rank four.
+
+The identity $\beta r^2=2s$ is also the reason the bridge is essential.
+If one set $\beta=0$, then it would force $2s=0$, and the fourth-power
+class computed below would disappear.  The bridge is precisely what keeps
+the characteristic-four carry alive.
+
+We next explain why the Hopf structure works without listing a large
+coefficient table.  Put
+\[
+ L=1+rU,\qquad M=1+sV,\qquad\lambda=LM.
+\]
+Using \eqref{eq:large-five-relations} and the two quadratic relations gives
+\[
+ M^2=1,\qquad L^2=1+2sV,\qquad
+ \lambda^2=1+2sV.
+\]
+Also $2\theta=2sV$, so comparison with
+$(1+\theta)^2$ gives
+\begin{equation}\label{eq:large-theta}
+ \theta^2=0,\qquad
+ 2\theta=2sV,\qquad
+ \lambda^{-1}=1-\theta.
+\end{equation}
+
+Let $U_i,V_i,\lambda_i$ denote the coordinates in the two tensor factors and
+set
+\[
+ U_*=U_1+\lambda_1U_2,
+ \qquad
+ V_*=V_1\lambda_2+V_2.
+\]
+The five relations in \eqref{eq:large-five-relations} give the closure
+identities
+\begin{equation}\label{eq:large-closure}
+ U_*^2=\alpha U_*+\beta V_*,
+ \qquad
+ V_*^2=\gamma V_*,
+ \qquad
+ (1+rU_*)(1+sV_*)=\lambda_1\lambda_2.
+\end{equation}
+Here is a short view of the cancellations.  One has
+\[
+ \gamma(\lambda-1)=-2V,\qquad
+ \beta(1-\lambda)=\alpha sU,\qquad
+ \beta(\lambda^2-1)=0,
+\]
+and
+\[
+ 2\lambda U+\alpha(\lambda^2-\lambda)+\alpha sV=0.
+\]
+Indeed, they give the transparent defect calculations
+\[
+ V_*^2-\gamma V_*
+ =V_1\lambda_2\bigl(\gamma(\lambda_2-1)+2V_2\bigr)=0
+\]
+and
+\begin{align*}
+ U_*^2-\alpha U_*-\beta V_*
+  ={}&\beta V_1(1-\lambda_2)+2\lambda_1U_1U_2
+      +\alpha(\lambda_1^2-\lambda_1)U_2
+      +\beta(\lambda_1^2-1)V_2\\
+  ={}&\bigl(\alpha sV_1+2\lambda_1U_1
+      +\alpha(\lambda_1^2-\lambda_1)\bigr)U_2=0.
+\end{align*}
+For the group-like identity, put
+$E=rsV_1U_2$.  Direct factorization gives
+\begin{equation}\label{eq:large-group-like-factor}
+ (1+rU_*)(1+sV_*)-\lambda_1\lambda_2
+  =(L_1M_2)E\bigl(2+rU_2+sV_1+E\bigr).
+\end{equation}
+Each of the four terms on the right vanishes by the two quadrics and the
+consequences of \eqref{eq:large-five-relations}: $2E=0$,
+$E(rU_2)=0$, $E(sV_1)=0$, and $E^2=0$.
+Thus \eqref{eq:large-closure} holds.  It says precisely that $\Delta$
+respects the two quadrics and that $\lambda$ is group-like.  Counitality is
+immediate, and group-likeness makes coassociativity of the two skew-primitive
+formulas formal.
+
+An antipode is
+\begin{equation}\label{eq:large-antipode}
+ S(U)=U-sW+\alpha sV,
+ \qquad
+ S(V)=V+rW.
+\end{equation}
+Indeed these are $-\lambda^{-1}U$ and $-V\lambda^{-1}$, respectively.
+For a direct check, use
+\[
+ UW=\alpha W+\beta\gamma V,\qquad
+ VW=\gamma W,\qquad
+ W^2=\alpha\gamma W+\beta\gamma^2V.
+\]
+Substitution gives
+\[
+ S(U)^2=\alpha S(U)+\beta S(V),\qquad
+ S(V)^2=\gamma S(V),\qquad S(\lambda)=\lambda^{-1}.
+\]
+Thus $S$ defines an algebra map, and the two convolution identities follow
+from \eqref{eq:large-Delta} and the formulas
+$S(U)=-\lambda^{-1}U$, $S(V)=-V\lambda^{-1}$.
+
+It remains to compute the power word.  The norm formula
+\eqref{eq:first-reading-norm} and \eqref{eq:large-theta} give
+\[
+ N_4(\lambda)=4+6\theta=2\theta=2sV.
+\]
+Therefore
+\[
+ [4]^\#(U)=2sVU=2sW,
+ \qquad
+ [4]^\#(V)=2sV^2=2s\gamma V=-4V=0.
+\]
+Since the power word is still a morphism of schemes, its comorphism is an
+algebra map, and hence
+\[
+ [4]^\#(W)=[4]^\#(U)[4]^\#(V)=0.
+\]
+To see directly that the first element is nonzero, use the specialization
+\begin{equation}\label{eq:large-specialization-in-proof}
+ B_{\mathrm{br}}\longrightarrow R,\qquad
+ (r,s,\alpha,\beta,\gamma)\longmapsto(y,x,xy,x^2,y^2).
+\end{equation}
+The five defining equations of $B_{\mathrm{br}}$ vanish in $R$, and $2s$
+maps to the nonzero element $2x$ (see \eqref{eq:carry}).  Explicitly, the
+first two equations map to $4=0$,
+the next two to $y^3=x^3=0$, and the last to
+$2x^2y=x^3y^3=0$.  Thus $2s\ne0$ in $B_{\mathrm{br}}$, and freeness of
+$A_{\mathrm{br}}$ gives
+$2sW\ne0$.  Finally
+$\lambda^4=1$ and
+\[
+ N_8(\lambda)=N_4(\lambda)(1+\lambda^4)=2N_4(\lambda)=0,
+\]
+so $[8]=e$.
+\end{proof}
+
+\subsubsection*{A human-sized untruncated base}
+
+The five-coefficient ring explains where the equations come from.  For a
+short concrete presentation which is still untruncated, solve only two of
+the coefficients,
+\[
+ \alpha=rs,\qquad \beta=s^2,
+\]
+and leave $\gamma=g$ as a separate generator.  This gives
+\begin{equation}\label{eq:three-coefficient-base}
+ D=\Z[r,s,g]/(r^2s+2,\;s^3,\;gs+2,\;gr).
+\end{equation}
+The four relations are easy to remember: $(rs,r)$ and $(g,s)$ are the two
+rank-two cancellation patterns, while $s^3=gr=0$ kill the two cross-terms.
+The remaining bridge balance is automatic.  Indeed, $(gs+2)r=0$ and
+$gr=0$ give $2r=0$, whence
+\[
+ s^2r+rs^2=2rs^2=0.
+\]
+Consequently there is a surjection
+\begin{equation}\label{eq:bridge-to-D}
+ B_{\mathrm{br}}\twoheadrightarrow D,
+ \qquad
+ (\alpha,\beta,\gamma,r,s)\longmapsto(rs,s^2,g,r,s).
+\end{equation}
+
+Thus Proposition~\ref{prop:large-bridge} immediately gives the following
+particularly short example:
+\begin{equation}\label{eq:three-coefficient-A}
+ A_D=D[U,V]/(U^2-rsU-s^2V,\;V^2-gV),
+ \qquad \lambda=(1+rU)(1+sV),
+\end{equation}
+with
+\begin{equation}\label{eq:three-coefficient-Delta}
+ \Delta(U)=U\ot1+\lambda\ot U,
+ \qquad
+ \Delta(V)=V\ot\lambda+1\ot V.
+\end{equation}
+It is free over $D$ on $1,U,V,UV$, and
+\begin{equation}\label{eq:three-coefficient-powers}
+ [4]^\#(U)=2sUV\ne0,
+ \qquad [4]^\#(V)=[4]^\#(UV)=0,
+ \qquad [8]=e.
+\end{equation}
+Here nonvanishing follows from the specialization
+\[
+ D\twoheadrightarrow R,
+ \qquad (r,s,g)\longmapsto(y,x,y^2),
+\]
+which sends $2s$ to $2x\ne0$.  The base $D$ is genuinely untruncated and
+non-Artinian: setting $2=s=g=0$ gives a surjection
+$D\twoheadrightarrow\F_2[r]$.
+
+The relationship among the three presentations is now completely visible:
+\[
+ B_{\mathrm{br}}\twoheadrightarrow D\twoheadrightarrow R,
+ \qquad
+ D/(g-r^2)\simeq
+ \Z[r,s]/(r^3,s^3,r^2s+2)\simeq R.
+\]
+The five-coefficient ring is best for deriving the compatibility equations;
+$D$ is arguably the easiest concrete example; and $R$ is the optimized
+length-nine specialization.
+
+No minimality claim is being made for either enlarged ansatz.  The later
+statement is narrower: after imposing
+$\alpha=rs$, $\beta=s^2$, and $\gamma=r^2$, the Hopf identities force a map
+from the universal coefficient ring $R$, and survival of the fourth-power
+class forces that map to be injective.  Thus the exact two-coefficient
+family contains a copy of the length-nine ring, whereas the constructions
+above deliberately leave some or all of $\alpha,\beta,\gamma$ unoptimized.
+
+\section{The length-nine base without guesswork}
+
+\subsection{A Smith-normal-form proof}
+
+There is a particularly clean proof that the integer presentation really has
+length nine.  Let
+\[
+ B=\Z[x,y]/(x^3,y^3).
+\]
+It is free of rank nine over $\Z$, on the monomials $x^iy^j$ with
+$0\le i,j\le2$.  Let $N:B\to B$ be multiplication by $xy^2$.  Then
+\[
+ R_{\mathrm{add}}=\operatorname{coker}(N-2\id).
+\]
+On the nine monomials, $N$ has exactly two nonzero arrows:
+\[
+ 1\longmapsto xy^2,
+ \qquad x\longmapsto x^2y^2.
+\]
+It is zero on the other five complementary basis elements and $N^2=0$.
+Each of the two $2\times2$ blocks of $N-2\id$ has Smith normal form
+$\operatorname{diag}(1,4)$, while each of the five remaining blocks is
+$(-2)$.  Consequently
+\begin{equation}\label{eq:additive-R}
+ R_{\mathrm{add}}\simeq(\Z/4)^2\oplus(\Z/2)^5.
+\end{equation}
+More explicitly, every element has a unique normal form
+\begin{equation}\label{eq:normal-form-R}
+ a+bx+\alpha y+\beta x^2+\gamma xy+\delta y^2+\eta x^2y,
+\end{equation}
+where $a,b\in\Z/4$ and
+$\alpha,\beta,\gamma,\delta,\eta\in\F_2$.
+
+This calculation proves at once that $|R|=2^9$, that $2\ne0$, and that
+\begin{equation}\label{eq:carry}
+ xy^2=2,
+ \qquad x^2y^2=2x\ne0.
+\end{equation}
+It also proves that multiplication by $xy^2-2$ on $B$ is injective: its
+determinant is $(-2)^9\ne0$.  Therefore
+\[
+ x^3,\quad y^3,\quad xy^2-2
+\]
+is a regular sequence in $\Z[x,y]$.  Thus $R$ is an Artin complete
+intersection, which gives an independent conceptual proof of its
+Gorenstein property.
+
+\subsection{Locality, filtration, and socle}
+
+The relations imply
+\begin{equation}\label{eq:torsion}
+ 2y=2x^2=2xy=2y^2=2x^2y=0.
+\end{equation}
+Both $x$ and $y$ are nilpotent, so every prime ideal contains them; it then
+also contains $2=xy^2$.  Hence
+\[
+ \m=(x,y)
+\]
+is the unique maximal ideal and $R/\m=\F_2$.  This nilpotence observation is
+needed for uniqueness; merely noting that $R/(x,y)=\F_2$ would prove only
+that $(x,y)$ is maximal.
+
+The associated graded ring is especially simple:
+\begin{equation}\label{eq:grR}
+ \gr_{\m}R\simeq\F_2[X,Y]/(X^3,Y^3).
+\end{equation}
+Indeed, $x,y$ generate $\m$, so there is a surjection from the right-hand
+side to $\gr_{\m}R$.  Both sides have $\F_2$-dimension nine by
+\eqref{eq:additive-R}, so it is an isomorphism.  In concrete terms,
+\begin{align}
+ \m^2&=\F_2\{x^2,xy,y^2,x^2y,2,2x\},\nonumber\\
+ \m^3&=\F_2\{x^2y,2,2x\},\nonumber\\
+ \m^4&=\F_2\{2x\},
+ &\m^5&=0.\label{eq:m-powers}
+\end{align}
+Thus the Hilbert function is $(1,2,3,2,1)$ and the length is nine.  Direct
+multiplication of the normal form \eqref{eq:normal-form-R} by $x$ and $y$
+gives
+\begin{equation}\label{eq:socle}
+ \Soc(R)=\F_2(2x).
+\end{equation}
+In the graded picture, this is simply the top monomial
+$X^2Y^2$, lifted by $x^2y^2=2x$.
+
+\section{The rank-four algebra and the bridge element}
+
+First form the monic quadratic extension
+\[
+ C=R[V]/(V^2-y^2V),
+\]
+which is free on $1,V$.  Then
+\[
+ A=C[U]/(U^2-xyU-x^2V)
+\]
+is free on $1,U$ over $C$.  This proves, without a Groebner-basis
+assumption, that
+\begin{equation}\label{eq:A-basis}
+ A=R\{1,U,V,W\},\qquad W=UV,
+\end{equation}
+is finite locally free of rank four.
+
+The complete multiplication needed below is
+\begin{equation}\label{eq:A-multiplication}
+\begin{aligned}
+ U^2&=xyU+x^2V,& V^2&=y^2V,& UV&=W,\\
+ UW&=xyW+2xV,& VW&=y^2W,& W^2&=0.
+\end{aligned}
+\end{equation}
+For example,
+\[
+ UW=U^2V=xyW+x^2y^2V=xyW+2xV,
+\]
+and the remaining identities follow similarly.
+
+\begin{lemma}\label{lem:theta}
+For $\theta$ and $\lambda$ in \eqref{eq:theta-lambda},
+\begin{equation}\label{eq:theta-identities}
+ \theta^2=0,
+ \qquad \lambda^{-1}=1-\theta,
+ \qquad 2\theta=2xV,
+ \qquad \lambda^2=1+2xV,
+ \qquad \lambda^4=1.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The two nonzero-looking square terms in $\theta^2$ are
+\[
+ y^2U^2=2xV,
+ \qquad x^2V^2=2xV.
+\]
+Their sum is $4xV=0$.  All mixed terms vanish by
+\eqref{eq:torsion}, $x^3=y^3=0$, or $W^2=0$.  Thus $\theta^2=0$.
+The inverse formula follows.  Also $2y=2xy=0$, so
+$2\theta=2xV$.  Finally
+\[
+ (1+\theta)^2=1+2\theta=1+2xV
+\]
+and its square is one.
+\end{proof}
+
+Modulo $\m$, one has
+\[
+ A/\m A\simeq\F_2[U,V]/(U^2,V^2).
+\]
+Thus two coordinate generators are unavoidable: the cotangent space at the
+unit of the special fiber has dimension two.
+
+\section{A hand audit of the Hopf structure}
+
+The only delicate questions are whether \eqref{eq:Delta} respects the two
+quadrics and whether $\lambda$ is group-like.  We verify both directly.
+
+In $A\ot_R A$, use lower-case abbreviations
+\[
+ u=U\ot1,\quad v=V\ot1,\quad
+ u'=1\ot U,\quad v'=1\ot V,
+\]
+and put $l=\lambda\ot1=1+\theta_1$ and
+$l'=1\ot\lambda=1+\theta_2$.  The proposed product coordinates are
+\begin{equation}\label{eq:product-coordinates}
+ \bar u=u+lu',
+ \qquad \bar v=vl'+v'.
+\end{equation}
+
+\subsection{Preservation of the two quadrics}
+
+Using the defining relations in each tensor factor gives
+\begin{align}
+ \bar u^2-xy\bar u-x^2\bar v
+  ={}&x^2v(1-l')+2luu'+xy(l^2-l)u'
+      +x^2(l^2-1)v'\nonumber\\
+  ={}&-x^2v\theta_2+2(1+\theta_1)uu'
+      +xy\theta_1u'+2x^2\theta_1v'.\label{eq:U-defect}
+\end{align}
+The following four reductions are immediate from
+\eqref{eq:A-multiplication} and the base relations:
+\[
+ x^2v\theta_2=x^2yv u',
+ \qquad 2\theta_1u=2xuv,
+\]
+\[
+ xy\theta_1=2u+x^2yv+2xuv,
+ \qquad 2x^2\theta_1=0.
+\]
+Substitution in \eqref{eq:U-defect} gives
+\[
+ -x^2yvu'+(2uu'+2xuvu')
+ +(2uu'+x^2yvu'+2xuvu')=0.
+\]
+
+Similarly,
+\begin{align}
+ \bar v^2-y^2\bar v
+ &=y^2v(l'^2-l')+2vv'l'\nonumber\\
+ &=y^2v\theta_2+2vv'(1+\theta_2).
+ \label{eq:V-defect}
+\end{align}
+Here $y^2v\theta_2=2vv'$ and $2vv'\theta_2=0$, so
+\eqref{eq:V-defect} is $4vv'=0$.  Hence the proposed coproduct descends to
+the quotient algebra $A$.
+
+\subsection{The group-like identity}
+
+Write
+\[
+ a_1=1+yu,\quad b_1=1+xv,
+ \qquad a_2=1+yu',\quad b_2=1+xv'.
+\]
+Then $l=a_1b_1$ and $l'=a_2b_2$.  From
+\eqref{eq:product-coordinates},
+\[
+ 1+y\bar u=a_1(1+yb_1u'),
+ \qquad
+ 1+x\bar v=b_2(1+xva_2).
+\]
+Set $p=xv$ and $q=yu'$.  The difference between
+\[
+ (1+q(1+p))(1+p(1+q))
+ \quad\text{and}\quad (1+p)(1+q)
+\]
+is
+\[
+ pq(2+p+q+pq).
+\]
+But $2pq=p^2q=pq^2=0$, by \eqref{eq:torsion} and the two quadrics.
+It follows that
+\begin{equation}\label{eq:group-like}
+ \Delta(\lambda)=\lambda\ot\lambda.
+\end{equation}
+
+For reference, in rows and columns indexed by $1,U,V,W$, the same identity
+is the compact matrix certificate
+\[
+ M(\Delta\lambda)=
+ \begin{pmatrix}
+ 1&y&x&xy\\
+ y&y^2&xy&2\\
+ x&xy&x^2&x^2y\\
+ xy&2&x^2y&2x
+ \end{pmatrix}
+ =
+ \begin{pmatrix}1\\y\\x\\xy\end{pmatrix}
+ \begin{pmatrix}1&y&x&xy\end{pmatrix}.
+\]
+
+\subsection{Counit, coassociativity, and antipode}
+
+The augmentation $\eps(U)=\eps(V)=0$ is plainly a counit.  Once
+\eqref{eq:group-like} is known, coassociativity is formal.  For example,
+\begin{align*}
+ (\Delta\ot\id)\Delta(U)
+ &=U\ot1\ot1+\lambda\ot U\ot1
+   +\lambda\ot\lambda\ot U\\
+ &=(\id\ot\Delta)\Delta(U),
+\end{align*}
+and the same calculation with the skewness reversed applies to $V$.
+
+The antipode can be written either conceptually or in the basis
+\eqref{eq:A-basis}:
+\begin{align}
+ S(U)&=-\lambda^{-1}U=U+x^2yV-xW,\nonumber\\
+ S(V)&=-V\lambda^{-1}=V+yW,
+ &S(W)&=W.\label{eq:antipode}
+\end{align}
+Substitution in \eqref{eq:A-multiplication} shows that these images respect
+both quadrics and that $S(\lambda)=\lambda^{-1}$.  The two convolution
+identities on $U$ and $V$ now read
+\[
+ S(U)+S(\lambda)U=0,
+ \qquad U+\lambda S(U)=0,
+\]
+\[
+ S(V)\lambda+V=0,
+ \qquad VS(\lambda)+S(V)=0.
+\]
+They hold on all of $A$ because the displayed maps are algebra maps into the
+commutative algebra $A$.  This completes a hand proof of every Hopf axiom.
+
+Finally, $G$ is noncommutative.  The coefficient of $V\ot U$ in
+$\Delta(U)$ is $x$, whereas the coefficient of $U\ot V$ is zero.  Since
+$x\ne0$ and $A\ot_R A$ is free, $\Delta$ is not cocommutative.
+
+\section{The conceptual power calculation}
+
+The following elementary lemma is the main simplification of the example.
+
+\begin{lemma}[Skew-primitive norm formula]\label{lem:norm}
+Let $B$ be a commutative Hopf algebra, let $l\in B$ be group-like, and
+suppose
+\[
+ \Delta(z)=z\ot1+l\ot z
+ \quad\text{or}\quad
+ \Delta(z)=z\ot l+1\ot z.
+\]
+For $N_n(T)=1+T+\cdots+T^{n-1}$, one has
+\[
+ [n]^\#(l)=l^n,
+ \qquad [n]^\#(z)=N_n(l)z.
+\]
+\end{lemma}
+
+\begin{proof}
+On points, the first formula says that the $z$-coordinate of a product is
+$z(g)+l(g)z(h)$, and the second has the opposite skewness.  Repeating the
+same element $n$ times gives the geometric series.  Equivalently, the same
+statement follows by induction from the coproduct formulas.
+\end{proof}
+
+When $l=1+t$ and $t^2=0$, the norm has the closed form
+\begin{equation}\label{eq:binomial-norm}
+ N_n(1+t)=n+\binom n2t.
+\end{equation}
+Apply this with $l=\lambda=1+\theta$.  Since $4=0$ and
+$2\theta=2xV$,
+\begin{equation}\label{eq:N4}
+ N_4(\lambda)=4+6\theta=2\theta=2xV.
+\end{equation}
+Lemma~\ref{lem:norm} therefore gives
+\begin{align}
+ [4]^\#(U)&=2xVU=2xW,\nonumber\\
+ [4]^\#(V)&=2xV^2=2xy^2V=4V=0,
+ & [4]^\#(W)&=0.\label{eq:fourth}
+\end{align}
+The first element is nonzero: $2x\ne0$ by the Smith-normal-form calculation,
+and $W$ is part of an $R$-basis of $A$.  Thus $[4]$ is not the unit word.
+
+Also $\lambda^4=1$ and
+\[
+ N_8(\lambda)=N_4(\lambda)(1+\lambda^4)=2N_4(\lambda)=0.
+\]
+Since $A$ is generated by $U,V$, this says $[8]^\#=\iota\eps$.
+
+For comparison, direct contraction of the coproduct gives the triangular
+doubling calculation
+\begin{equation}\label{eq:doubling}
+ [2]^\#(U)=x^2yV-xW,
+ \qquad [2]^\#(V)=-yW,
+ \qquad [2]^\#(W)=0.
+\end{equation}
+Applying it twice leaves only the path
+\[
+ U\xmapsto{\ x^2y\ }V\xmapsto{\ -y\ }W,
+ \qquad -(x^2y)y=-x^2y^2=2x.
+\]
+This recovers $[4]^\#(U)=2xW$ and makes visible the final socle carry.
+
+\section{The ambient solvable group}
+
+The two coproduct lines are standard coordinates on a small solvable group.
+Let $\mathcal H$ have points $(l,u,v)$, with $l$ invertible, and law
+\begin{equation}\label{eq:H-law}
+ (l,u,v)(l',u',v')
+  =(ll',\;u+lu',\;vl'+v').
+\end{equation}
+If $w=v/l$, this becomes
+\[
+ (l,u,w)(l',u',w')
+  =(ll',\;u+lu',\;w+l^{-1}w').
+\]
+Thus
+\[
+ \mathcal H\simeq\Ga^2\rtimes\Gm,
+\]
+where $\Gm$ has weights $+1$ and $-1$.  It embeds in $\operatorname{GL}_3$
+by
+\[
+ (l,u,w)\longmapsto
+ \begin{pmatrix}
+ l&0&u\\
+ 0&l^{-1}&w\\
+ 0&0&1
+ \end{pmatrix}.
+\]
+
+The group $G$ is the finite closed subgroup of $\mathcal H$ cut out by the
+two quadrics in \eqref{eq:A} and the graph equation
+\begin{equation}\label{eq:graph}
+ l=(1+yu)(1+xv)=1+yu+xv+xyuv.
+\end{equation}
+The group-like calculation in Section~4 says precisely that this graph and
+the two quadrics are closed under \eqref{eq:H-law}.
+
+In $\mathcal H$ one has the general power formula
+\[
+ (l,u,v)^n=(l^n,N_n(l)u,vN_n(l)).
+\]
+The counterexample is therefore the familiar semidirect-product norm
+phenomenon.  Although $\lambda^4=1$, its translation norm is
+\[
+ N_4(\lambda)=2(\lambda-1)\ne0.
+\]
+The coefficient $\binom42=6\equiv2\pmod4$ is the characteristic-four
+binomial carry.  The finite rank-four equations arrange that multiplying
+this carry by $U$ gives exactly the top socle class $2xUV$.
+
+This is a more precise description than calling the construction a
+``Zappa--Szep-type product.''  No factorization into two finite flat subgroup
+schemes is needed or asserted.
+
+\section{A useful nonnormal rank-two subgroup}
+
+There is nevertheless a useful rank-two subgroup
+\[
+ H_0=(V=0)\subset G,
+ \qquad
+ \mathcal O(H_0)=R[U]/(U^2-xyU).
+\]
+The ideal $(V)$ is a Hopf ideal: one has
+$\Delta(V)=V\ot\lambda+1\ot V$, $\eps(V)=0$, and
+$S(V)=V+yW=V(1+yU)\in(V)$.  Modulo $V$ one has
+$\lambda=1+yU$, and a direct norm calculation gives $[2]_{H_0}=e$.
+
+This subgroup is not normal.  On points, write $h=(a,0)\in H_0(T)$ and
+$g=(u,v)\in G(T)$, suppressing the character coordinate.  The law
+\eqref{eq:H-law} gives
+\begin{equation}\label{eq:conjugation}
+ V(ghg^{-1})=yva\,\lambda(g)^{-1},
+\end{equation}
+which is universally nonzero.  Indeed, its coordinate is
+$(yV\lambda^{-1})\otimes a$, and
+\[
+ yV\lambda^{-1}=yV-y^2W\ne0
+\]
+in the free basis of $A$.  Thus the apparent rank-two-by-rank-two
+filtration is not a filtration by normal subgroup schemes.
+
+The fourth-power word factors nontrivially through $H_0$, because
+$[4]^\#(V)=0$ but $[4]^\#(U)=2xUV\ne0$.  Squaring once more kills its image
+because $H_0$ is killed by two.  This gives a structural explanation of
+\[
+ [4]\ne e,\qquad[8]=e,
+\]
+and pinpoints why a naive exponent argument based on two rank-two pieces
+fails: the available rank-two subgroup is not normal.
+
+\section{How minimal and how simple is the example?}
+
+\subsection{Quotient-minimality}
+
+Every nonzero ideal in an Artin local ring meets the socle.  Since
+$\Soc(R)=\F_2(2x)$, every nonzero ideal of $R$ contains $2x$.  It follows
+that every proper quotient of this particular base kills the coefficient
+of $[4]^\#(U)$.  In particular,
+\[
+ R_8=R/(2x)
+\]
+has length eight, the kernel $\F_2(2x)$ is square-zero, and the fourth-power
+defect vanishes over $R_8$.  The example is literally a one-dimensional
+socle deformation that creates the defect.
+
+\subsection{Minimality in the group-like bridge family}
+
+There is also a precise, but restricted, universality statement.  Let $S$
+be local, let $x,y\in\n_S$, and use over $S$ the same two quadrics, the same
+$\lambda$, and the same skew-primitive formulas.  Put $q=xy^2$.  Coefficient
+comparison in the two relation defects and in
+$\Delta(\lambda)-\lambda\ot\lambda$ includes the necessary equations
+\begin{equation}\label{eq:forcing}
+ (q+1)(q+2)=0,
+ \qquad y^3(q+1)=0,
+ \qquad x^3(q+1)(q^2+q+1)=0.
+\end{equation}
+Because $q\in\n_S$, the factors $q+1$ and $q^2+q+1$ are units.  Hence the
+Hopf formulas force
+\[
+ q=-2,\qquad x^3=y^3=0.
+\]
+Conversely, these relations imply $4=0$ and make the hand computations in
+Section~4 go through.  Thus $R$ is universal for this displayed bridge
+family.
+
+If the fourth-power coefficient survives over such an $S$, the induced map
+$R\to S$ is injective.  Indeed, a nonzero kernel would contain the socle
+generator $2x$ and would kill $2xUV$.  Therefore a finite $S$ in this
+family has at least $512$ elements; if its residue field is $\F_2$, it has
+length at least nine.
+
+This is not a global classification of all rank-four Hopf algebras.  The
+correct scope is
+\[
+ \boxed{\text{length nine is minimal in this bridge family; global length
+ eight remains open.}}
+\]
+
+\subsection{Generator-minimality}
+
+Equation \eqref{eq:grR} gives
+\[
+ \dim_{\F_2}\m/\m^2=2.
+\]
+Since $2=xy^2\in\m^3$, the two base directions $x,y$ cannot be replaced by
+one generator as a local $\Z/4$-algebra.  Likewise the special fiber of $A$
+has two-dimensional cotangent space, so two generators are necessary as an
+augmented coordinate algebra.
+The displayed presentation is therefore already essentially
+generator-minimal.  The genuine simplification is conceptual:
+\[
+ \lambda=(1+yU)(1+xV),
+ \quad\text{two skew-primitive formulas, and one norm lemma.}
+\]
+
+\section{Independent verification and audit caveats}
+
+The bundled archive \path{rank4_length9_counterexample_bundle.zip} contains
+two bounded exact Python verifiers.  On the local Mac, both completed with
+exit status zero under Python~3.14.5.  After extracting the archive, the
+reproduction commands are
+\begin{verbatim}
+unzip -q rank4_length9_counterexample_bundle.zip \
+  -d /tmp/rank4_length9_audit
+cd /tmp/rank4_length9_audit
+python3 verify_rank4_length9_counterexample.py
+python3 independent_verify_rank4_length9_counterexample.py
+\end{verbatim}
+They verify the $512$-element base model, associativity, freeness,
+multiplicativity and coassociativity of $\Delta$, the group-like identity,
+the antipode equations, noncocommutativity, and the power words through
+$[8]$.  The first completed in $3.60$ seconds and the second in $7.61$
+seconds.  The archive passed \texttt{unzip -t}; its SHA-256 digest is
+\begin{center}
+\small\path{132f044bc092d1b888e5ff0e315e35a9b4790a92fd92809709d22448de0fe165}.
+\end{center}
+
+As a genuinely literal ideal check, from the workspace root we also ran
+\begin{verbatim}
+M2 --script m2/audit_rank4_length9_counterexample_20260711.m2
+\end{verbatim}
+Under Macaulay2~1.25.11 on the local Mac (not an SSH session), this bounded
+computation completed with exit status zero in $0.23$ seconds.  Its
+strong Groebner basis for the base ideal is
+\[
+ (4,\;2y,\;y^3,\;xy^2+2,\;2x^2,\;x^3),
+\]
+and it leaves $2$, $2x$, and $2xUV$ in nonzero normal form.  It independently
+reduces both coproduct relation defects,
+$\Delta(\lambda)-\lambda\ot\lambda$, the antipode defects, and the
+$[8]$ coordinates to zero, while reducing $[4]^\#(U)$ to $2xUV$.
+
+For the deliberately unoptimized construction, we separately ran
+\begin{verbatim}
+M2 --script m2/audit_rank4_unoptimized_bridge_20260711.m2
+\end{verbatim}
+over the untruncated five-coefficient ring
+\eqref{eq:large-base}.  It completed with exit status zero.  A strong
+Groebner reduction leaves $2s$ nonzero; it also verifies all five
+compatibility relations and the nonvanishing of $2s$ in the
+three-coefficient specialization \eqref{eq:three-coefficient-base}.
+The same audit reduces both quadratic coproduct
+defects and $\Delta(\lambda)-\lambda\ot\lambda$ to zero, verifies the
+antipode identities, and returns
+\[
+ ([4]^\#(U),[4]^\#(V),[8]^\#(U),[8]^\#(V))
+ =(2sUV,0,0,0).
+\]
+
+There are four minor caveats in the bundled write-up, none fatal.
+\begin{enumerate}
+\item The locality proof should explicitly use nilpotence of $x,y$ to prove
+uniqueness of the maximal ideal; this was supplied in Section~2.
+\item The two Python verifiers use different multiplication implementations,
+but both begin from the same asserted seven-term normal form.  The Smith
+normal form above and the independent literal ideal computation remove that
+shared assumption.
+\item The optional script
+\path{derive_length9_family_conditions.py} requires SymPy, which was absent
+from the default Python environment and was not listed as a dependency.  It
+is not needed to certify the example.
+\item ``Zappa--Szep-type'' should be read only as a heuristic.  The rigorous
+structural statement is the closed embedding into
+$\Ga^2\rtimes\Gm$ from Section~6.
+\end{enumerate}
+
+\section{Conclusion}
+
+The example is valid, and its irreducible data fit in four lines:
+\[
+ \boxed{
+ \begin{gathered}
+ R=(\Z/4)[x,y]/(x^3,y^3,xy^2-2),\\
+ A=R[U,V]/(U^2-xyU-x^2V,\;V^2-y^2V),\\
+ \lambda=(1+yU)(1+xV),\\
+ \Delta(U)=U\ot1+\lambda\ot U,
+ \qquad \Delta(V)=V\ot\lambda+1\ot V.
+ \end{gathered}}
+\]
+The conceptual mechanism is the semidirect-product norm
+\[
+ N_4(1+\theta)=4+\binom42\theta=2\theta.
+\]
+Here the bridge equations make $2\theta=2xV$, and multiplication by $U$
+turns it into the nonzero top class $2xUV$.  This proves
+$[4]\ne e$; the same norm vanishes at eight.  The result is smaller and much
+more transparent than the earlier length-ten construction, but it does not
+settle the global length-eight frontier.
+
+\appendix
+\section{Coefficient list for the universal bridge claim}
+
+For completeness, here is the coefficient-level form of the
+restricted universality calculation used in Section~8.  With $q=xy^2$, put
+\[
+ E=q^2+2q+2,
+\]
+\[
+ F=x^3y^6+2x^2y^4+4q+2,
+ \qquad
+ H=x^3y^6+x^2y^4+q+2.
+\]
+After expanding preservation of both quadrics, group-likeness of $\lambda$,
+and coassociativity in the free basis $1,U,V,UV$ of each tensor factor, the
+primitive coefficients, up to sign and repetition, are
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}ll@{}}
+\toprule
+$x^3y$ & $x^2y(q+2)$\\
+$y^3(q+1)$ & $(q+1)(q+2)$\\
+$xyE$ & $qE$\\
+$x^2yE$ & $x^2y^2E$\\
+$x^3y(q+2)^2$ & $y(q+1)^2(q+2)$\\
+$x(q+1)^2(q+2)$ & $x^3y^2(q+1)^2$\\
+$x^3y^3(q+1)^2$ & $x^2yF$\\
+$x^3(q+1)(q^2+q+1)$ & $(q+1)H$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The three entries isolated in \eqref{eq:forcing} force
+$q=-2$, $y^3=0$, and $x^3=0$ over a local base.  Conversely, substitution of
+these three relations annihilates every entry in the table.  This proves the
+claimed ``if and only if'' inside this particular ansatz, without suggesting
+that the ansatz classifies all rank-four group schemes.
+
+\end{document}

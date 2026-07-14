@@ -1,0 +1,30 @@
+POST-RUN ENCODING CONTROLS (not part of the six-log canonical audit)
+
+1. Detached disequality control
+
+The direct q(q(T)) != 0 formula was checked without the Hopf core constraints
+on one representative of each of the three base-ring isomorphism classes.
+All three detached formulas were SAT:
+
+DETACHED_DISEQUALITY q00_a0 sat
+DETACHED_DISEQUALITY sf2_g0_a0 sat
+DETACHED_DISEQUALITY sf2_g1_a0 sat
+
+This rules out the failure mode in which the constructed defect expression
+is identically zero before relation stability and coassociativity are imposed.
+
+2. Alternate QF_BV engine control
+
+The same three representatives were rerun through SolverFor("QF_BV"), with
+one thread, a 1024 MiB Z3 ceiling, 60-second H0 timeout, and 300-second D1
+timeout. Every H0 query was SAT and every direct disequality was UNSAT:
+
+q00_a0:    H0 SAT, D1 UNSAT, 11.63 s total, 257.98 MiB peak
+sf2_g0_a0: H0 SAT, D1 UNSAT, 14.77 s total, 459.14 MiB peak
+sf2_g1_a0: H0 SAT, D1 UNSAT, 14.26 s total, 331.23 MiB peak
+
+The alternative engine is a decision-procedure cross-check for the same
+formula, not independent mathematical evidence.
+
+Frozen mathematical driver SHA-256:
+ac70fdf145989723133d4c4efecb740353b0d8530bc9ee060089271de7a3caac

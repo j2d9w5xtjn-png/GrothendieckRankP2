@@ -1,0 +1,21 @@
+path_or_pattern	classification	note
+START_HERE_CURRENT.md	current-status	Supersedes older handoff and live-job claims.
+AUDIT_REPORT_GROTHENDIECK_FINITE_FLAT_GROUP_SCHEMES_2026-07-09.md	audit	Read before older global reports.
+STRUCTURAL_MINIMAL_BASE_ORDER4_2026-07-09.md	proof-reduction	Minimal Gorenstein base and socle-extension framework.
+STRUCTURAL_LENGTH6_QUOTIENTS_F2_2026-07-10.md	classification	Residue-F2 length-six structural input.
+STRUCTURAL_LENGTH7_FRONTIER_F2_2026-07-10.md	frontier-report	Some H1221 counts are stale; START_HERE gives the corrected snapshot.
+H1221_BATCH1_RESULT_2026-07-10.md	exact-computation	Audited completed batch.
+H1221_BATCH2_RESULT_2026-07-10.md	exact-computation	Audited completed batch; establishes 158/190 before batch three.
+H1221_FULL_RESULT_2026-07-10.md	exact-computation	Strict final audit: all 190 rows closed across all 19 liftable classes.
+Q24_H1221_SPRIME_RESULT_2026-07-10.md	exact-computation	Audited characteristic-16 class.
+scripts/*.py	source	Top-level Python source snapshot; individual experimental maturity varies.
+scripts/*.m2	source	Top-level Macaulay2 source snapshot; individual experimental maturity varies.
+scripts/certs_lowmem_pruned_*.m2out	certificate	Verified low-memory M2 certificate artifacts.
+scripts/length6_h1221_type2_orbits_reference_20260710.log	validation	Terminal ring-orbit classification evidence.
+scripts/principal_length6_chain_classification_evidence_map_20260710_final.log	validation	Terminal principal-ring classification evidence.
+scripts/sprime_length6_h1221_q*_20260710.log	exact-computation	All 19 completed classes are included; strict audit closes 190/190 rows.
+scripts/sprime_length6_radext_*_20260710.log	exact-computation	Completed radical-extension stratum.
+scripts/sprime_length6_rankone*_20260710.log	exact-computation	Completed rank-one strata.
+scripts/*incomplete*.log	excluded	Not included as theorem-strength evidence.
+live H1221/stretched/principal logs	excluded	Active at snapshot; no partial result claimed.
+SHA256SUMS	integrity	Hashes every other archived regular file.

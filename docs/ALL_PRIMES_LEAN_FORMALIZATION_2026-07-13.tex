@@ -1,0 +1,406 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[T1]{fontenc}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Z}{\mathbf Z}
+\newcommand{\tensor}{\otimes}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\finrank}{\operatorname{finrank}}
+
+\title{A Mathlib-Style Formalization of the Arbitrary-Prime\\
+Grothendieck Power Counterexample:\\
+Construction, Verified Core, and Exact Proof Boundary}
+\author{Akhil Mathew and Codex}
+\date{July 13, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This note records a new Lean 4 formalization of the arbitrary-prime construction.
+For every prime $p$ it defines the intended Artinian base $R_p$ and the
+coordinate algebra $A_p$, proves in Lean that $A_p$ is finite free of rank
+$p^2$ over $R_p$, proves the defining equations, and proves that the carry
+term which detects the $p^2$-power word is nonzero.  It also develops a
+Mathlib-native convolution API which turns the expected skew-primitive
+coproduct into the desired power-map calculation.
+
+The file contains no \texttt{sorry}, \texttt{admit}, or axiom declaration.
+It does not pretend that the whole arbitrary-prime Hopf calculation has
+already been checked: the odd-prime divided-bridge closure identity and two
+geometric-sum identities are represented by explicit certificate structures.
+Once terms of those structures are constructed, the final theorem gives a
+finite free commutative Hopf algebra of rank $p^2$ whose $p^2$-power map is
+not the unit map.  Thus the formalization separates the fully verified
+commutative-algebra and nonvanishing core from the remaining Hopf-polynomial
+normalization problem.
+\end{abstract}
+
+\tableofcontents
+
+\section{Files and reproducibility}
+
+The main new Lean source is
+\begin{center}
+\texttt{FiniteFlatGroupSchemes/GrothendieckCounterexampleAllPrimes.lean}.
+\end{center}
+It is imported by the project root \texttt{FiniteFlatGroupSchemes.lean}.
+The source uses Lean $4.31.0$ and Mathlib $v4.31.0$.
+
+No second Mathlib checkout was downloaded into Dropbox.  The project entry
+\texttt{.lake} is a symbolic link to
+\begin{center}
+\texttt{\$HOME/.cache/finite-flat-group-schemes/lake}.
+\end{center}
+The final verification command was
+\begin{verbatim}
+lake build
+\end{verbatim}
+and it completed successfully with $8561$ jobs in the already populated
+external cache.  A direct bounded check of the new source also succeeded:
+\begin{verbatim}
+lake env lean \
+  FiniteFlatGroupSchemes/GrothendieckCounterexampleAllPrimes.lean
+\end{verbatim}
+
+The implementation follows the style of the polished rank-four formalization
+shared at
+\begin{center}
+\url{https://gist.github.com/j2d9w5xtjn-png/b1fc94332439e1d43944163e1dae3aef}.
+\end{center}
+In particular, it uses narrow imports, documented definitions, explicit
+Mathlib algebra maps, and a theorem boundary visible in the types.  For
+arbitrary $p$, however, a two-step \texttt{AdjoinRoot} presentation is more
+natural than the four-dimensional custom normal form used when $p=2$.
+
+\section{The uniform mathematical construction}
+
+Fix a prime $p$.  For $1\leq i\leq p-1$ put
+\[
+  w_i=\frac{1}{p}\binom pi\in\Z.
+\]
+It is convenient to set $w_0=0$ and to write
+\[
+  W_c(T)=\sum_{i=0}^{p-1}w_i c^{i-1}T^i,
+\]
+where the $i=0$ summand is zero.  In Lean the natural number coefficient is
+\texttt{dividedChoose p i := p.choose i / p}; the theorem
+\texttt{prime\_mul\_dividedChoose} verifies
+\[
+  p w_i=\binom pi\qquad(0<i<p).
+\]
+
+The base ring is
+\begin{equation}\label{eq:base}
+ R_p=\Z[a,b]/
+ \bigl(a^{p+1},\ b^{2p-1},\ a^p b^{p-1}+p\bigr).
+\end{equation}
+The intended coordinate algebra is
+\begin{equation}\label{eq:A}
+ A_p=R_p[U,V]/(F,G),
+\end{equation}
+where
+\begin{align}
+ G(V)&=V^p-a^pW_b(V),\label{eq:G}\\
+ F(U,V)&=U^p-a b^{p-1}W_a(U)+b^pW_b(V).
+ \label{eq:F}
+\end{align}
+
+Rather than formalize a simultaneous two-variable quotient and then run a
+Gr\"obner-basis argument, the Lean file constructs
+\[
+  B_p=\operatorname{AdjoinRoot}_{R_p}(G),\qquad
+  A_p=\operatorname{AdjoinRoot}_{B_p}(F).
+\]
+Both polynomials are monic of degree $p$.  This presentation makes finite
+freeness a structural consequence of Mathlib's canonical power basis.
+
+\section{The verified base-ring identities}
+
+The variables in $\Z[a,b]$ are implemented as an
+\texttt{MvPolynomial (Fin 2) \(\mathbb Z\)}.  The quotient classes are
+\texttt{a p} and \texttt{b p}.  Lean checks the three defining relations
+directly from membership in \texttt{Ideal.span}.  It also checks that the
+base is nonzero by evaluating $a$ and $b$ at zero in $\Z/p$.
+
+The following consequences are formal theorems:
+\begin{align*}
+ pa&=0,\\
+ pa^p&=0,\\
+ p^2&=0,\\
+ pb^p&=0.
+\end{align*}
+They occur as \texttt{p\_mul\_a}, \texttt{p\_mul\_a\_pow},
+\texttt{p\_squared\_eq\_zero}, and \texttt{p\_mul\_b\_pow}.
+
+The subtle assertion is that one power earlier does not vanish:
+\begin{equation}\label{eq:pbnonzero}
+ p b^{p-1}\neq0\quad\text{in }R_p.
+\end{equation}
+The theorem \texttt{p\_mul\_b\_pred\_ne\_zero} proves
+\eqref{eq:pbnonzero} uniformly in $p$.
+
+\subsection{The coefficient detector}
+
+For a polynomial $q\in\Z[a,b]$, define
+\begin{equation}\label{eq:detector}
+ \ell(q)=
+ [b^{p-1}]q-p[a^pb^{2p-2}]q\in\Z/p^2.
+\end{equation}
+This is \texttt{topCoefficientDetector}.  The proof verifies separately that
+$\ell$ annihilates an arbitrary polynomial multiple of each generator of the
+ideal in \eqref{eq:base}.
+
+For the monomial generators this follows from exponent bounds.  For the
+inhomogeneous generator $h=a^pb^{p-1}+p$, one computes for arbitrary $r$:
+\begin{align*}
+ [b^{p-1}](rh)&=p[b^{p-1}]r,\\
+ [a^pb^{2p-2}](rh)&=[b^{p-1}]r
+   +p[a^pb^{2p-2}]r.
+\end{align*}
+Consequently
+\[
+ \ell(rh)=-p^2[a^pb^{2p-2}]r=0\quad\text{in }\Z/p^2.
+\]
+The finite three-generator span is unpacked with
+\path{Ideal.mem_span_insert} and
+\path{Ideal.mem_span_singleton'}; no polynomial normalization tactic is
+trusted here.  Finally
+\[
+ \ell(pb^{p-1})=p\neq0\quad\text{in }\Z/p^2,
+\]
+where the last inequality is checked using \texttt{ZMod.val}.  Hence
+$pb^{p-1}$ cannot lie in the defining ideal.
+
+\section{Finite freeness and rank}
+
+The helper \texttt{monicPolynomial} constructs a polynomial
+\[
+ X^p+\sum_{i<p}c_iX^i.
+\]
+Theorems \path{monicPolynomial_isMonicOfDegree},
+\path{monicPolynomial_monic}, and
+\path{monicPolynomial_natDegree} prove that it is monic of natural degree
+$p$.  These lemmas are then applied to $G$ and $F$.
+
+Mathlib supplies a power basis for the root of a monic polynomial.  The file
+therefore constructs instances
+\[
+ \operatorname{Module.Free}_{R_p}(B_p),\quad
+ \operatorname{Module.Finite}_{R_p}(B_p),\quad
+ \operatorname{Module.Free}_{B_p}(A_p),\quad
+ \operatorname{Module.Finite}_{B_p}(A_p).
+\]
+Transitivity supplies finite freeness of $A_p$ over $R_p$.  The checked rank
+statements are
+\begin{align*}
+ \finrank_{R_p}B_p&=p,\\
+ \finrank_{B_p}A_p&=p,\\
+ \finrank_{R_p}A_p&=p^2.
+\end{align*}
+The last is the theorem \texttt{finrank\_A}.  Conceptually the basis is
+\begin{equation}\label{eq:basis}
+ \{U^iV^j:0\leq i,j<p\}.
+\end{equation}
+Lean also proves the two root relations \eqref{eq:G} and \eqref{eq:F} as
+\texttt{V\_relation}, \texttt{v\_relation}, and
+\texttt{U\_relation}.
+
+\section{The nonzero carry in the coordinate algebra}
+
+A small general lemma,
+\texttt{scalar\_mul\_adjoinRoot\_pow\_ne\_zero}, says that if $f$ is monic,
+$c\neq0$, and $i<\deg f$, then
+\[
+  c\,\overline X^i\neq0\quad\text{in }\operatorname{AdjoinRoot}(f).
+\]
+Importantly, the coefficient ring need not be a domain.  The proof applies a
+coordinate of the canonical power-basis representation.
+
+Apply this lemma first to $B_p/R_p$ with coefficient $pb^{p-1}$ and basis
+vector $V^{p-1}$, then to $A_p/B_p$ with basis vector $U$.  Together with
+\eqref{eq:pbnonzero}, this gives the fully checked theorem
+\texttt{carry\_ne\_zero}:
+\begin{equation}\label{eq:carry}
+  p b^{p-1}U V^{p-1}\neq0\quad\text{in }A_p.
+\end{equation}
+This is the exact term which should occur as the image of $U$ under the
+$p^2$-power word.
+
+\section{Expected Hopf structure}
+
+Put
+\[
+ L=1+aU,\qquad M=1+bV,\qquad \lambda=LM^{-1}.
+\]
+The nilpotence relations imply that $L$ and $M$ are units.  The expected
+coproduct is
+\begin{align}
+ \Delta(U)&=U\tensor1+\lambda\tensor U,\label{eq:deltaU}\\
+ \Delta(V)&=V\tensor\lambda^{-1}+1\tensor V,\label{eq:deltaV}\\
+ \Delta(\lambda)&=\lambda\tensor\lambda.
+ \label{eq:deltalambda}
+\end{align}
+The counit sends $U,V$ to zero and $\lambda$ to one.
+
+For $p=2$, the existing file
+\texttt{GrothendieckCounterexample.lean} proves closure by explicit
+normalization in a four-dimensional algebra.  For odd $p$, substituting
+\eqref{eq:deltaU}--\eqref{eq:deltaV} into \eqref{eq:F}--\eqref{eq:G}
+requires the divided bridge, or truncated-log, identity from the accompanying
+mathematical construction.  This is the genuinely new polynomial identity;
+it is not a routine consequence of monicity.
+
+\section{The exact Lean proof boundary}
+
+The structure \texttt{HopfPackage p} records concrete data
+\begin{itemize}[leftmargin=2em]
+\item $\lambda$ and $\lambda^{-1}$, together with their inverse and
+      $LM^{-1}$ identities;
+\item an $R_p$-algebra homomorphism
+      $\Delta:A_p\to A_p\tensor_{R_p}A_p$;
+\item a counit and antipode;
+\item coassociativity, the two counit laws, the two antipode laws;
+\item formulas \eqref{eq:deltaU}--\eqref{eq:deltalambda} and their inverse
+      analogues.
+\end{itemize}
+From a term $H:\texttt{HopfPackage p}$, the definitions
+\texttt{H.toBialgebra} and \texttt{H.toHopfAlgebra} construct actual Mathlib
+instances using \texttt{Bialgebra.ofAlgHom} and
+\texttt{HopfAlgebra.ofAlgHom}.  Thus \texttt{HopfPackage} is not an axiom or
+an opaque proposition asserting existence: a future proof must supply every
+map and every law.
+
+The only further arithmetic input is
+\texttt{PowerCertificate p H}, containing the two identities
+\begin{align}
+ \sum_{i=0}^{p^2-1}\lambda^i
+   &=p b^{p-1}V^{p-1},\label{eq:geom1}\\
+ \sum_{i=0}^{p^2-1}\lambda^{-i}
+   &=p b^{p-1}V^{p-1}.
+ \label{eq:geom2}
+\end{align}
+Nonvanishing is no longer a field of this certificate; it is the independent
+theorem \eqref{eq:carry}.
+
+The present formalization therefore has the status summarized below.
+\begin{center}
+\begin{tabular}{@{}p{0.56\textwidth}p{0.29\textwidth}@{}}
+\toprule
+Claim & Lean status\\
+\midrule
+Definition and nontriviality of $R_p$ & checked\\
+Relations $a^{p+1}=0$, $b^{2p-1}=0$, $a^pb^{p-1}+p=0$ & checked\\
+$p^2=0$, $pb^p=0$, and $pb^{p-1}\neq0$ & checked\\
+Definition of $B_p$ and $A_p$ by monic equations & checked\\
+Finite free $A_p/R_p$ of rank $p^2$ & checked\\
+$pb^{p-1}UV^{p-1}\neq0$ & checked\\
+Artinianness of $R_p$ as a typeclass instance & not yet encoded\\
+Closure of the proposed coproduct for arbitrary $p$ & explicit
+  \texttt{HopfPackage} obligation\\
+Geometric identities \eqref{eq:geom1}--\eqref{eq:geom2} & explicit
+  \texttt{PowerCertificate} obligations\\
+Final counterexample theorem & checked conditional on the two certificates\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{The convolution power calculation}
+
+Assume $H:\texttt{HopfPackage p}$.  The file defines the universal point as
+the identity algebra homomorphism in Mathlib's convolution monoid and defines
+\texttt{powerMap p H n} as its $n$-th convolution power.  If
+\[
+ S_n(x)=1+x+\cdots+x^{n-1},
+\]
+then induction from the skew-primitive coproduct gives checked formulas
+\begin{align}
+ [n]^\#(U)&=S_n(\lambda)U,\label{eq:powerU}\\
+ [n]^\#(V)&=V S_n(\lambda^{-1}),\label{eq:powerV}\\
+ [n]^\#(\lambda)&=\lambda^n.
+\end{align}
+These are \texttt{powerMap\_U}, \texttt{powerMap\_v}, and
+\texttt{powerMap\_lambda}.
+
+Given \texttt{PowerCertificate p H}, equation \eqref{eq:powerU} yields
+\[
+ [p^2]^\#(U)=p b^{p-1}U V^{p-1}.
+\]
+By \eqref{eq:carry}, this is nonzero.  Hence the $p^2$-power word is not the
+unit word.  Lean packages this as
+\texttt{powerMap\_p\_squared\_U\_ne\_zero} and finally as
+\texttt{counterexample}:
+\[
+ \finrank_{R_p}A_p=p^2,
+ \qquad [p^2]^\#\neq e^\#.
+\]
+
+\section{Why the certificate boundary is useful}
+
+There are two tempting but unsound shortcuts which the source avoids.
+First, one could simply declare a Hopf algebra instance on $A_p$.  This would
+hide the main odd-prime theorem in typeclass search.  Second, one could use an
+axiom stating that the carry is nonzero.  The coefficient detector and power
+bases now eliminate the second shortcut completely, while
+\texttt{HopfPackage} exposes every field required to eliminate the first.
+
+The boundary also permits the remaining calculation to be developed without
+destabilizing the compiled commutative-algebra core.  A candidate coproduct
+can be built with \texttt{AdjoinRoot.lift}; Lean will reduce its existence to
+the two relation-preservation identities.  After those are proved,
+coassociativity and the counit laws should be discharged by extensionality on
+the two roots $U,V$.  The geometric identities can then be treated as a
+separate truncated-binomial computation.
+
+\section{Recommended next formalization steps}
+
+The shortest route to a fully unconditional theorem appears to be:
+\begin{enumerate}[leftmargin=2em]
+\item Define finite geometric inverses for $L=1+aU$ and $M=1+bV$, proving in
+      Lean that they are units from $a^{p+1}=0$ and $b^{2p-1}=0$.  This makes
+      $\lambda=LM^{-1}$ unconditional.
+\item State the divided-bridge identity as a standalone equality in a
+      bounded polynomial quotient.  Prove it first before constructing any
+      typeclass instances.
+\item Use \texttt{AdjoinRoot.lift} twice to construct the coproduct from the
+      two relation-preservation theorems.
+\item Prove group-likeness of $\lambda$, coassociativity, counit, and antipode
+      identities by \texttt{AdjoinRoot} extensionality.
+\item Prove \eqref{eq:geom1} and derive \eqref{eq:geom2} by the inversion
+      symmetry if possible.
+\item Construct explicit terms of \texttt{HopfPackage p} and
+      \texttt{PowerCertificate p H}; the already compiled theorem
+      \texttt{counterexample} then closes the argument.
+\item Finally provide an \texttt{IsArtinianRing (R p)} instance, most likely
+      by exhibiting $R_p$ as a finite algebra over $\Z/p^2$.
+\end{enumerate}
+
+All computational experiments should remain bounded.  The present proof of
+the top coefficient is symbolic and uses no Gr\"obner basis; compilation took
+seconds and required no large-memory search.
+
+\section{Conclusion}
+
+The arbitrary-prime construction now has a substantial Mathlib-style formal
+core.  For every prime $p$, Lean verifies the exact coordinate algebra, its
+iterated power basis, finite freeness and rank $p^2$, the defining equations,
+and the nonzero carry which witnesses failure of the $p^2$-power word.  The
+convolution calculation from a skew-primitive Hopf structure to the final
+counterexample is also verified.
+
+What remains is sharply localized: the odd-prime divided-bridge closure
+identity, the associated Hopf maps and laws, the two geometric sums, and an
+Artinian typeclass instance for the base.  These are explicit theorem
+obligations, not assumptions hidden behind \texttt{sorry} or an axiom.
+
+\end{document}

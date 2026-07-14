@@ -1,0 +1,11 @@
+run_id	kind	location_or_job	source_hash	status	elapsed_or_freeze	maxrss	classification	notes
+local1g_20260710	local_python_z3	results/monogenic_direct4/local1g_20260710	ac70fdf145989723133d4c4efecb740353b0d8530bc9ee060089271de7a3caac	exit_0	88.714s	497.91MiB	successful_exact_negative	six H0 SAT and direct-[4] disequality UNSAT
+direct4_qfbv_controls	local_python_z3	not_banked_as_canonical	ac70fdf145989723133d4c4efecb740353b0d8530bc9ee060089271de7a3caac	exit_0	11.63-14.77s	459.14MiB max	cross_tactic_check	three isomorphism-class representatives
+direct4_detached_controls	local_python_z3	not_banked_as_canonical	ac70fdf145989723133d4c4efecb740353b0d8530bc9ee060089271de7a3caac	exit_0	under 1 minute	under 1GiB	encoding_control	direct disequality SAT without Hopf core
+rt_hf_final_audit	local_python	03_completed_evidence/model_audits/FROZEN_RT_HF_AUDIT_2026-07-10.txt	0a3c77d52148ec18064de2c63e6ae19f66e1c5061fe83cbd7ee3582a2ea02324	exit_0	about 1 minute	not recorded	successful_finite_screen	1608 tuples and 32 monogenic residues
+h1221_complete	local_python_z3	03_completed_evidence/h1221	see per-log/source manifests	exit_0	15715.66s summed	1645.00MiB	successful_exact_negative	510 audited terminal processes
+stretched_ordinary_and_retries	local_python_z3	04_open_and_new_frontier/stretched	see reports	exit_0	25925.15s summed	1593.75MiB	inconclusive_on_Sprime	83 closed 25 vacuous 2 timeout; two now bypassed by direct4
+principal_frozen	local_python_z3	04_open_and_new_frontier/principal_partial	49e1f74e11e51f8678f7f14d93db82464c2630f979c124b46d62a41aa83caf52	active_at_freeze	2026-07-10T16:50Z	5842.03MiB	incomplete	103 terminal logs at freeze; no SAT
+inherited_s5t4gen	local_M2	PID 91870	818537309e6f340355e154eda068485722fc9332bcae1614bd5617067a7696b5	active_at_freeze	2026-07-10T16:52:34Z	26427328KiB	inconclusive	DegreeLimit 5 in progress
+inherited_fp3gen	local_M2	PID 91872	93dbaae0746d1aaf9426f8c5cb580b380bc8002858938b61cfba65ac53749e27	active_at_freeze	2026-07-10T16:52:34Z	8059328KiB	inconclusive	FatPoint3 t4 module GB in progress
+slurm_none	Slurm	none	none	not_submitted	none	none	no_job	No Slurm job ID exists for this session

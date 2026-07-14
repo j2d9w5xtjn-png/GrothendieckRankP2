@@ -1,0 +1,453 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+
+\newcommand{\Z}{\mathbf Z}
+\newcommand{\F}{\mathbf F}
+\newcommand{\ot}{\otimes}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\add}{\mathrm{add}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{A Three-Relation Rank-Four Group Scheme\\Not Killed by Four}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We give a self-contained rank-four Hopf algebra whose fourth-power word is
+not the unit word.  Its base has two generators and only three defining
+relations.  These are exactly the two rank-two cancellation relations and
+the one mixed relation used by the construction; no Artinian truncation is
+added.  Conceptually, the group scheme is a closed subgroup of an elementary
+semidirect product \(\mathbb G_a^2\rtimes\mathbb G_m\).  We also prove a
+precise, limited minimality statement for this two-parameter recipe.
+\end{abstract}
+
+\section{The construction}
+
+Let
+\begin{equation}\label{eq:base}
+ C=\Z[r,s]/(r^3+2,\ s^3+2,\ rs^2).
+\end{equation}
+Over \(C\), define
+\begin{equation}\label{eq:A}
+ A=C[U,V]/(U^2-r^2U+rsV,\ V^2-s^2V),
+ \qquad W=UV,
+\end{equation}
+and put
+\begin{equation}\label{eq:lambda}
+ \lambda=(1+rU)(1+sV).
+\end{equation}
+
+\begin{theorem}\label{thm:main}
+The algebra \(A\) is free of rank four over \(C\), on
+\[
+ 1,\qquad U,\qquad V,\qquad W=UV.
+\]
+It is a Hopf algebra with counit \(\eps(U)=\eps(V)=0\) and coproduct
+\begin{equation}\label{eq:Delta}
+ \Delta(U)=U\ot1+\lambda\ot U,
+ \qquad
+ \Delta(V)=V\ot\lambda+1\ot V.
+\end{equation}
+If \(G=\Spec A\), then
+\begin{equation}\label{eq:powers}
+ [4]^\#(U)=2sW\ne0,
+ \qquad
+ [4]^\#(V)=[4]^\#(W)=0,
+ \qquad
+ [8]=e.
+\end{equation}
+In particular, \(G\) is a finite locally free group scheme of rank four
+which is not killed by four.
+\end{theorem}
+
+Here \([n]\) is the power word \(g\mapsto g^n\).  The notation
+\([n]^\#\) denotes its comorphism on \(A\).  We do not need \([n]\) to be a
+group homomorphism.
+
+\section{Where the three relations come from}
+
+There is one elementary rank-two calculation behind the example.  Suppose
+\(T^2=aT\), put \(g=1+bT\), and try
+\[
+ \Delta(T)=T\ot1+g\ot T.
+\]
+If \(T_*=T_1+g_1T_2\), then
+\begin{equation}\label{eq:rank2}
+ T_*^2-aT_*
+ =g_1\bigl(2T_1+a(g_1-1)\bigr)T_2
+ =g_1(2+ab)T_1T_2.
+\end{equation}
+Thus the single equation \(ab=-2\) cancels the cross-term and produces the
+usual rank-two Hopf pattern.  Indeed,
+\(\Delta(g)=g\ot g\), \(g^2=1\), and one may take \(S(T)=T\).
+
+For the rank-four example, use the two pairs
+\[
+ (a,b)=(r^2,r),
+ \qquad
+ (a,b)=(s^2,s).
+\]
+They require
+\[
+ r^3=-2,\qquad s^3=-2,
+\]
+which are the first two relations in \eqref{eq:base}.  The new feature is
+the correction term \(-rsV\) in
+\[
+ U^2=r^2U-rsV.
+\]
+It joins the two rank-two patterns.
+
+One can see the entire bookkeeping in the following five-line table.  Put
+\[
+ \alpha=r^2,\qquad \beta=-rs,\qquad \gamma=s^2.
+\]
+The bridge construction asks for
+\begin{equation}\label{eq:five-checks}
+\begin{array}{c|c}
+\text{compatibility identity}&\text{reason in \(C\)}\\ \hline
+\alpha r=-2&r^3=-2\\
+\gamma s=-2&s^3=-2\\
+\gamma r=0&rs^2=0\\
+\beta s=0&-rs^2=0\\
+\beta r=-\alpha s&-r^2s=-r^2s.
+\end{array}
+\end{equation}
+So the two cubic relations supply the two diagonal cancellations, while
+the single relation \(rs^2=0\) kills both unwanted mixed terms.  The bridge
+balance is automatic because of the choice \(\beta=-rs\).  This is the
+conceptual reason that only three base relations appear.
+
+\section{The one nonzero base element we need}
+
+The relations in \(C\) immediately imply
+\begin{equation}\label{eq:base-consequences}
+ 2r=0,\qquad 2s^2=0,\qquad 4=0.
+\end{equation}
+Indeed,
+\[
+ 2r=r(s^3+2)-s(rs^2)=0,
+\]
+and similarly
+\[
+ 2s^2=s^2(r^3+2)-r^2(rs^2)=0.
+\]
+Multiplying \(2r=0\) by \(r^2\) and using \(r^3=-2\) gives \(4=0\).
+
+What matters is that \(2s\) does \emph{not} vanish.  Here is a short proof
+which computes only what we need.  Set
+\[
+ C_1=\Z[r,s]/(r^3+2,\ s^3+2).
+\]
+The two cubics are monic, so \(C_1\) is free over \(\Z\) on
+\[
+ r^is^j,\qquad 0\le i,j\le2.
+\]
+Define an additive map
+\[
+ \ell:C_1\longrightarrow\Z/4
+\]
+by taking the coefficient of the basis element \(s\), modulo \(4\).
+We claim that \(\ell\) kills the ideal \((rs^2)\).  Indeed,
+\[
+ (r^is^j)rs^2=r^{i+1}s^{j+2}.
+\]
+After using \(r^3=s^3=-2\), this can have an \(s\)-term only when
+\(i=j=2\); in that case
+\[
+ r^3s^4=(-2)(-2s)=4s.
+\]
+Thus the coefficient of \(s\) is always divisible by \(4\).  The map
+\(\ell\) therefore descends to an additive map
+\[
+ \bar\ell:C\longrightarrow\Z/4
+\]
+and \(\bar\ell(2s)=2\).  In particular,
+\begin{equation}\label{eq:2s-nonzero}
+ 2s\ne0\quad\text{in }C.
+\end{equation}
+This is the only structural fact about the base needed below.
+
+\section{Why this is a Hopf algebra}
+
+\subsection*{Freeness and the basic identities}
+
+The relation \(V^2=s^2V\) is monic in \(V\), and after adjoining \(V\), the
+relation \(U^2=r^2U-rsV\) is monic in \(U\).  Hence
+\[
+ A=C\{1,U,V,W\}
+\]
+is free of rank four.
+
+The multiplication rules needed below are especially sparse:
+\begin{equation}\label{eq:W-rules}
+ UW=r^2W,\qquad VW=s^2W,\qquad W^2=0.
+\end{equation}
+Put
+\[
+ L=1+rU,\qquad M=1+sV,\qquad
+ \theta=\lambda-1=rU+sV+rsW.
+\]
+Using \eqref{eq:base-consequences} and the two quadrics gives
+\begin{equation}\label{eq:lambda-identities}
+ M^2=1,\qquad
+ L^2=1+2sV,\qquad
+ \lambda^2=1+2sV,
+\end{equation}
+and
+\begin{equation}\label{eq:theta-identities}
+ 2\theta=2sV,\qquad
+ \theta^2=0,\qquad
+ \lambda^{-1}=1-\theta.
+\end{equation}
+Thus \(\lambda\) is a unit.
+
+\subsection*{The ambient group}
+
+The coproduct formulas in \eqref{eq:Delta} are not isolated guesses.  Let
+\[
+ H=\Spec B,\qquad B=C[u,v,z,z^{-1}],
+\]
+where \(H\) has multiplication
+\begin{equation}\label{eq:ambient-law}
+ (u,v,z)(u',v',z')
+ =\bigl(u+zu',\ vz'+v',\ zz'\bigr).
+\end{equation}
+This law is simply block-diagonal matrix multiplication under
+\[
+ (u,v,z)\longmapsto
+ \begin{pmatrix}z&u\\0&1\end{pmatrix}
+ \oplus
+ \begin{pmatrix}1&v\\0&z\end{pmatrix}.
+\]
+In particular, associativity and inverses are automatic.
+Equivalently, the coordinate Hopf algebra of \(H\) has
+\begin{align*}
+ \Delta_H(u)&=u\ot1+z\ot u,\\
+ \Delta_H(v)&=v\ot z+1\ot v,\\
+ \Delta_H(z)&=z\ot z.
+\end{align*}
+This is a familiar semidirect product.  Indeed, after replacing \(v\) by
+\(w=v/z\), the law becomes
+\[
+ (u,w,z)(u',w',z')
+ =\bigl(u+zu',\ w+z^{-1}w',\ zz'\bigr);
+\]
+thus \(\mathbb G_m\) acts on the two additive coordinates with weights
+\(1\) and \(-1\).
+
+Because \(\lambda\) is a unit, the homomorphism
+\[
+ B\longrightarrow A,\qquad
+ u\longmapsto U,\quad v\longmapsto V,\quad z\longmapsto\lambda
+\]
+realizes \(G=\Spec A\) as the closed subscheme of \(H\) defined by
+\begin{equation}\label{eq:ambient-ideal}
+ u^2-r^2u+rsv=0,\qquad
+ v^2-s^2v=0,\qquad
+ z=(1+ru)(1+sv).
+\end{equation}
+Therefore \(A\) will be a Hopf algebra once we show that this closed
+subscheme contains the identity and is closed under the ambient
+multiplication and inverse.  Associativity will then be inherited from
+\(H\).  This is the conceptual point of the construction.
+
+\subsection*{Closure under multiplication}
+
+Write \(U_i,V_i,\lambda_i\) for the elements in the two tensor factors, and
+let
+\[
+ U_*=U_1+\lambda_1U_2,
+ \qquad
+ V_*=V_1\lambda_2+V_2.
+\]
+By \eqref{eq:ambient-law}, these are exactly the \(u\)- and \(v\)-coordinates
+of the product of two points of \(G\).  Four consequences of the three base
+relations are
+\begin{align}
+ s^2(\lambda-1)&=-2V,\label{eq:aux1}\\
+ rs(\lambda-1)&=r^2sU,\label{eq:aux2}\\
+ rs(\lambda^2-1)&=0,\label{eq:aux3}\\
+ 2\lambda U+r^2(\lambda^2-\lambda)+r^2sV&=0.\label{eq:aux4}
+\end{align}
+They make the two quadratic checks short:
+\begin{align*}
+ V_*^2-s^2V_*
+ &=V_1\lambda_2\bigl(s^2(\lambda_2-1)+2V_2\bigr)=0,
+\\
+ U_*^2-r^2U_*+rsV_*
+ &=-rsV_1(1-\lambda_2)
+   +\bigl(2\lambda_1U_1+r^2(\lambda_1^2-\lambda_1)\bigr)U_2\\
+ &\hspace{2em}-rs(\lambda_1^2-1)V_2\\
+ &=\bigl(r^2sV_1+2\lambda_1U_1
+          +r^2(\lambda_1^2-\lambda_1)\bigr)U_2=0.
+\end{align*}
+
+It remains to check the graph equation in \eqref{eq:ambient-ideal}.  Set
+\[
+ E=rsV_1U_2.
+\]
+The factorization has a simple source.  If
+\[
+ L_*=1+rU_*,\qquad M_*=1+sV_*,
+\]
+then the ambient product formulas give
+\[
+ L_*=L_1(1+rM_1U_2),\qquad
+ M_*=(1+sV_1L_2)M_2.
+\]
+Expanding only the two middle factors now gives
+\begin{equation}\label{eq:group-like-factor}
+ (1+rU_*)(1+sV_*)-\lambda_1\lambda_2
+ =L_1M_2E\bigl(2+rU_2+sV_1+E\bigr).
+\end{equation}
+Every term on the right vanishes.  Indeed,
+\[
+ 2E=E(sV_1)=E^2=0,
+\]
+and
+\[
+ E(rU_2)
+ =r^2sV_1(r^2U_2-rsV_2)=0
+\]
+by \(2r=2s^2=0\).  Hence
+\[
+ \Delta(\lambda)=\lambda\ot\lambda.
+\]
+Thus the product again satisfies both quadrics and the graph equation.
+The identity \((0,0,1)\) plainly lies in \(G\), so ambient multiplication
+and identity restrict to \(G\).
+
+\subsection*{Closure under inverses}
+
+The inverse in the ambient group is
+\[
+ (u,v,z)^{-1}=(-z^{-1}u,\,-vz^{-1},\,z^{-1}).
+\]
+Restricting this formula to \(G\) suggests
+\begin{equation}\label{eq:antipode}
+ S(U)=U-sW+r^2sV,\qquad
+ S(V)=V+rW.
+\end{equation}
+These formulas are simply
+\[
+ S(U)=-\lambda^{-1}U,\qquad
+ S(V)=-V\lambda^{-1}.
+\]
+Using \eqref{eq:W-rules}, direct substitution gives
+\[
+ S(U)^2-r^2S(U)+rsS(V)=0,\qquad
+ S(V)^2-s^2S(V)=0,\qquad
+ S(\lambda)=\lambda^{-1}.
+\]
+Thus \(S\) is a well-defined algebra map.  The convolution identities
+follow at once from \eqref{eq:Delta}; for example,
+\[
+ U+\lambda S(U)=0,\qquad
+ S(U)+S(\lambda)U=0,
+\]
+and similarly for \(V\).  Hence the ambient inverse also restricts to
+\(G\).
+
+We have proved that \(G\) is a closed subgroup scheme of \(H\).
+Equivalently, the ideal in \eqref{eq:ambient-ideal} is a Hopf ideal in
+\(B\), and its quotient is \(A\).  All Hopf axioms for \(A\), including
+coassociativity, are therefore inherited from the elementary ambient group.
+
+\section{The fourth-power carry}
+
+We use one elementary norm observation.  If
+\[
+ \Delta(z)=z\ot1+l\ot z
+\]
+with \(l\) group-like, then repeated multiplication gives
+\[
+ [n]^\#(z)=N_n(l)z,
+ \qquad
+ N_n(l)=1+l+\cdots+l^{n-1}.
+\]
+For a right skew-primitive element, the formula is
+\([n]^\#(z)=zN_n(l)\).
+
+Since \(\lambda=1+\theta\) and \(\theta^2=0\),
+\[
+ N_4(\lambda)
+ =1+\lambda+\lambda^2+\lambda^3
+ =4+6\theta
+ =2\theta
+ =2sV.
+\]
+Therefore
+\[
+ [4]^\#(U)=N_4(\lambda)U=2sUV=2sW,
+\]
+which is nonzero by \eqref{eq:2s-nonzero} and freeness of \(A\).  On the
+other hand,
+\[
+ [4]^\#(V)=VN_4(\lambda)
+ =2sV^2=2s^3V=-4V=0.
+\]
+Since the comorphism of the power word is an algebra map,
+\([4]^\#(W)=0\) as well.
+
+Finally, \(\lambda^4=1\), so
+\[
+ N_8(\lambda)
+ =N_4(\lambda)(1+\lambda^4)
+ =2N_4(\lambda)=0.
+\]
+Both generators \(U,V\) go to zero under \([8]^\#\), and hence
+\([8]=e\).  This proves Theorem~\ref{thm:main}.
+
+\section{In what sense three relations are minimal}
+
+The number of equations in an arbitrary ring presentation is not an
+intrinsic invariant, so the appropriate claim is modest: the particular
+three-relation compatibility locus used above cannot itself be defined
+inside \(\Spec\Z[r,s]\) by fewer equations.
+
+Let
+\[
+ I=(r^3+2,\ s^3+2,\ rs^2)\subset\Z[r,s],
+ \qquad
+ \mathfrak m=(2,r,s).
+\]
+We have already seen that \(2r\in I\), and it follows that
+\[
+ 4\in I,\qquad r^4\in I,\qquad s^6\in I.
+\]
+Thus \(\sqrt I=\mathfrak m\).  Since \(\mathfrak m\) has height three,
+Krull's height theorem says that \(I\) cannot be generated by fewer than
+three elements.  More generally, if \(J\supset I\) is any proper ideal,
+then \(\sqrt J=\mathfrak m\), so \(J\) also needs at least three generators.
+Thus this particular compatibility locus cannot be cut out inside
+\(\Spec\Z[r,s]\) by fewer than three equations.
+
+This is not a claim about every conceivable construction of a rank-four
+Hopf algebra.  It says exactly what is useful here: after fixing the two
+parameters \(r,s\) and the coefficients
+\[
+ \alpha=r^2,\qquad \beta=-rs,\qquad \gamma=s^2,
+\]
+no fourth relation, nilpotence cutoff, or Artinian truncation is being
+smuggled into the proof.  The three base relations themselves
+happen to force the base to be Artinian, but that is a consequence rather
+than an input.
+
+\end{document}

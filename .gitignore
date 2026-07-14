@@ -1,0 +1,33 @@
+# Lean build products
+.lake/
+*.olean
+*.ilean
+
+# LaTeX intermediates and generated output
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.bbl
+*.blg
+
+# Python caches and local state
+__pycache__/
+*.pyc
+*.lock
+
+# Computation output and scratch
+results/
+build/
+tmp/
+midway/
+*.err
+*.stdout.log
+*.stderr.log
+
+# Archives
+*.zip
+*.tar.gz

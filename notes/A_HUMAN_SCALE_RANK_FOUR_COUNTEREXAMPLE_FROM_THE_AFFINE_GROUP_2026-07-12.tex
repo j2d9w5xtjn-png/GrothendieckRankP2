@@ -1,0 +1,1746 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{array,booktabs}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{xurl}
+\usepackage[colorlinks=true,
+            linkcolor=blue!55!black,
+            citecolor=blue!55!black,
+            urlcolor=blue!55!black]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Z}{\mathbf Z}
+\newcommand{\F}{\mathbf F}
+\newcommand{\Ga}{\mathbb G_a}
+\newcommand{\Gm}{\mathbb G_m}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Soc}{\operatorname{Soc}}
+\newcommand{\gr}{\operatorname{gr}}
+\newcommand{\length}{\operatorname{length}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\m}{\mathfrak m}
+\newcommand{\ot}{\otimes}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\unit}{\mathrm e}
+
+\title[A human-scale rank-four counterexample]
+      {A Human-Scale Rank-Four Counterexample\\
+       from the Affine Group}
+\author{}
+\date{}
+\subjclass[2020]{14L15, 16T05}
+\keywords{finite flat group scheme, skew primitive, affine group,
+power word, square-zero deformation}
+
+\begin{document}
+
+\begin{abstract}
+We give a deliberately mnemonic presentation of a finite locally free
+group scheme of rank four which is not killed by four.  Its base is
+\[
+ R=\Z[a,b]/(a^3,b^3,a^2b+2),
+\]
+and its coordinate algebra is
+\[
+ A=R[U,V]/(U^2-abU+b^2V,\ V^2-a^2V).
+\]
+Put
+\[
+ \lambda=(1+aU)(1+bV).
+\]
+The coproduct formulas
+\[
+ \Delta(U)=U\ot1+\lambda\ot U,\qquad
+ \Delta(V)=V\ot\lambda+1\ot V
+\]
+say geometrically that \((U,V,\lambda)\) defines a closed subgroup of
+the standard weight-\((1,-1)\) semidirect product
+\(\Ga^2\rtimes\Gm\).  In fact this subgroup assertion has only one
+nonformal component.  If the bridge \(b^2V\) is replaced by \(tV\), with
+\(t\in(b^2)\), the complete multiplication-defect vector is
+\[
+ \bigl(a(b^2-t)V_1U_2,0,0\bigr).
+\]
+Thus \(t=b^2\) kills the only curvature tautologically; all group-law
+identities are inherited from the ambient semidirect product.  Modulo the
+square-zero ideal \(Q=(b^2)\), the group is the exact matched product of
+two rank-two affine subgroups.  Inside the fixed smooth ambient group,
+its naive coefficientwise lift has the single normal curvature
+\(ab^2V_1U_2\).  The counterexample is obtained by bending just one
+defining hypersurface by \(b^2V\); its normal coboundary cancels that
+curvature exactly.
+Writing \(\lambda=1+\theta\), one finds
+\[
+ \theta^2=0,\qquad 2\theta=2bV.
+\]
+Ordinary matrix powering therefore gives
+\[
+ [4]^\#(U)=2bUV\ne0,\qquad [4]^\#(V)=0,\qquad [8]=\unit.
+\]
+The nonzero class is transparent from
+\[
+ R_{\mathrm{add}}\simeq
+ (\Z/4)\{1,b\}\oplus
+ (\Z/2)\{a,a^2,ab,b^2,ab^2\}.
+\]
+The same presentation makes the deformation mechanism visible through
+the square-zero chain
+\[
+ b^2\longmapsto ab^2\longmapsto a^2b^2=-2b\ne0.
+\]
+We first illustrate the mechanism through three elementary deformations:
+an affine-line graph, an infinitesimal Heisenberg curvature, and a
+characteristic-two finite bridge with one closure defect.
+We also explain why an honest product or semidirect product of familiar
+smaller group schemes cannot furnish a simpler counterexample.
+\end{abstract}
+
+\maketitle
+
+\section{The example}
+
+The analogue of Lagrange's theorem for a finite locally free group scheme
+\(G/S\) of rank \(n\) asks whether the power word
+\[
+ [n]\colon G\longrightarrow G,\qquad g\longmapsto g^n,
+\]
+is the constant unit word.  The question is recorded in SGA~3; see
+\cite[Exp.~VIII, Rem.~7.3.1]{SGA3II}.  It is true over a field and over a
+reduced base, and Deligne proved it for commutative finite locally free
+group schemes over every base; see \cite[\S1]{OortTate}.  Thus a
+counterexample must use both a nonreduced base and a noncommutative group
+law.
+
+Here is the construction in full.
+
+\begin{theorem}\label{thm:main}
+Let
+\begin{equation}\label{eq:R}
+ R=\Z[a,b]/(a^3,b^3,a^2b+2)
+\end{equation}
+and
+\begin{equation}\label{eq:A}
+ A=R[U,V]/(U^2-abU+b^2V,\ V^2-a^2V).
+\end{equation}
+Put \(W=UV\) and
+\begin{equation}\label{eq:lambda}
+ \lambda=(1+aU)(1+bV).
+\end{equation}
+Then:
+\begin{enumerate}
+\item \(R\) is a local Artin complete intersection of length nine and
+characteristic four, with
+\[
+ \Soc(R)=\F_2(2b).
+\]
+\item \(A\) is free of rank four over \(R\), on
+\[
+ 1,\qquad U,\qquad V,\qquad W.
+\]
+\item There is a Hopf algebra structure on \(A\) with
+\(\eps(U)=\eps(V)=0\) and
+\begin{equation}\label{eq:Delta}
+ \Delta(U)=U\ot1+\lambda\ot U,\qquad
+ \Delta(V)=V\ot\lambda+1\ot V.
+\end{equation}
+\item If \(G=\Spec A\), then
+\begin{equation}\label{eq:powers}
+ [4]^\#(U)=2bW\ne0,\qquad
+ [4]^\#(V)=0,\qquad
+ [8]=\unit.
+\end{equation}
+In particular, the rank-four group scheme \(G\) is not killed by four.
+\item Its closed fiber is \(\alpha _2\times\alpha _2\), but \(G\) itself
+is noncommutative.
+\end{enumerate}
+\end{theorem}
+
+The point of this note is not merely that the formulas are short.  We will
+derive every term in them from one geometric idea.
+
+The reader interested only in the shortest Hopf-algebra verification can
+read Section~\ref{sec:design}, Subsection~\ref{subsec:one-curvature}, and
+Section~\ref{sec:power}: ambient multiplication leaves a single curvature
+coefficient, which the bridge kills tautologically, and one matrix power
+supplies inverses.
+The intervening sections explain why that coefficient and that bridge are
+forced.
+
+\section{The affine-group design principle}
+\label{sec:design}
+
+Let \(M=\Spec B\) be an affine monoid scheme.  A group-like function
+\(l\in B\) is exactly a multiplicative character:
+\[
+ \Delta(l)=l\ot l,\quad\eps(l)=1
+ \qquad\Longleftrightarrow\qquad
+ l\colon M\longrightarrow\mathbb A^1_{\mathrm{mult}}.
+\]
+If \(M\) is a group scheme, \(l\) is invertible and this is a homomorphism
+\(M\to\Gm\).
+
+Suppose
+\[
+ \Delta(x)=x\ot1+l\ot x.
+\]
+On points this says
+\[
+ x(gh)=x(g)+l(g)x(h).
+\]
+Thus \(x\) is not usually a homomorphism to \(\Ga\); rather, the pair
+\((x,l)\) is a homomorphism to the affine group
+\[
+ \operatorname{Aff}_1=\Ga\rtimes\Gm,\qquad
+ (u,z)(u',z')=(u+zu',zz').
+\]
+Equivalently,
+\[
+ g\longmapsto
+ \begin{pmatrix}l(g)&x(g)\\0&1\end{pmatrix}
+\]
+is a two-dimensional representation.  The right skew-primitive formula
+\[
+ \Delta(y)=y\ot l+1\ot y
+\]
+has the analogous lower-triangular interpretation.
+
+It is convenient to remember both coordinates simultaneously.  Let
+\begin{equation}\label{eq:H-law}
+ H=\Ga^2\rtimes\Gm,\qquad
+ (u,v,z)(u',v',z')
+ =(u+zu',\,vz'+v',\,zz').
+\end{equation}
+This is the fiber product over \(\Gm\) of an upper and a lower affine
+group.  It has the faithful block-matrix representation
+\begin{equation}\label{eq:block-matrix}
+ (u,v,z)\longmapsto
+ \begin{pmatrix}z&u\\0&1\end{pmatrix}
+ \oplus
+ \begin{pmatrix}z&0\\v&1\end{pmatrix}.
+\end{equation}
+It is also literally the usual semidirect product for a
+\(\Gm\)-action on \(\Ga^2\).  Put
+\[
+ w=z^{-1}v.
+\]
+In the coordinates \((u,w,z)\), the law becomes
+\begin{equation}\label{eq:standard-semidirect}
+ (u,w,z)(u',w',z')
+ =
+ (u+zu',\,w+z^{-1}w',\,zz').
+\end{equation}
+Thus
+\[
+ H\simeq\Ga^2\rtimes\Gm,
+ \qquad
+ z\cdot(u,w)=(zu,z^{-1}w).
+\]
+One may represent this standard semidirect product by
+\[
+ (u,w,z)\longmapsto
+ \begin{pmatrix}
+  z&0&u\\
+  0&z^{-1}&w\\
+  0&0&1
+ \end{pmatrix}.
+\]
+The right-skew coordinate \(v\) is simply the denominator-free coordinate
+\(v=zw\).
+
+Matrix powering gives the central formula.  If \(l\) is group-like and
+\(x\) is left \(l\)-skew primitive, then
+\begin{equation}\label{eq:norm}
+ [n]^\#(x)=N_n(l)x,\qquad
+ N_n(T)=1+T+\cdots+T^{n-1}.
+\end{equation}
+For a right skew primitive \(y\), one has
+\([n]^\#(y)=yN_n(l)\).  Indeed,
+\[
+ (u,z)^n=(N_n(z)u,z^n)
+\]
+in \(\operatorname{Aff}_1\).
+
+Now suppose \(4=0\), \(l=1+\theta\), and \(\theta^2=0\).  Then
+\begin{equation}\label{eq:carry}
+ N_4(l)=2\theta,\qquad l^4=1,\qquad N_8(l)=0.
+\end{equation}
+Consequently a rank-four counterexample will follow if we can make
+\[
+ l\text{ group-like},\qquad
+ x\text{ left }l\text{-skew primitive},\qquad
+ 2\theta x\ne0.
+\]
+The second coordinate in Theorem~\ref{thm:main} is the small amount of
+extra memory needed to make a finite rank-four locus in \(H\) stable under
+multiplication.
+
+\section{Three toy deformations}
+\label{sec:toys}
+
+Before returning to the counterexample, we isolate its three basic ideas
+in examples which require almost no machinery.  The first explains why
+the affine group is the natural ambient group.  The second explains
+curvature and coboundaries.  The third is a small finite flat bridge
+construction in which the entire subgroup check has one component.
+
+\subsection{The additive line bending toward the multiplicative line}
+
+Let \(S\) be a ring and let \(\varepsilon\in S\) satisfy
+\(\varepsilon^2=0\).  On the affine line define
+\begin{equation}\label{eq:toy-affine-law}
+ x\star y=x+y+\varepsilon xy.
+\end{equation}
+This law is best understood without checking associativity directly.
+In the affine group
+\[
+ \operatorname{Aff}_1(S)
+ =\{(u,z):z\in S^\times\},
+ \qquad
+ (u,z)(u',z')=(u+zu',zz'),
+\]
+consider the graph
+\begin{equation}\label{eq:toy-affine-graph}
+ j(x)=(x,1+\varepsilon x).
+\end{equation}
+One calculation gives
+\[
+ j(x)j(y)
+ =
+ \bigl(x+y+\varepsilon xy,\,
+       (1+\varepsilon x)(1+\varepsilon y)\bigr)
+ =
+ j(x\star y).
+\]
+Thus \eqref{eq:toy-affine-law} is associative because it is the
+restriction of an already associative multiplication.  Its identity is
+\(0\), and
+\[
+ x^{-1}=-x+\varepsilon x^2.
+\]
+
+On coordinate rings this says
+\[
+ \Delta(x)
+ =x\ot1+1\ot x+\varepsilon x\ot x
+ =x\ot1+(1+\varepsilon x)\ot x,
+\]
+while \(1+\varepsilon x\) is group-like.  This is the simplest example
+of a skew-primitive coordinate: the apparently deformed addition law is
+just a subgroup graph inside an affine group.
+
+There is also a finite version.  Suppose \(S\) has characteristic two.
+Then the equation \(x^2=0\) is preserved, since in the tensor square
+\[
+ \Delta(x)^2
+ =x^2\ot1+1\ot x^2+\varepsilon^2x^2\ot x^2=0.
+\]
+Consequently
+\[
+ S[x]/(x^2)
+\]
+with the displayed coproduct is a finite locally free group scheme of
+rank two, deforming the usual infinitesimal additive group.  It is still
+killed by two because
+\[
+ [2]^\#(x)=2x+\varepsilon x^2=0.
+\]
+
+The general rank-two building block is almost as short.  Impose
+\[
+ x^2=cx,\qquad \ell=1+dx,
+\]
+and use \(x_*=x_1+\ell_1x_2\).  Reduction by the two quadratic
+relations gives
+\begin{equation}\label{eq:toy-rank-two-cancellation}
+ x_*^2-cx_*
+ =\ell_1(2+cd)x_1x_2,
+ \qquad
+ 1+dx_*=(1+dx_1)(1+dx_2).
+\end{equation}
+Thus the single scalar equation \(cd=-2\) makes this a rank-two subgroup
+of \(\operatorname{Aff}_1\); it also gives
+\(\ell^2=1\) and \(x\star x=(2+cd)x=0\).  This is the elementary rank-two cancellation
+used twice in the main construction, and is a convenient special case
+of the Tate--Oort picture \cite{OortTate}.
+
+There is a useful elementary deformation space hidden here.  Over a
+field \(k\) of characteristic two, the parameter equation becomes
+\[
+ k[c,d]/(cd),
+\]
+the union of two lines crossing at the origin.  At the origin the group
+is
+\[
+ k[x]/(x^2),\qquad \Delta(x)=x\ot1+1\ot x.
+\]
+Along the \(c\)-axis the equation of the finite scheme deforms while the
+coproduct stays primitive; along the \(d\)-axis the scheme \(x^2=0\)
+stays fixed while the coproduct deforms.  Over the dual numbers,
+\[
+ c=\alpha\varepsilon,\qquad d=\beta\varepsilon
+\]
+may be chosen independently because \(\varepsilon^2=0\).  Over
+\(k[\varepsilon]/(\varepsilon^3)\), however, the first obstruction is
+\[
+ cd=\alpha\beta\varepsilon^2.
+\]
+Thus the two directions coexist to first order but obstruct one another
+at second order.  The rank-four bridge will provide a new normal
+coordinate in which precisely such a mixed obstruction can be canceled.
+
+This toy already contains the group-like character, the skew-primitive
+coordinate, and the advantage of inheriting the group axioms from an
+ambient semidirect product.
+
+\subsection{A square-zero curvature which may or may not be removable}
+
+Let \(k\) be a nonzero commutative ring and put
+\[
+ S=k[\varepsilon]/(\varepsilon^2).
+\]
+On \(\mathbb A^3_S\) define the infinitesimal Heisenberg law
+\begin{equation}\label{eq:toy-heisenberg-law}
+ (x,y,z)(x',y',z')
+ =
+ \bigl(x+x',\,y+y',\,z+z'+\varepsilon xy'\bigr).
+\end{equation}
+Associativity is the single identity
+\[
+ xy'+(x+x')y''
+ =
+ x'y''+x(y'+y'').
+\]
+If \(p=(x,y)\), \(q=(x',y')\), and \(c(p,q)=xy'\), this is the cocycle
+identity
+\begin{equation}\label{eq:toy-cocycle}
+ c(p,q)+c(p+q,r)=c(q,r)+c(p,q+r).
+\end{equation}
+The inverse is
+\[
+ (x,y,z)^{-1}=(-x,-y,-z+\varepsilon xy).
+\]
+
+Modulo \(\varepsilon\), the plane \(z=0\) is a subgroup.  Its naive lift
+is not: multiplying two points of that plane produces the normal error
+\[
+ \varepsilon xy'.
+\]
+Try to repair the plane by bending it to
+\[
+ z=\varepsilon f(x,y).
+\]
+It is a subgroup exactly when
+\begin{equation}\label{eq:toy-coboundary-equation}
+ f(x+x',y+y')-f(x,y)-f(x',y')=xy'.
+\end{equation}
+The left side is symmetric in the two pairs \((x,y)\) and
+\((x',y')\), whereas the right side is not.  Hence no such polynomial
+\(f\) exists.  The curvature is a cocycle by ambient associativity, but
+it is not a coboundary.
+
+For comparison, replace \(xy'\) in
+\eqref{eq:toy-heisenberg-law} by the symmetric curvature
+\[
+ xy'+x'y.
+\]
+Now
+\[
+ (x+x')(y+y')-xy-x'y'=xy'+x'y,
+\]
+so \(f(x,y)=xy\) solves the bending equation.  The graph
+\[
+ z=\varepsilon xy
+\]
+is a subgroup, and the coordinate
+\[
+ \widetilde z=z-\varepsilon xy
+\]
+turns the entire law back into ordinary addition.  This is the
+beginner's deformation-theoretic dictionary:
+\[
+ \begin{array}{c@{\quad\Longleftrightarrow\quad}l}
+  \text{ambient associativity}
+    &\text{the curvature is a \(2\)-cocycle},\\
+  \text{bending the equations}
+    &\text{adding a coboundary},\\
+  \text{a subgroup lift exists}
+    &\text{the curvature class vanishes}.
+ \end{array}
+\]
+
+\subsection{A miniature finite bridge}
+
+We next give a small successful bridge which is very close in shape to
+the counterexample but has no characteristic-four carry.  Let
+\[
+ B=\F_2[r,s]/(r^2,s^2),
+ \qquad Q=(s).
+\]
+Thus \(Q^2=0\), and multiplication by \(r\) gives only the two-step chain
+\[
+ s\longmapsto rs\longmapsto0.
+\]
+For \(t\in Q\), set
+\begin{equation}\label{eq:toy-bridge-algebra}
+ A_t
+ =
+ B[U,V]/(U^2-rU+tV,\ V^2),
+ \qquad
+ \lambda=(1+rU)(1+sV).
+\end{equation}
+Use the product coordinates inherited from the denominator-free
+semidirect product:
+\[
+ U_*=U_1+\lambda_1U_2,
+ \qquad
+ V_*=V_1\lambda_2+V_2.
+\]
+Reduction by the two quadrics gives the complete defect vector
+\begin{equation}\label{eq:toy-bridge-defect}
+ \begin{pmatrix}
+  U_*^2-rU_*+tV_*\\
+  V_*^2\\
+  (1+rU_*)(1+sV_*)-\lambda_1\lambda_2
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  r(s-t)V_1U_2\\0\\0
+ \end{pmatrix}.
+\end{equation}
+Here is a short audit.  The identities \(r^2=s^2=0\) give
+\(\lambda_i^2=1\), and hence \(V_*^2=0\).  They also give
+\[
+ r(1+\lambda_1)=rsV_1,\qquad
+ t(1+\lambda_2)=rtU_2,
+\]
+which reduce the first quadratic defect to the displayed coefficient.
+For the graph, put
+\[
+ \delta=rsV_1U_2,\quad
+ A=(1+rU_1)(1+rU_2),\quad
+ C=(1+sV_1)(1+sV_2).
+\]
+Then
+\[
+ 1+rU_*=A+\delta,\qquad 1+sV_*=C+\delta.
+\]
+Since \(\delta A=\delta C=\delta\) and \(\delta^2=0\), the two errors
+cancel in characteristic two:
+\[
+ (A+\delta)(C+\delta)=AC=\lambda_1\lambda_2.
+\]
+Thus the naive lift \(t=0\) has the unique curvature
+\[
+ rsV_1U_2.
+\]
+There is a concrete group-theoretic interpretation.  Inside the ambient
+semidirect product are two rank-two subgroups
+\[
+ P:\ (U,0,1+rU),\quad U^2=rU,
+ \qquad
+ K_s:\ (0,V,1+sV),\quad V^2=0.
+\]
+Their ordered product \(P K_s\) is exactly the scheme defined by
+\(A_0\), but a product of two subgroups need not itself be a subgroup.
+To reverse the middle factors one would have to send
+\[
+ U\longmapsto\widetilde U=(1+sV)U.
+\]
+The failure of \(\widetilde U\) to remain on \(P\) is
+\[
+ \widetilde U^{\,2}-r\widetilde U=rsVU.
+\]
+This is precisely the curvature above.  Modulo \((s)\) it vanishes and
+the ordered product becomes a matched-product subgroup.  The bridge
+will bend this product locus in the normal \(V\)-direction so that it
+still closes before reducing modulo \(s\).
+
+The normal cochain \(\eta_t=-tV\) changes it by
+\[
+ \partial\eta_t
+ =-t(V_*-V_1-V_2)
+ =-rtV_1U_2.
+\]
+Choosing \(t=s\) therefore kills the curvature and gives
+\begin{equation}\label{eq:toy-successful-bridge}
+ A_s=B[U,V]/(U^2-rU+sV,\ V^2).
+\end{equation}
+This is the exact toy version of the bridge in the main example.
+
+The algebra \(A_s\) is free of rank four on \(1,U,V,UV\).  Moreover
+\[
+ (1+rU)^2=(1+sV)^2=1,
+ \qquad \lambda^2=1.
+\]
+Hence \(N_4(\lambda)=0\), and the fourth-power word is the identity.
+The third-power word supplies inverses, so \(A_s\) is a Hopf algebra
+without a separate antipode calculation.  This toy is already a
+nontrivial, generally noncommutative deformation, but it is not a
+counterexample: it is killed by four.
+For example, doubling is visibly nonzero:
+\[
+ [2]^\#(U)=sUV+rsV,\qquad
+ [2]^\#(V)=rUV,
+\]
+whereas applying doubling once more gives the identity section.
+
+The comparison with the main construction is now visible.  The toy has
+only
+\[
+ s\longmapsto rs\longmapsto0.
+\]
+The main example replaces this by the longer chain
+\[
+ q=b^2\longmapsto aq=ab^2
+ \longmapsto a^2q=-2b\ne0.
+\]
+In both cases the middle class is the subgroup curvature and the bridge
+is its null-homotopy.  Only in the main example is there one more
+nonzero step; that final step is exactly the fourth-power class.
+
+\section{Why an obvious semidirect product cannot work}
+\label{sec:no-go}
+
+Before constructing the group, it is useful to understand why the most
+obvious interpretation of \eqref{eq:H-law} is too simple.
+
+\begin{lemma}[Killedness propagates through extensions]
+\label{lem:extension-no-go}
+Suppose
+\[
+ 1\longrightarrow H\longrightarrow G\longrightarrow K\longrightarrow1
+\]
+is an exact sequence of group schemes.  If \(H\) is killed by \(h\) and
+\(K\) is killed by \(k\), then \(G\) is killed by \(hk\).
+\end{lemma}
+
+\begin{proof}
+For every test algebra and every \(g\in G\), the element \(g^k\) maps to
+the identity in \(K\), hence belongs to \(H\).  Therefore
+\[
+ g^{hk}=(g^k)^h=1.
+\]
+This pointwise identity is functorial and hence is an identity of word
+morphisms.
+\end{proof}
+
+In particular, an honest semidirect product of two rank-two group schemes
+is killed by four: each rank-two factor is commutative and is killed by
+two.  Therefore the desired group cannot retain a flat rank-two kernel
+and a flat rank-two quotient.  The bridge term in \eqref{eq:A} is not
+cosmetic; it destroys precisely this overly simple extension structure.
+
+Nor does adding another quadratic skew coordinate help the geometric-sum
+mechanism.  It doubles the rank from four to eight, while
+\eqref{eq:carry} already says \(N_8(l)=0\).  Thus the natural
+larger-rank enlargement erases the carry instead of clarifying it.
+
+\section{Two rank-two cancellations and one bridge}
+\label{sec:bridge}
+
+We next derive the scalar equations which make a rank-four locus in \(H\)
+closed under multiplication.  Begin with
+\begin{equation}\label{eq:general-A}
+ A_0=B[U,V]/(U^2-\alpha U-\beta V,\ V^2-\gamma V)
+\end{equation}
+and put
+\[
+ \lambda=(1+rU)(1+sV).
+\]
+Try the product law inherited from \(H\):
+\begin{equation}\label{eq:general-product}
+ U_*=U_1+\lambda_1U_2,\qquad
+ V_*=V_1\lambda_2+V_2.
+\end{equation}
+
+The elementary rank-two calculation explains the diagonal conditions.
+If \(T^2=cT\), \(g=1+dT\), and
+\(T_*=T_1+g_1T_2\), then
+\begin{equation}\label{eq:rank-two-cancellation}
+ T_*^2-cT_*=g_1(2+cd)T_1T_2.
+\end{equation}
+Thus \(cd=-2\) cancels the cross term.  Applying this to both coordinates,
+and then comparing the remaining mixed terms, produces five equations:
+\begin{equation}\label{eq:five}
+ \begin{array}{c@{\qquad}c@{\qquad}l}
+  \alpha r=-2,&\gamma s=-2,
+    &\text{two rank-two cancellations},\\[2pt]
+  \gamma r=0,&\beta s=0,
+    &\text{two mixed vanishings},\\[2pt]
+  \multicolumn{2}{c}{\beta r+\alpha s=0}
+    &\text{the bridge balance}.
+ \end{array}
+\end{equation}
+
+\begin{lemma}[The one closure calculation]\label{lem:closure}
+Assume \eqref{eq:five}.  In the tensor square of \(A_0\), the product
+coordinates \eqref{eq:general-product} satisfy
+\begin{equation}\label{eq:three-closure-identities}
+ U_*^2=\alpha U_*+\beta V_*,
+ \qquad
+ V_*^2=\gamma V_*,
+ \qquad
+ (1+rU_*)(1+sV_*)=\lambda_1\lambda_2.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+This is a universal reduction by two monic quadrics.  A short hand
+calculation is recorded in Appendix~\ref{app:closure}; its only scalar
+inputs are the five displayed equations \eqref{eq:five}.
+\end{proof}
+
+\begin{proposition}[The bridge criterion]\label{prop:bridge}
+Assume \eqref{eq:five}.  Then \(A_0\) is free of rank four over \(B\),
+and the formulas
+\[
+ \Delta(U)=U\ot1+\lambda\ot U,\qquad
+ \Delta(V)=V\ot\lambda+1\ot V,\qquad
+ \eps(U)=\eps(V)=0
+\]
+make \(A_0\) a Hopf algebra.  If \(W=UV\), then
+\begin{equation}\label{eq:general-power}
+ [4]^\#(U)=2sW,\qquad [4]^\#(V)=0,\qquad [8]=\unit.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The two monic quadrics give the basis \(1,U,V,W\).  The five scalar
+equations imply
+\begin{equation}\label{eq:scalar-consequences}
+ 4=2\alpha=2\beta=2\gamma=2r=0,\qquad
+ r^2\beta=2s,\qquad 2s^2=0.
+\end{equation}
+For example,
+\[
+ 4=(\alpha r)(\gamma s)=\alpha s(\gamma r)=0,
+\]
+and multiplying the bridge balance by \(r\) gives
+\[
+ r^2\beta=-r\alpha s=2s.
+\]
+
+Let \(L=1+rU\), \(M=1+sV\), and
+\(\theta=\lambda-1\).  Reduction by the quadrics gives
+\begin{equation}\label{eq:lambda-identities}
+ M^2=1,\qquad
+ L^2=\lambda^2=1+2sV,\qquad
+ \theta^2=0,\qquad
+ 2\theta=2sV.
+\end{equation}
+In particular, \(\lambda^{-1}=1-\theta\).  Hence
+\[
+ j\colon\Spec A_0\longrightarrow H_B,\qquad
+ (U,V)\longmapsto(U,V,\lambda)
+\]
+is a closed immersion: on coordinate rings it sends \(u,v,z\) to
+\(U,V,\lambda\), and \(U,V\) generate \(A_0\).  Lemma~\ref{lem:closure}
+says exactly that its image is closed under multiplication.  We have
+therefore constructed a closed submonoid of the semidirect-product group
+\(H\).  Associativity, the unit, and coassociativity of the induced
+coproduct are inherited from \(H\); there are no further bialgebra
+identities to check.  Inverses will follow from the power calculation.
+
+By \eqref{eq:lambda-identities} and \eqref{eq:carry},
+\[
+ N_4(\lambda)=2sV.
+\]
+The norm formula gives
+\[
+ [4]^\#(U)=2sVU=2sW,
+ \qquad
+ [4]^\#(V)=2sV^2=2s\gamma V=-4V=0.
+\]
+It also gives \([8]=\unit\).  Hence the seventh-power word is a two-sided
+inverse, so the closed submonoid is a group scheme and \(A_0\) is a Hopf
+algebra.
+\end{proof}
+
+\section{The three relations are forced}
+\label{sec:forced}
+
+We now reverse-engineer the shortest memorable specialization of
+Proposition~\ref{prop:bridge}.  Choose the two character parameters to be
+\[
+ r=a,\qquad s=b.
+\]
+We want a single scalar relation to supply both diagonal cancellations.
+Taking
+\[
+ a^2b=-2
+\]
+forces the convenient choices
+\[
+ \alpha=ab,\qquad \gamma=a^2,
+\]
+because
+\[
+ \alpha r=(ab)a=a^2b,\qquad
+ \gamma s=(a^2)b=a^2b.
+\]
+The bridge balance then asks for
+\[
+ \beta a=-(ab)b,
+\]
+so the evident choice is
+\[
+ \beta=-b^2.
+\]
+The two remaining mixed vanishings become exactly
+\[
+ \gamma r=a^3=0,\qquad
+ \beta s=-b^3=0.
+\]
+
+Thus the entire example is forced by
+\[
+ a^3=0,\qquad b^3=0,\qquad a^2b=-2.
+\]
+In table form, the five compatibility checks are literally
+\begin{equation}\label{eq:specialization-table}
+ \begin{array}{c@{\qquad}c}
+  \alpha r=(ab)a=a^2b=-2&
+  \gamma s=(a^2)b=a^2b=-2\\
+  \gamma r=a^3=0&
+  \beta s=-b^3=0\\
+  \multicolumn{2}{c}{
+   \beta r+\alpha s=(-b^2)a+(ab)b=0.}
+ \end{array}
+\end{equation}
+Substituting these coefficients into \eqref{eq:general-A} gives exactly
+\eqref{eq:A}.  Proposition~\ref{prop:bridge} now proves all the Hopf
+assertions in Theorem~\ref{thm:main}, except for the claimed
+nonvanishing.  We prove that next.
+
+In the standard semidirect-product coordinates
+\eqref{eq:standard-semidirect}, this closed immersion is
+\begin{equation}\label{eq:G-to-standard-semidirect}
+ G\longrightarrow\Ga^2\rtimes\Gm,\qquad
+ (U,V)\longmapsto
+ \bigl(U,\lambda^{-1}V,\lambda\bigr).
+\end{equation}
+Indeed, if \(Y=\lambda^{-1}V\), then
+\[
+ \Delta(Y)=Y\ot1+\lambda^{-1}\ot Y.
+\]
+Thus \(U\) and \(Y\) are the weight \(+1\) and weight \(-1\) translation
+coordinates for the \(\Gm\)-action.  Conversely,
+\(V=\lambda Y\), so \eqref{eq:G-to-standard-semidirect} is still a closed
+immersion and loses no coordinate information.
+
+Equivalently, this gives a construction entirely inside the standard
+semidirect product.  Give
+\[
+ \widetilde H_R=\Ga^2\rtimes\Gm
+\]
+coordinates \((x,y,z)\), with \(z\) acting with weights \(+1,-1\) as in
+\eqref{eq:standard-semidirect}.  Then \(G\) is the closed subscheme cut
+out by only three equations:
+\begin{equation}\label{eq:three-equations-in-semidirect}
+ \begin{split}
+  x^2-abx+b^2zy&=0,\\
+  zy^2-a^2y&=0,\\
+ z-(1+ax)(1+bzy)&=0.
+ \end{split}
+\end{equation}
+Equivalently, for every \(R\)-algebra \(C\), set
+\[
+ G(C)=\left\{(x,y,z)\in C\times C\times C^\times:
+ \begin{array}{l}
+  x^2-abx+b^2zy=0,\\
+  zy^2-a^2y=0,\\
+  z=(1+ax)(1+bzy)
+ \end{array}\right\}.
+\]
+The group law is not an additional formula to discover: it is the
+restriction of
+\[
+ (x,y,z)(x',y',z')
+   =(x+zx',\ y+z^{-1}y',\ zz')
+\]
+from \(\widetilde H(C)\).  Lemma~\ref{lem:closure} is exactly the single
+assertion that the three displayed equations are preserved by this
+product.  The identity and associativity are then inherited from the
+ambient semidirect product, and the already proved identity \([8]=\unit\)
+makes the seventh-power word the inverse.  Thus this functor is visibly a
+closed subgroup functor of \(\widetilde H_R\).
+
+Finally, \(U=x\), \(V=zy\), and \(\lambda=z\) identify its coordinate
+algebra with \(A\); conversely \(y=\lambda^{-1}V\).  This is the
+semidirect-product construction of the group scheme.  Notice that it
+appears to require three closure identities, rather than separate
+verifications of the coassociativity, counit, and antipode axioms.  The
+next subsection shows that two of those identities are automatic and
+the third has only one scalar coefficient.
+
+Here ``semidirect-product construction'' means a closed subgroup of an
+ambient semidirect product; it does not mean that \(G\) itself splits as
+a semidirect product of finite group schemes.  Lemma~\ref{lem:extension-no-go}
+shows that such a splitting could not give a counterexample.
+
+\subsection{The one-curvature form of the construction}
+\label{subsec:one-curvature}
+
+The semidirect-product presentation reduces the entire construction to
+one closure coefficient.  Put
+\[
+ q=b^2,\qquad Q=(q)\subset R.
+\]
+Then
+\[
+ Q^2=bQ=2Q=0.
+\]
+For any \(t\in Q\), consider
+\begin{equation}\label{eq:At}
+ A_t=
+ R[U,V]/(U^2-abU+tV,\ V^2-a^2V),
+ \qquad
+ \lambda=(1+aU)(1+bV).
+\end{equation}
+The cases \(t=0\) and \(t=q\) will be the naive lift and the corrected
+lift, respectively.
+
+\begin{lemma}[The one-curvature calculation]\label{lem:one-curvature}
+In \(A_t\ot_R A_t\), put
+\[
+ \lambda_i=(1+aU_i)(1+bV_i),\qquad
+ U_*=U_1+\lambda_1U_2,\qquad
+ V_*=V_1\lambda_2+V_2.
+\]
+Then the complete closure-defect vector is
+\begin{equation}\label{eq:one-curvature-vector}
+ \begin{pmatrix}
+  U_*^2-abU_*+tV_*\\
+  V_*^2-a^2V_*\\
+  (1+aU_*)(1+bV_*)-\lambda_1\lambda_2
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  a(q-t)V_1U_2\\0\\0
+ \end{pmatrix}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+This is one reduction by the two monic quadrics; a short hand proof is
+given in Appendix~\ref{app:one-curvature}.  Conceptually, the two diagonal
+rank-two cancellations are both the relation \(a^2b=-2\), the two pure
+mixed terms die because \(a^3=0\) and \(bt=0\), and only the coefficient
+\[
+ a(q-t)
+\]
+can remain.  The important extra content of
+\eqref{eq:one-curvature-vector} is that the other two closure equations
+vanish identically, before imposing this last coefficient.
+\end{proof}
+
+Now take \(t=q=b^2\).  The right side of
+\eqref{eq:one-curvature-vector} vanishes tautologically.  Thus the map
+\[
+ \Spec A_q\longrightarrow H_R,
+ \qquad
+ (U,V)\longmapsto(U,V,\lambda)
+\]
+identifies its source with a closed submonoid of the ambient semidirect
+product.  The identities in Appendix~\ref{app:one-curvature} also show
+that \(\lambda\) is a unit.  Associativity, the identity, coassociativity,
+the counit, and group-likeness of \(\lambda\) are inherited from \(H\).
+Finally, \([8]=\unit\) makes the seventh-power word the inverse, so this
+closed submonoid is a group scheme.  Since \(A_q=A\), this gives the
+shortest proof of the Hopf assertion in Theorem~\ref{thm:main}: apart from
+the power calculation needed for inverses, the only nonformal
+verification is the single coefficient \(a(b^2-b^2)=0\).
+
+In the standard weight-\((1,-1)\) coordinates \((x,y,z)\), the same family
+is cut out by
+\[
+ x^2-abx+tzy=0,\qquad zy^2-a^2y=0,\qquad
+ z=(1+ax)(1+bzy).
+\]
+Under ambient multiplication its sole defect is
+\[
+ a(q-t)z_1y_1x_2.
+\]
+
+\section{The base ring and the surviving top class}
+\label{sec:base}
+
+The base presentation has a transparent additive calculation.  Start with
+\[
+ R_0=\Z[a,b]/(a^3,b^3),
+\]
+which is free over \(\Z\) on the nine box monomials
+\[
+ a^ib^j,\qquad 0\le i,j\le2.
+\]
+Let \(N\) be multiplication by \(a^2b\).  It has only two nonzero arrows:
+\begin{equation}\label{eq:two-arrows}
+ 1\longmapsto a^2b,\qquad
+ b\longmapsto a^2b^2.
+\end{equation}
+The additive group of \(R\) is the cokernel of \(N+2\id\).
+Each arrow in \eqref{eq:two-arrows} gives a \(\Z/4\)-summand, while each
+of the other five box monomials gives a \(\Z/2\)-summand.  Consequently
+\begin{equation}\label{eq:additive-R}
+ R_{\mathrm{add}}\simeq
+ (\Z/4)\{1,b\}\oplus
+ (\Z/2)\{a,a^2,ab,b^2,ab^2\}.
+\end{equation}
+Equivalently, every element has a unique expression
+\[
+ c_0+c_1b+
+ \epsilon_1a+\epsilon_2a^2+\epsilon_3ab+
+ \epsilon_4b^2+\epsilon_5ab^2,
+\]
+where \(c_0,c_1\in\Z/4\) and \(\epsilon_i\in\F_2\).
+
+This proves at once that \(R\) has length nine and that
+\begin{equation}\label{eq:nonzero-carry}
+ 2b=-a^2b^2\ne0.
+\end{equation}
+It also shows \(4=0\).  Alternatively,
+\[
+ 4=(a^2b)^2=a^4b^2=0.
+\]
+Since \(a,b\) are nilpotent and \(2=-a^2b\), the ring is local with
+maximal ideal \(\m=(a,b)\) and residue field \(\F_2\).  Its associated
+graded ring is
+\[
+ \gr_{\m}R\simeq\F_2[A,B]/(A^3,B^3),
+\]
+so its Hilbert function is \((1,2,3,2,1)\).  The top class is
+\[
+ A^2B^2\longleftrightarrow a^2b^2=-2b,
+\]
+and hence
+\[
+ \Soc(R)=\F_2(2b).
+\]
+Finally, \(a^3,b^3,a^2b+2\) form a regular sequence in
+\(\Z[a,b]\), for example by the injectivity of \(N+2\id\) in the
+calculation above.  Thus \(R\) is a complete intersection.
+
+The two relations defining \(A\) are successively monic, so
+\[
+ A=R\{1,U,V,W\}.
+\]
+Combining this freeness with \eqref{eq:nonzero-carry} proves
+\[
+ 2bW\ne0.
+\]
+
+\section{The fourth power is visible in one matrix}
+\label{sec:power}
+
+Put
+\[
+ \theta=\lambda-1=aU+bV+abW.
+\]
+The bridge criterion gives
+\begin{equation}\label{eq:theta}
+ \theta^2=0,\qquad 2\theta=2bV.
+\end{equation}
+Therefore
+\[
+ N_4(\lambda)=2\theta=2bV.
+\]
+The universal point of \(G\), viewed through
+\eqref{eq:block-matrix}, has fourth power
+\begin{equation}\label{eq:matrix-fourth}
+ \left[
+ \begin{pmatrix}\lambda&U\\0&1\end{pmatrix}
+ \oplus
+ \begin{pmatrix}\lambda&0\\V&1\end{pmatrix}
+ \right]^4
+ =
+ \begin{pmatrix}1&2bUV\\0&1\end{pmatrix}
+ \oplus I_2.
+\end{equation}
+The upper-right entry is nonzero by
+\eqref{eq:nonzero-carry} and freeness of \(A\).  This single matrix is
+the counterexample:
+\[
+ \operatorname{rank}(G)=4,\qquad [4]\ne\unit.
+\]
+On the other hand, \(N_8(\lambda)=0\), so the eighth power of the same
+matrix is the identity.
+
+Modulo \(\m=(a,b)\), both quadrics become \(U^2=V^2=0\), \(\lambda=1\),
+and both coordinates are primitive.  Thus
+\[
+ G_{\F_2}\simeq\alpha _2\times\alpha _2.
+\]
+The failure is entirely relative.  The total coproduct is nevertheless
+noncocommutative: in
+\[
+ \Delta(U)-\tau\Delta(U)
+ =(\lambda-1)\ot U-U\ot(\lambda-1),
+\]
+the coefficient of \(V\ot U\) is \(b\ne0\).
+
+\section{The counterexample as a bent subscheme}
+\label{sec:square-zero}
+
+We now recast the construction as an embedded first-order deformation.
+This is perhaps its most geometric form.  A simple subgroup downstairs
+is cut out by three hypersurfaces in the fixed smooth group \(H\).  The
+coefficientwise lift of those hypersurfaces is no longer a subgroup: the
+product of two points misses one hypersurface by one square-zero normal
+error.  Bending that hypersurface by \(b^2V\) cancels the error exactly.
+
+Put
+\[
+ q=b^2,\qquad Q=(q)\subset R,\qquad D=R/Q.
+\]
+Then
+\[
+ Q^2=0,\qquad bQ=2Q=0,
+\]
+and multiplication by \(a\) gives the chain
+\begin{equation}\label{eq:memory-chain}
+ q=b^2\longmapsto aq=ab^2
+ \longmapsto a^2q=a^2b^2=-2b
+ \longmapsto0.
+\end{equation}
+
+The closed immersion
+\[
+ \Spec D\longrightarrow\Spec R
+\]
+is therefore a first-order thickening.  It is important that it is not a
+split dual-number thickening; we return to this point below.
+
+\subsection{The simple subscheme downstairs}
+
+Use the denominator-free coordinates of \eqref{eq:H-law} and write
+\[
+ B_R=\mathcal O(H_R)=R[U,V,z,z^{-1}],\qquad
+ \lambda=(1+aU)(1+bV).
+\]
+Consider the three ambient equations
+\begin{equation}\label{eq:three-normal-equations}
+ \Phi=U^2-abU,\qquad
+ \Psi=V^2-a^2V,\qquad
+ \Xi=z-\lambda.
+\end{equation}
+After reduction to \(D\), let
+\[
+ G_0=V(\overline\Phi,\overline\Psi,\overline\Xi)
+ \subset H_D.
+\]
+This is the simpler object from which the counterexample will be lifted.
+
+Modulo \(Q\), the bridge disappears.  There are two rank-two subgroup
+schemes of \(H_D\):
+\begin{equation}\label{eq:two-downstairs-factors}
+ \begin{array}{lll}
+  P:&U^2=abU,&p(U)=(U,0,1+aU),\\[2pt]
+  K:&V^2=a^2V,&k(V)=(0,V,1+bV).
+ \end{array}
+\end{equation}
+Both subgroup assertions are the same elementary rank-two cancellation,
+because
+\[
+ (ab)a=(a^2)b=a^2b=-2.
+\]
+Multiplication in \(H_D\) gives
+\begin{equation}\label{eq:matched-product-map}
+ P\times_DK\longrightarrow H_D,
+ \qquad
+ (U,V)\longmapsto p(U)k(V)
+   =\bigl(U,V,(1+aU)(1+bV)\bigr).
+\end{equation}
+Its image is \(G_0=G_D\), and the map is an isomorphism of schemes onto
+that image.  It is closed under multiplication by
+Lemma~\ref{lem:one-curvature} with \(t=0\), since \(q=0\) over \(D\).
+Moreover \(2b=-a^2q=0\) over \(D\), so the norm calculation gives
+\([4]=\unit\); hence it is a subgroup.  Thus \(G_D\) is an \emph{exact
+matched product} \(P\bowtie K\).  It need not be a direct or semidirect
+product as a group; reversing the two factors produces mutual actions.
+All coherence for those actions is inherited from associativity in \(H\).
+
+There is a useful geometric bonus: \(G_0\subset H_D\) is a complete
+intersection with completely explicit normal directions.  Indeed,
+\(\overline\Phi\) and \(\overline\Psi\) are successive monic equations.
+After imposing them, \(\overline\lambda^2=1\), so
+\(z-\overline\lambda\) is a nonzerodivisor in the remaining Laurent
+polynomial ring.  If \(I_0\) denotes the ideal of \(G_0\), then
+\begin{equation}\label{eq:conormal-basis}
+ I_0/I_0^2\simeq
+ \mathcal O(G_0)\{\overline\Phi,\overline\Psi,\overline\Xi\}.
+\end{equation}
+Thus an infinitesimal embedded displacement may be recorded simply by
+saying how far each of these three equations moves.
+
+\subsection{The naive lift and its one normal curvature}
+
+Lift the three equations in \eqref{eq:three-normal-equations}
+coefficientwise from \(D\) to \(R\):
+\begin{equation}\label{eq:naive-embedded-lift}
+ X_{\mathrm{naive}}=V(\Phi,\Psi,\Xi)\subset H_R.
+\end{equation}
+Eliminating \(z\) and reducing by the two monic quadrics shows that this
+is a finite flat rank-four lift of \(G_0\), with basis
+\(1,U,V,UV\).  It contains the ambient identity, but it is not closed
+under ambient multiplication.
+
+Here is an intrinsic way to measure that failure.  Put
+\[
+ E=Q\ot_D\mathcal O(G_0),\qquad
+ E_2=Q\ot_D\mathcal O(G_0\times_DG_0).
+\]
+The equality \(Q^2=0\), together with flatness, identifies \(E\) with
+the square-zero ideal in the coordinate ring of any one of our lifts.
+Since \(G_0\) is a subgroup, pulling a lifted defining equation back
+under ambient multiplication and then restricting it to
+\(X_{\mathrm{naive}}\times_RX_{\mathrm{naive}}\) gives an element of
+\(E_2\).  The result depends only on its conormal class and defines the
+\emph{multiplication curvature}
+\[
+ \kappa_{\mathrm{naive}}:
+ I_0/I_0^2\longrightarrow E_2,
+\]
+where the target is viewed as an \(\mathcal O(G_0)\)-module through the
+multiplication of \(G_0\).  Lemma~\ref{lem:one-curvature} says that the
+whole map is
+\begin{equation}\label{eq:naive-curvature}
+ \begin{split}
+  \kappa_{\mathrm{naive}}(\overline\Phi)
+    &=aq\,V_1U_2,\\
+  \kappa_{\mathrm{naive}}(\overline\Psi)
+    &=\kappa_{\mathrm{naive}}(\overline\Xi)=0.
+ \end{split}
+\end{equation}
+In plain language, the product of two points remains on the second
+quadratic hypersurface and on the character graph, but misses the first
+quadratic hypersurface by the infinitesimal normal distance
+\(aqV_1U_2\).  This is the only failure of the naive lift.
+
+\subsection{Bending one hypersurface}
+
+Because \(Q^2=0\), correcting the first equation is a linear problem.
+For \(t\in Q\), define
+\begin{equation}\label{eq:embedded-lift-family}
+ X_t=V(\Phi+tV,\Psi,\Xi)\subset H_R.
+\end{equation}
+Every \(X_t\) is finite flat of rank four and has special fiber \(G_0\).
+Fixing \(X_{\mathrm{naive}}\) as an origin, its equation displacement is
+the conormal homomorphism
+\begin{equation}\label{eq:normal-equation-displacement}
+ \begin{split}
+  \delta_t:I_0/I_0^2&\longrightarrow E,\\
+  \overline\Phi&\longmapsto t\otimes\overline V,\qquad
+  \overline\Psi,\overline\Xi\longmapsto0.
+ \end{split}
+\end{equation}
+This is the standard normal-module description of the difference
+between two framed embedded lifts across a square-zero extension.  It is
+an affine difference, not a canonical vector attached to a lift: the
+naive lift has supplied the origin.
+
+There is a harmless but useful sign convention.  The equation is
+\[
+ \Phi+tV=0,
+ \qquad\text{or geometrically}\qquad
+ \Phi=-tV.
+\]
+Thus the equation displacement is \(+tV\), whereas the geometric normal
+displacement is the one-cochain
+\[
+ \eta_t=-tV
+\]
+in the \(\overline\Phi\)-direction.  The linearized subgroup condition
+applied to this geometric displacement is especially simple.  Using
+\(V_*=V_1\lambda_2+V_2\), one obtains the single-line calculation
+\begin{equation}\label{eq:bridge-coboundary}
+ \begin{split}
+  d_{\mathrm{mult}}\eta_t
+  &=-t(V_*-V_1-V_2)\\
+  &=-tV_1(\lambda_2-1)
+   =-atV_1U_2.
+ \end{split}
+\end{equation}
+Here \(bt=0\) removes the \(V_2\)-part of
+\(t(\lambda_2-1)\).  Hence the subgroup-lifting equation is simply
+\[
+ \kappa_{\mathrm{naive}}+d_{\mathrm{mult}}\eta_t
+ =a(q-t)V_1U_2=0.
+\]
+This is the active component of the general linearized
+multiplication-stability operator on the normal module.  We do not need
+its other components: \eqref{eq:naive-curvature} says that they vanish.
+Because \(Q^2=0\), this first-order calculation is exact; there are no
+discarded quadratic or higher-order deformation terms.
+
+The most evident solution is \(t=q=b^2\), and it gives exactly
+\[
+ U^2-abU+b^2V=0.
+\]
+Consequently
+\begin{equation}\label{eq:counterexample-as-bend}
+ G=X_q=V(\Phi+qV,\Psi,\Xi)\subset H_R
+\end{equation}
+is obtained from the matched-product subgroup \(G_0\) by one first-order
+normal bend inside the fixed smooth ambient group \(H_R\).  Equivalently,
+in the standard weight-\((1,-1)\) coordinates \(V=zy\), we have changed
+only the first wall
+\[
+ x^2-abx=0
+ \qquad\text{to}\qquad
+ x^2-abx=-b^2zy.
+\]
+
+The bend makes \(X_q\) a closed submonoid and does not move the unit.
+In fact no separate antipode formula is needed here.
+
+\begin{lemma}[Inverses lift in a finite flat monoid]
+\label{lem:monoid-lifts-group}
+Let \(S_0\hookrightarrow S\) be a nilpotent closed immersion and let
+\(M/S\) be a finite locally free monoid scheme.  If \(M_{S_0}\) is a
+group scheme, then \(M\) is a group scheme.
+\end{lemma}
+
+\begin{proof}
+Consider the left-translation morphism over the first factor
+\[
+ M\times_SM\longrightarrow M\times_SM,
+ \qquad (x,y)\longmapsto(x,xy).
+\]
+It is a morphism between finite locally free schemes of the same rank
+over \(M\).  Its reduction over \(S_0\) is an isomorphism.  Locally on
+\(M\), the determinant of the corresponding map of finite free modules
+is therefore a unit modulo a nilpotent ideal, hence a unit; the original
+morphism is an isomorphism.  The same argument applies to right
+translation.  Pulling the unit section back under the two inverse
+translation maps supplies right and left inverses.  Associativity makes
+them equal.
+\end{proof}
+
+Apply the lemma to \(G=X_q\) and \(G_0=G_D\).  Thus multiplicative
+closure, finite flatness, and the simple group downstairs already imply
+that the bent subscheme is a group scheme.  The independently computed
+identity \([8]=\unit\) gives the more explicit inverse word \([7]\).
+
+Ambient associativity also forces the usual cocycle identity for the
+curvature: multiplying three points in the two possible parenthesizations
+gives the same next obstruction.  Thus the bridge may be viewed as a
+null-homotopy of the unique multiplication curvature.  The displayed
+two-term calculation is the relevant one-coordinate piece of the usual
+bialgebra deformation complex of Gerstenhaber--Schack
+\cite{GerstenhaberSchack}; it is not ordinary extension cohomology for
+the two rank-two factors.
+
+\subsection{The subgroup locus and the fourth-power locus}
+
+One may package the preceding construction in the embedded deformation
+functor of finite flat degree-four subschemes of \(H\), or, informally,
+in the relative Hilbert functor \(\operatorname{Hilb}^4(H)\).  The point
+\([G_0]\) lies over \(D\).  Requiring the universal subscheme to contain
+the unit and to be stable under multiplication and inversion cuts out
+the subgroup subfunctor.  Requiring in addition that its fourth-power
+word equal the unit cuts out a smaller subfunctor.  Our calculation says
+that the naive lift misses the first locus by \(aqV_1U_2\), while the
+normal bend \(-qV\) moves it back into that locus.  We now see that the
+resulting group still leaves the second locus.
+
+Indeed, let \(A=\mathcal O(G)\), put \(I=QA\), and write
+\(A_D=A/I=\mathcal O(G_0)\).  Freeness of \(A\) gives
+\[
+ I^2=0,\qquad I\simeq Q\ot_DA_D.
+\]
+Let \(c:G\to G\) be the constant unit map.  Since
+\(2b=-a^2q=0\) over \(D\), the power calculation gives
+\([4]_{G_0}=c_{G_0}\).  Hence the difference of the two algebra maps
+\([4]^\#-c^\#\) lands in \(I\), kills \(I\), and induces a map
+\[
+ \omega_4:A_D\longrightarrow Q\ot_DA_D.
+\]
+The difference of two algebra maps which agree modulo a square-zero ideal
+is a derivation relative to their common reduction.  Thus \(\omega_4\)
+is a \(c_{G_0}^\#\)-derivation, and the exact power calculation gives
+\begin{equation}\label{eq:first-order-word-defect}
+ \omega_4(\overline U)
+   =2b\,\overline U\overline V
+   =-a^2q\,\overline U\overline V\ne0,
+ \qquad
+ \omega_4(\overline V)=0.
+\end{equation}
+Equivalently, it is the first-order displacement of the fourth-power map
+from the unit map,
+\[
+ c_{G_0}^*\Omega^1_{G_0/D}
+ \longrightarrow Q\ot_D\mathcal O_{G_0}.
+\]
+It should not be confused with the differential of \([4]\) in the group
+variable; it is the variation of the identity \([4]=c\) in the base
+deformation.  It is nonzero because \(2b\ne0\) in \(Q\) and
+\(1,U,V,UV\) is a free basis upstairs.
+
+The whole mechanism can now be read as a three-line geometric story:
+\begin{equation}\label{eq:three-stage-deformation-story}
+ \underbrace{qV}_{\text{normal bend}}
+ \quad\rightsquigarrow\quad
+ \underbrace{aq\,V_1U_2}_{\substack{\text{multiplication curvature}\\
+                                      \text{canceled by the bend}}}
+ \quad\rightsquigarrow\quad
+ \underbrace{-a^2q\,UV=2bUV}_{\substack{\text{fourth-word defect}\\
+                                         \text{which survives}}}.
+\end{equation}
+More precisely, in this chosen normal coordinate,
+\[
+ \omega_4(\overline U)
+ =-a\,\operatorname{diag}^*
+   \bigl(\kappa_{\mathrm{naive}}(\overline\Phi)\bigr).
+\]
+This is the coefficient-memory chain \eqref{eq:memory-chain}.  A
+square-zero coefficient module need not be one-dimensional or have
+trivial scalar action: \(Q\) remembers \(q,aq,a^2q\) in succession.
+That is why a genuinely first-order deformation can cancel the subgroup
+obstruction and still retain a secondary word obstruction.
+
+The possible corrections in this normal slice form the torsor
+\begin{equation}\label{eq:bridge-torsor}
+ \{t\in Q:a(q-t)=0\}
+ =q+\operatorname{Ann}_Q(a)
+ =\{q,\ q+2b\}.
+\end{equation}
+Indeed, the chain \eqref{eq:memory-chain} gives
+\(\operatorname{Ann}_Q(a)=(a^2q)=(2b)\).  Both choices have the same
+secondary residue
+\[
+ -a^2t=2b.
+\]
+The norm calculation turns this residue into
+\([4]^\#(U)=2bUV\ne0\).  In other words, the primary subgroup curvature
+is a coboundary, but its null-homotopy leaves a nonzero power-word class
+one step farther along the \(a\)-chain.
+
+The extension \(R\to D\) is visibly nonsplit.  Every lift \(b+x\), with
+\(x\in Q\), of \(\overline b\in D\) satisfies
+\[
+ (b+x)^2=b^2\ne0,
+\]
+whereas \(\overline b^{\,2}=0\) in \(D\).  The construction is therefore
+a first-order lift across a general nonsplit square-zero thickening, not
+literally a dual-number tangent arc.  The nonsplitting is also the source
+of the curvature: the coefficient \(\overline b\) squares to zero
+downstairs, while every lift has the unavoidable square \(q\) upstairs.
+Thus the inhomogeneous bridge is not an artifact of a poor choice of
+coordinates.
+
+There is also a direct framed gauge check.  A coordinate change which is
+the identity modulo \(Q\) has the form
+\[
+ U'=U+q\phi,\qquad V'=V+q\psi.
+\]
+Since \(q^2=2q=bq=0\), one has
+\[
+ (U')^2-abU'+qV'
+ =U^2-abU+qV+q\phi(2U-ab)
+ =U^2-abU+qV.
+\]
+Thus the bridge cannot be removed by an infinitesimal coordinate change
+within this natural normal slice.
+
+\section{Why this seems close to the simplest human model}
+
+There are two different notions of simplicity.
+
+The fully universal bridge base is
+\[
+ B_{\mathrm{br}}
+ =
+ \frac{\Z[\alpha,\beta,\gamma,r,s]}
+ {(\alpha r+2,\gamma s+2,\gamma r,\beta s,\beta r+\alpha s)}.
+\]
+It is not Artinian, and every defining equation has exactly one geometric
+job.  It is the best presentation for discovering the construction.
+The map
+\[
+ B_{\mathrm{br}}\longrightarrow R,\qquad
+ (\alpha,\beta,\gamma,r,s)
+ \longmapsto(ab,-b^2,a^2,a,b)
+\]
+then gives the two-variable model above.  It is the best presentation for
+remembering a concrete counterexample.
+
+For comparison, the optimized paper uses
+\[
+ \Z[r,s]/(r^3+2,s^3+2,rs^2)
+\]
+and the coefficients \(r^2,-rs,s^2\).  The present base is not even
+larger numerically: both bases have length nine and use three relations.
+The gain is explanatory.  Here both diagonal cancellations are the same
+equation \(a^2b=-2\), both mixed vanishings are pure cubic nilpotence, and
+the bridge balance is a two-term monomial syzygy.
+
+The two base directions are not gratuitous.  In any local target of the
+bridge equations with \(2s\ne0\), neither \(\alpha\) nor \(r\) can be a
+unit, while \(\alpha r=-2\).  Hence
+\[
+ 2\in\m^2.
+\]
+This already rules out the tempting bases
+\((\Z/4)[t]/(t^N)\), for which \(2\notin(2,t)^2\).  It also rules out
+local Artin chain rings more generally.  Indeed, let \(v\) be the chain
+valuation, let \(N\) be the nilpotence length, and put \(e=v(2)\).
+The equations give
+\[
+ v(\alpha)+v(r)=e,\qquad
+ v(\gamma)+v(s)=e,\qquad
+ v(\gamma)+v(r)\ge N,\qquad
+ v(\beta)+v(s)\ge N.
+\]
+The bridge is nonzero when \(2s\ne0\), and hence
+\[
+ v(\beta)+v(r)
+ =v(\alpha)+v(s)=e-v(r)+v(s).
+\]
+The third inequality gives
+\[
+ v(r)-v(s)\ge N-e>0,
+\]
+whereas the fourth gives
+\[
+ e+2\bigl(v(s)-v(r)\bigr)
+ =v(\beta)+v(s)\ge N,
+\]
+a contradiction.  Two transverse nilpotent directions are therefore
+structurally natural in this design.
+
+More group coordinates do not remove the essential difficulty.  Honest
+extensions are excluded by Lemma~\ref{lem:extension-no-go}, while the
+first obvious extra skew coordinate changes the rank to eight and makes
+the norm vanish.  The pair \((U,V)\) is therefore not an optimization
+artifact: \(U\) detects the affine-group carry and \(V\) is the minimal
+memory coordinate which lets a finite rank-four locus close under
+multiplication.
+
+The example can be remembered in four lines:
+\[
+ \boxed{
+ \begin{gathered}
+ a^3=b^3=0,\qquad a^2b=-2,\\
+ U^2=abU-b^2V,\qquad V^2=a^2V,\\
+ \lambda=(1+aU)(1+bV),\\
+ [4]^\#(U)=2bUV\ne0,\qquad [8]=\unit.
+ \end{gathered}}
+\]
+
+\appendix
+
+\section{The one-curvature calculation}\label{app:one-curvature}
+
+We prove Lemma~\ref{lem:one-curvature}.  Write
+\[
+ L=1+aU,\qquad M=1+bV,\qquad \lambda=LM.
+\]
+The base relations and \(t\in Q=(b^2)\) imply
+\[
+ 2a=4=0,\qquad t^2=bt=2t=0,
+ \qquad a^2b^2=-2b.
+\]
+Reduction by \(U^2=abU-tV\) and \(V^2=a^2V\) gives
+\begin{equation}\label{eq:one-curvature-auxiliary}
+ \begin{gathered}
+  M^2=1,\qquad
+  \lambda^2=1-a^2tV,\qquad
+  a^2(\lambda-1)=-2V,\\
+  t(\lambda-1)=atU,\qquad
+  t(\lambda^2-1)=0,\\
+  2\lambda U+ab(\lambda^2-\lambda)=-ab^2V.
+ \end{gathered}
+\end{equation}
+For the last identity, the two summands reduce respectively to
+\[
+ 2U+2bUV
+ \quad\text{and}\quad
+ 2U-ab^2V+2bUV;
+\]
+their sum is \(-ab^2V\) because \(4=0\).
+
+The second quadratic now has no defect:
+\[
+ V_*^2-a^2V_*
+ =V_1\lambda_2
+   \bigl(a^2(\lambda_2-1)+2V_2\bigr)=0.
+\]
+For the first quadratic, direct expansion followed by
+\eqref{eq:one-curvature-auxiliary} gives
+\begin{align*}
+ U_*^2-abU_*+tV_*
+ &=tV_1(\lambda_2-1)\\
+ &\quad+
+ \bigl(2\lambda_1U_1+ab(\lambda_1^2-\lambda_1)\bigr)U_2
+ +t(1-\lambda_1^2)V_2\\
+ &=a(t-b^2)V_1U_2
+  =a(q-t)V_1U_2.
+\end{align*}
+The last equality uses \(2a=0\).
+
+It remains to check the graph coordinate.  This calculation has a useful
+factor-swapping form.  Put
+\[
+ A=aU_2,\qquad B=bV_1,\qquad E=AB.
+\]
+Then
+\[
+ 1+aU_*=L_1(1+A+E),
+ \qquad
+ 1+bV_*=M_2(1+B+E),
+\]
+and hence
+\begin{align*}
+ &(1+aU_*)(1+bV_*)-\lambda_1\lambda_2\\
+ &\hspace{35mm}
+ =L_1M_2E(2+A+B+E).
+\end{align*}
+Now \(2E=0\).  Moreover
+\[
+ B^2=-2B,
+ \qquad
+ A^2=-a^2tV_2,
+\]
+so \(EB=EA=E^2=0\), using \(bt=0\).  The graph defect is therefore
+zero.  This completes the exact three-component calculation
+\eqref{eq:one-curvature-vector}.
+
+\section{The universal closure calculation}\label{app:closure}
+
+We record the calculation behind Lemma~\ref{lem:closure}.  It is the only
+nonformal step in passing from the ambient semidirect-product group to the
+finite rank-four subgroup.
+
+The five equations \eqref{eq:five} imply
+\[
+ 4=2\alpha=2\beta=2\gamma=2r=0,\qquad
+ r^2\beta=2s,\qquad 2s^2=0.
+\]
+They also give
+\[
+ \gamma(\lambda-1)=-2V,\qquad
+ \beta(1-\lambda)=\alpha sU,\qquad
+ \beta(\lambda^2-1)=0
+\]
+and
+\[
+ 2\lambda U+\alpha(\lambda^2-\lambda)+\alpha sV=0.
+\]
+Consequently
+\begin{align*}
+ V_*^2-\gamma V_*
+ &=V_1\lambda_2
+   \bigl(\gamma(\lambda_2-1)+2V_2\bigr)=0,\\
+ U_*^2-\alpha U_*-\beta V_*
+ &=\beta V_1(1-\lambda_2)\\
+ &\quad+
+ \bigl(2\lambda_1U_1+\alpha(\lambda_1^2-\lambda_1)\bigr)U_2
+ +\beta(\lambda_1^2-1)V_2=0.
+\end{align*}
+This proves preservation of the two quadrics.
+
+For the graph coordinate, let
+\[
+ L=1+rU,\qquad M=1+sV,\qquad E=rsV_1U_2.
+\]
+Direct factorization gives
+\[
+ (1+rU_*)(1+sV_*)-\lambda_1\lambda_2
+ =L_1M_2E(2+rU_2+sV_1+E).
+\]
+Each of the four terms on the right vanishes by the scalar consequences
+above and the two quadrics.  This proves
+\[
+ (1+rU_*)(1+sV_*)=\lambda_1\lambda_2
+\]
+and finishes the closure calculation.
+
+\section{Exact computer audit}
+
+All arguments above are by hand.  A short independent Macaulay2 script
+checks the polynomial identities by exact strong Gr\"obner reduction over
+\(\Z\):
+\begin{center}
+ \path{m2/verify_human_scale_affine_rank4_counterexample_20260712.m2}.
+\end{center}
+From the project root, run
+\begin{verbatim}
+M2 --script m2/verify_human_scale_affine_rank4_counterexample_20260712.m2
+\end{verbatim}
+The script checks \(4=0\), \(2b\ne0\), and the nonzero normal form of
+\(2bUV\).  It verifies that the coproduct preserves both quadrics, that
+\(\lambda\) is group-like, that the coproduct is noncocommutative, and
+that the displayed antipode satisfies both convolution identities.  In
+universal coefficients, it verifies that the five bridge equations imply
+all three identities of Lemma~\ref{lem:closure}.  In the square-zero
+normal slice, it independently obtains the exact curvature vector
+\[
+ \bigl(a(t-b^2)V_1U_2,0,0\bigr)
+\]
+and verifies that the nonzero naive curvature is canceled by the
+coboundary \(-b^2(V_*-V_1-V_2)\).  It separately checks that
+\[
+ q,\ aq,\ a^2q\ne0,\qquad q^2=bq=2q=0,
+\]
+that the naive character satisfies \(\lambda^2=1\), and that the
+first-order fourth-word defect obeys the conceptual identity
+\[
+ \omega_4(U)
+ =-a\,\operatorname{diag}^*
+   \bigl(\kappa_{\mathrm{naive}}(\Phi)\bigr).
+\]
+In the standard weight-\((1,-1)\) semidirect coordinates, it independently
+checks that all three equations
+\eqref{eq:three-equations-in-semidirect} are closed under multiplication.
+It also checks
+\[
+ \theta^2=0,\qquad 2\theta=2bV,\qquad
+ ([4]^\#U,[4]^\#V,[8]^\#U,[8]^\#V)=(2bUV,0,0,0),
+\]
+as well as the naive square-zero curvature before the bridge is inserted.
+Finally, it audits the three beginner examples: the affine-line graph
+and its rank-two quotient, associativity of the infinitesimal Heisenberg
+cocycle, and the complete defect vector
+\[
+ \bigl(r(s-t)V_1U_2,0,0\bigr)
+\]
+for the miniature bridge.  In the corrected toy it checks
+\(\lambda^2=1\), the two displayed nonzero doubling formulas,
+\(N_4(\lambda)=0\), and noncocommutativity.
+
+\begin{thebibliography}{9}
+
+\bibitem{SGA3II}
+M.~Demazure and A.~Grothendieck (eds.),
+\emph{Sch\'emas en groupes II: Groupes de type multiplicatif, et structure
+des sch\'emas en groupes g\'en\'eraux (SGA 3)},
+Lecture Notes in Mathematics, vol.~152, Springer-Verlag, 1970.
+
+\bibitem{GerstenhaberSchack}
+M.~Gerstenhaber and S.~D.~Schack,
+\emph{Bialgebra cohomology, deformations, and quantum groups},
+Proc. Natl. Acad. Sci. USA \textbf{87} (1990), no.~1, 478--481,
+\href{https://doi.org/10.1073/pnas.87.1.478}
+{doi:10.1073/pnas.87.1.478}.
+
+\bibitem{OortTate}
+J.~Tate and F.~Oort,
+\emph{Group schemes of prime order},
+Ann. Sci. \'Ecole Norm. Sup. (4) \textbf{3} (1970), no.~1, 1--21.
+
+\end{thebibliography}
+
+\end{document}

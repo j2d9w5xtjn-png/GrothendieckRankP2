@@ -1,0 +1,35 @@
+FRESH MODEL AUDITS 2026-07-10
+
+audit_rank4_no_normal_rank2_filtration_20260710.py
+rank4 no-normal-rank2 filtration audit v1
+ring: PASS (16 elements; length 4; m^2=socle=(ab); m^3=0; 8 units)
+D algebra: PASS (64 basis associativity checks; 4 critical overlaps)
+D Hopf structure: PASS (multiplicative, coassociative, cocommutative, antipode)
+A Hopf structure: PASS (displayed coproduct and antipode exact; special fiber alpha_2^2)
+power maps: PASS (phi(x)=az, phi(y)=bz, phi(z)=0, phi^2=eta*epsilon)
+height one: PASS (all 4096 augmentation-ideal elements square to zero)
+Lie obstruction: PASS (192/192 unimodular vectors fail w∧v=0)
+faithful-flat descent inputs: PASS (b notin (a), a notin (b))
+squaring equalizer: PASS (cardinality 8192, hence not finite free/flat over local R)
+AUDIT PASS
+
+Exit code: 0
+
+audit_tight_chain_hopf_model_20260710.py
+associativity: PASS (64 basis triples)
+bialgebra and coassociativity: PASS
+antipode: PASS
+P2: X->0, Y->uv*X, Z->uv*Y; P2^2=0: PASS
+dual phi: x->uv*y, y->uv*z, z->0
+S': uv*y=v*(u*y), uv*z=u*(v*z), with u*y and v*z in ker(phi): PASS
+noncommutative total group and alpha_2^2 special fiber: PASS
+AUDIT PASS
+
+Exit code: 0
+
+audit_tight_chain_family_independent_20260710.py
+triangular family: PASS (1608 valid parameter tuples; 1536 killed-fiber tuples)
+monogenic N=5 formulas: PASS (32 residue tuples)
+INDEPENDENT AUDIT PASS
+
+Exit code: 0
