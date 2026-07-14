@@ -21,11 +21,36 @@ separate draft area until its formal proof boundary is complete.
 - `manuscripts/archive/rank4/`: earlier length-ten and fourth-power-carry constructions;
 - `manuscripts/drafts/arbitrary-prime/`: rank-$p^2$-for-every-prime drafts and formalization notes;
 - `docs/`: mathematical reports and project-level audits;
-- `lean/`: Lean sources, toolchain metadata, and the first formalization draft archive;
+- `lean/`: the Lean formalizations, as a Lake project;
 - `scripts/`: Python verification and search programs;
 - `m2/`: Macaulay2 calculations;
 - `notes/`: remaining Markdown working notes;
 - `archive/handoffs/`: historical agent handoffs, run manifests, claim ledgers, and reproducibility material.
+
+## Building the Lean formalizations
+
+The `lean/` directory is a Lake project pinning Lean `v4.31.0` and the matching
+Mathlib release. Build with:
+
+```bash
+cd lean
+lake build
+```
+
+The maintained modules live under `lean/FiniteFlatGroupSchemes/`:
+`GrothendieckCounterexample.lean` (rank four, namespace
+`Counterexample.GrothendieckPower`), `GrothendieckCounterexampleAllPrimes.lean`
+(rank `p^2`, namespace `Counterexample.GrothendieckPowerAllPrimes`), and the
+general-purpose `ConvolutionPower.lean` (convolution powers of the identity of
+a bialgebra, namespace `AlgHom`, intended for upstreaming to Mathlib; see
+`docs/LEAN_ALL_PRIMES.md` for the intended PR structure). The build enables Mathlib's
+standard linter set (`weak.linter.mathlibStandardSet`) and is warning-free; the
+package passes Batteries' `#lint`, and the main theorems depend only on the
+standard axioms (`propext`, `Classical.choice`, `Quot.sound`). See
+`docs/LEAN_COUNTEREXAMPLE.md` and `docs/LEAN_ALL_PRIMES.md` for details.
+
+The Lean formalizations were written by the AI assistants Codex (OpenAI) and
+Claude (Anthropic); each module records this in its docstring.
 
 ## Which construction is primary?
 
@@ -35,8 +60,8 @@ The length-nine rank-four example is the main current construction:
 R=(\mathbb Z/4)[x,y]/(x^3,y^3,xy^2-2),
 \]
 
-with a rank-four Hopf algebra whose fourth-power word is nontrivial and whose
-eighth-power word is trivial.
+with a rank-four Hopf algebra whose fourth power map is nontrivial and whose
+eighth power map is trivial.
 
 The length-ten construction in `manuscripts/archive/rank4/` is a distinct,
 useful model: it is a compressed quotient of the earlier universal cubic
@@ -56,5 +81,8 @@ conditional minimality analysis. It is archived rather than discarded.
 The files were curated from the larger `FiniteFlatGroupSchemes` workspace on
 2026-07-13. The original workspace was not modified by this curation.
 
-The file `lean/GrothendieckCounterexampleGist.lean` came from the public GitHub
-gist [b1fc94332439e1d43944163e1dae3aef](https://gist.github.com/j2d9w5xtjn-png/b1fc94332439e1d43944163e1dae3aef).
+The file `lean/FiniteFlatGroupSchemes/GrothendieckCounterexample.lean` is the
+polished version of the public GitHub gist
+[b1fc94332439e1d43944163e1dae3aef](https://gist.github.com/j2d9w5xtjn-png/b1fc94332439e1d43944163e1dae3aef);
+the superseded pre-gist first draft survives in git history as
+`lean/GrothendieckCounterexample.lean`.
