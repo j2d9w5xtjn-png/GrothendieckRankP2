@@ -72,6 +72,13 @@ polynomial certificates and of the coproduct construction readable.
 The construction of this group scheme as well as its formalization were carried out by the
 AI assistants Codex (OpenAI) and Claude (Anthropic).
 
+## References
+
+* [F. Oort, J. Tate, *Group schemes of prime order*][oorttate1970]: Deligne's proof that a
+  commutative finite locally free group scheme is killed by its order is reproduced in §1,
+  and the question for possibly non-commutative group schemes is raised on p. 5.
+* [J. Tate, *Finite flat group schemes*][tate1997]: records the question as open in §3.8.
+
 ## Tags
 
 group scheme, Hopf algebra, counterexample
