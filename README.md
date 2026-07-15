@@ -8,6 +8,11 @@ The current primary result is the rank-four construction in residue
 characteristic `2`. The arbitrary-prime rank-$p^2$ material is retained as a
 separate draft area until its formal proof boundary is complete.
 
+> **Authorship.** All of the work in this repository — the mathematical
+> constructions, proofs, computations, exposition, and Lean formalizations —
+> was generated entirely by the AI models Codex (OpenAI) and Claude
+> (Anthropic).
+
 ## Start here
 
 1. Read `manuscripts/main/A_RANK_FOUR_COUNTEREXAMPLE_TO_GROTHENDIECKS_POWER_QUESTION_2026-07-12.tex`.
