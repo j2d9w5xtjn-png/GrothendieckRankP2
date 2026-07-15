@@ -315,7 +315,7 @@ open scoped QuadraticAlgebra
 abbrev B := QuadraticAlgebra R 0 (a ^ 2)
 
 /-- The generator `V` of `B`, satisfying `V² = a²V`. -/
-def V : B := QuadraticAlgebra.omega
+abbrev V : B := QuadraticAlgebra.omega
 
 @[simp] theorem V_relation : V ^ 2 = algebraMap R B (a ^ 2) * V := by
   unfold V
@@ -362,10 +362,10 @@ noncomputable instance : SMulCommClass R A A where
     ext <;> simp [V, aB, bB, pow_two] <;> ring
 
 /-- The generator `U` of `A`, satisfying `U² = abU - b²V`. -/
-def U : A := QuadraticAlgebra.omega
+abbrev U : A := QuadraticAlgebra.omega
 
 /-- The image of `V` in `A`. -/
-def v : A := algebraMap B A V
+abbrev v : A := algebraMap B A V
 
 @[simp] theorem U_relation :
     U ^ 2 = algebraMap R A (a * b) * U - algebraMap R A (b ^ 2) * v := by
@@ -793,7 +793,6 @@ theorem algHom_ext {S : Type*} [Semiring S] [Algebra R S]
       _ = algebraMap R A z.re + algebraMap R A z.im * v := by
         rw [map_add, map_mul, ← IsScalarTower.algebraMap_apply R B A,
           ← IsScalarTower.algebraMap_apply R B A]
-        rfl
   have hB (z : B) : f (algebraMap B A z) = g (algebraMap B A z) := by
     rw [h_embed]
     simp only [map_add, map_mul]
